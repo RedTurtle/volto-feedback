@@ -7,6 +7,7 @@ import { usePrevious } from '@plone/volto/helpers';
 import { Form, Segment } from 'semantic-ui-react';
 import { getTranslatedQuestion } from 'volto-feedback';
 import { defineMessages } from 'react-intl';
+import { FormHeader } from 'volto-feedback/components';
 
 const messages = defineMessages({
   header_positive: {
@@ -71,14 +72,16 @@ const AnswersStep = ({
       aria-expanded={userFeedback !== null}
       aria-hidden={userFeedback === null}
     >
-      <div className="answers-header">
-        <h6>
-          {userFeedback > treshold
+      <FormHeader
+        title={
+          userFeedback > treshold
             ? intl.formatMessage(messages.header_positive)
-            : intl.formatMessage(messages.header_negative)}
-        </h6>
-        <div>{`${step}/${totalSteps}`}</div>
-      </div>
+            : intl.formatMessage(messages.header_negative)
+        }
+        step={step + 1}
+        totalSteps={totalSteps}
+        className={'answers-header'}
+      />
       <Form className="answers-form">
         <Form.Group widths={16}>
           {Object.keys(state)?.map((s) => (

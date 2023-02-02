@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextArea, Form } from 'semantic-ui-react';
 import { defineMessages } from 'react-intl';
+import { FormHeader } from 'volto-feedback/components';
 
 const messages = defineMessages({
   suggestions_placeholder: {
@@ -28,10 +29,12 @@ const CommentsStep = ({
   };
   return (
     <div className="comments-step">
-      <div className="comments-header">
-        <h6>{intl.formatMessage(messages.header_comments)}</h6>
-        <div>{`${step}/${totalSteps}`}</div>
-      </div>
+      <FormHeader
+        title={intl.formatMessage(messages.header_comments)}
+        step={step + 1}
+        totalSteps={totalSteps}
+        className="comments-header"
+      />
       <div className="comment">
         <Form>
           <TextArea
