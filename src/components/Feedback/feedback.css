@@ -1,0 +1,30 @@
+.feedback {
+  margin: 1rem 0;
+}
+
+.feedback .buttons .ui.button {
+  min-height: 3.5rem;
+}
+
+.feedback .comment {
+  margin: 1rem 0;
+}
+
+.feedback .ui.form .comment textarea {
+  height: 6rem;
+}
+
+.feedback .submit-wrapper {
+  margin: 2rem 0;
+}
+
+.feedback #cs-more {
+  overflow: hidden;
+  max-height: 0;
+
+  transition: 0.6s max-height ease;
+}
+
+.feedback #cs-more[aria-expanded='true'] {
+  max-height: 800px;
+}

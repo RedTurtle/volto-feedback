@@ -1,0 +1,47 @@
+#page-feedbacks .ui.button.labeled i.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-feedbacks .ui.table.sortable thead th.sorted:after {
+  width: 0px;
+  height: 0px;
+  border-top: 0px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #000;
+  margin-bottom: 4px;
+  content: '';
+  transform: rotate(-135deg);
+}
+
+#page-feedbacks .ui.checkbox.toggle label {
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+#page-feedbacks .ui.table.sortable thead th.sorted.descending:after {
+  margin-bottom: 0;
+  transform: rotate(45deg);
+}
+
+#page-feedbacks .ui.form.search-form .ui.fluid.input {
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+#page-feedbacks .ui.form.search-form .ui.fluid.input input {
+  max-width: 23rem;
+}
+
+#page-feedbacks .ui.message.selected-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#feedback-comments-modal .vote-label .icon {
+  margin: 0;
+}

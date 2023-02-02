@@ -1,0 +1,122 @@
+.feedback-form {
+  padding: 0 2rem;
+  margin: 1rem 0;
+}
+
+.feedback-form .buttons .ui.button {
+  min-height: 3.5rem;
+}
+
+.feedback-form .comment {
+  margin: 1rem 0;
+}
+
+.feedback-form .ui.form .comment textarea {
+  height: 6rem;
+}
+
+.feedback-form .submit-wrapper {
+  margin: 2rem 0;
+}
+
+.feedback-form #vf-more {
+  overflow: hidden;
+  max-height: 0;
+
+  transition: 0.6s max-height ease;
+}
+
+.feedback-form #vf-more[aria-expanded='true'] {
+  max-height: 800px;
+}
+
+.feedback-form .rating-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.feedback-form .answers-step .answers-header,
+.feedback-form .comments-step .comments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 0 0.9375rem 1.325rem -0.9rem rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.feedback-form .answers-step .answers-form {
+  padding: 1rem;
+}
+
+.feedback-form .answers-step .answers-form .field {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.feedback-form .answers-step .answers-form .field .checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.feedback-form
+  .answers-step
+  .answers-form
+  .field
+  .checkbox
+  input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+
+.feedback-form .answers-step .answers-form .field .checkbox label {
+  margin-left: 0.75rem;
+  font-weight: 600;
+}
+
+.feedback-form .comments-step .comment {
+  padding: 0 1rem;
+}
+
+.feedback-form .comments-step .comment textarea {
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.feedback-form .form-step-actions {
+  display: flex;
+  height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  visibility: hidden;
+}
+
+.feedback-form .form-step-actions[aria-hidden='false'] {
+  height: auto;
+  visibility: visible;
+}
+
+.feedback-form .form-step-actions .next-action,
+.feedback-form .form-step-actions .prev-action {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  outline: none;
+}
+
+.feedback-form .form-step-actions .prev-action {
+  margin-right: 1rem;
+}
+
+.feedback-form .form-step-actions .next-action {
+  margin-right: 1rem;
+  background-color: rgb(0, 126, 177);
+  color: white;
+}
