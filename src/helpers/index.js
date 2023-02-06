@@ -46,12 +46,12 @@ const messages = defineMessages({
 });
 
 export const getFeedbackFormSteps = () => {
-  return config.settings['volto-feedback'].formSteps;
+  return config.settings['volto-feedback'].formSteps ?? [];
 };
 
 export const getFeedbackFormByStep = (step) => {
   const configuredSteps = getFeedbackFormSteps();
-  return configuredSteps.find((cs) => cs.step === step)?.pane;
+  return configuredSteps.find((cs) => cs.step === step)?.pane ?? null;
 };
 
 export const getFeedbackQuestions = (
@@ -71,6 +71,7 @@ export const getFeedbackTreshold = () => {
 };
 export const getTranslatedQuestion = (intl, question_id) => {
   if (!intl) throw new Error('No intl provided');
+  if (!question_id) return null;
   try {
     return intl.formatMessage(messages[question_id]);
   } catch (e) {
@@ -84,25 +85,33 @@ export const getQuestionIndex = (question_id) => {
   const allQuestions = NEGATIVE_FEEDBACK_QUESTIONS.concat(
     POSITIVE_FEEDBACK_QUESTIONS,
   );
-  return allQuestions.find((q) => q.id === question_id)?.index;
+  return allQuestions.findIndex((q) => q.id === question_id);
 };
 
 export const getNumberOfSteps = () => {
   return getFeedbackFormSteps()?.length;
 };
 
+export const generateFeedbackCommentUUID = (date) => {
+  // Create key uuid from date, it's unique enough for our case.
+  // We can't use provided uid in response because it's the
+  // uid of the content that was rated due to how Soup and
+  // the backend addon work.
+  return new Date(date).getTime().toString(36);
+};
+
 export const NEGATIVE_FEEDBACK_QUESTIONS = [
-  { id: 'unclear_instructions', index: 0 },
-  { id: 'incomplete_instructions', index: 1 },
-  { id: 'unclear_proceeding', index: 2 },
-  { id: 'technical_problems', index: 3 },
-  { id: 'other_negative', index: 4 },
+  'unclear_instructions',
+  'incomplete_instructions',
+  'unclear_proceeding',
+  'technical_problems',
+  'other_negative',
 ];
 export const POSITIVE_FEEDBACK_QUESTIONS = [
-  { id: 'clear_instructions', index: 5 },
-  { id: 'complete_instructions', index: 6 },
-  { id: 'clear_proceeding', index: 7 },
-  { id: 'no_technical_problems', index: 8 },
-  { id: 'other_positive', index: 9 },
+  'clear_instructions',
+  'complete_instructions',
+  'clear_proceeding',
+  'no_technical_problems',
+  'other_positive',
 ];
 export const FEEDBACK_TRESHOLD = 3.5;

@@ -36,7 +36,7 @@ const AnswersStep = ({
     return questions?.reduce(
       (acc, curr) => ({
         ...acc,
-        [curr?.id]: false,
+        [curr]: false,
       }),
       {},
     );
@@ -51,7 +51,7 @@ const AnswersStep = ({
           userFeedback >= treshold) ||
         (prevFeedback && prevFeedback >= treshold && userFeedback <= treshold)
       ) {
-        updateFormData('answers', null);
+        updateFormData('answer', null);
       }
       if (prevFeedback !== userFeedback) initializeState(getInitialState());
     }
@@ -62,7 +62,7 @@ const AnswersStep = ({
       if (curr === value) return { ...acc, [curr]: true };
       else return { ...acc, [curr]: false };
     }, {});
-    updateFormData('answers', value);
+    updateFormData('answer', value);
     setState(newState);
   };
   return (
@@ -88,7 +88,7 @@ const AnswersStep = ({
             <Form.Checkbox
               label={getTranslatedQuestion(intl, s)}
               value={s}
-              checked={getFormFieldValue('answers') === s}
+              checked={getFormFieldValue('answer') === s}
               onChange={handleAnswerChange}
             />
           ))}

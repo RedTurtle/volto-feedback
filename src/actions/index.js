@@ -84,7 +84,7 @@ export function getFeedbacks(data) {
 export const GET_FEEDBACK = 'GET_FEEDBACK';
 export function getFeedback(uid, subrequest) {
   return {
-    type: GET_FEEDBACKS,
+    type: GET_FEEDBACK,
     subrequest,
     request: {
       op: 'get',

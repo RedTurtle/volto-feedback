@@ -23,7 +23,7 @@ import './feedback-form.css';
 import {
   getFeedbackFormByStep,
   getNumberOfSteps,
-  getQuestionIndex,
+  getTranslatedQuestion,
 } from 'volto-feedback/helpers';
 import 'semantic-ui-css/components/rating.css';
 
@@ -61,6 +61,10 @@ const messages = defineMessages({
     id: 'feedback_form_button_prev',
     defaultMessage: 'Previous',
   },
+  feedback_sent: {
+    id: 'feedback_sent',
+    defaultMessage: 'Your feedback was sent!',
+  },
 });
 
 const FeedbackForm = () => {
@@ -97,12 +101,8 @@ const FeedbackForm = () => {
 
   const getFormFieldValue = (field) => formData?.[field] ?? undefined;
 
-  const nextStep = () => {
-    if (step === numberOfSteps - 1)
-      // actually have to submit form
-      sendFormData();
-    else setStep(step + 1);
-  };
+  const nextStep = () => setStep(step + 1);
+
   const prevStep = () => setStep(step - 1);
 
   useEffect(() => {
@@ -135,18 +135,12 @@ const FeedbackForm = () => {
   );
 
   const sendFormData = () => {
-    const actualAnswers = getQuestionIndex(formData['answers']);
     const data = {
       ...formData,
-      answers: actualAnswers,
+      ...(captcha && { 'g-recaptcha-response': validToken }),
+      answer: getTranslatedQuestion(intl, formData.answer),
     };
-    console.log('I will be submitting this data', data);
-    // dispatch(
-    //   submitFeedback(path, {
-    //     ...data,
-    //     ...(captcha && { 'g-recaptcha-response': validToken }),
-    //   }),
-    // );
+    dispatch(submitFeedback(path, data));
   };
 
   let action = path?.length > 1 ? path.replace(/\//g, '') : path;
@@ -179,93 +173,6 @@ const FeedbackForm = () => {
       <h2 id="vf-radiogroup-label">{intl.formatMessage(messages.title)}</h2>
 
       {!submitResults?.loading && !submitResults.loaded && (
-        // <Form
-        //   onSubmit={() => {
-        //     sendFormData();
-        //   }}
-        // >
-        //   <div className="buttons" aria-labelledby="vf-radiogroup-label">
-        //     <Button
-        //       animated={
-        //         satisfaction == null || satisfaction !== true ? 'fade' : null
-        //       }
-        //       color="green"
-        //       onClick={(e) => {
-        //         changeSatisfaction(e, true);
-        //       }}
-        //       aria-controls="vf-more"
-        //       active={satisfaction === true}
-        //     >
-        //       <Button.Content hidden>
-        //         {intl.formatMessage(messages.yes)}
-        //       </Button.Content>
-        //       {(satisfaction == null || satisfaction !== true) && (
-        //         <Button.Content visible>
-        //           <Icon name={ThumbsUp} size="1.5rem" />
-        //         </Button.Content>
-        //       )}
-        //     </Button>
-
-        //     <Button
-        //       animated={
-        //         satisfaction == null || satisfaction !== false ? 'fade' : null
-        //       }
-        //       color="red"
-        //       onClick={(e) => {
-        //         changeSatisfaction(e, false);
-        //       }}
-        //       aria-controls="vf-more"
-        //       active={satisfaction === false}
-        //     >
-        //       <Button.Content hidden>
-        //         {intl.formatMessage(messages.no)}
-        //       </Button.Content>
-        //       {(satisfaction == null || satisfaction !== false) && (
-        //         <Button.Content visible>
-        //           <Icon name={ThumbsDown} size="1.5rem" />
-        //         </Button.Content>
-        //       )}
-        //     </Button>
-        //   </div>
-
-        //   <div
-        //     id="vf-more"
-        //     role="region"
-        //     aria-expanded={satisfaction !== null}
-        //     aria-hidden={satisfaction === null}
-        //   >
-        //     <div className="comment">
-        //       <TextArea
-        //         placeholder={intl.formatMessage(
-        //           messages.suggestions_placeholder,
-        //         )}
-        //         onChange={(e, v) => {
-        //           updateFormData('comment', v.value);
-        //         }}
-        //       />
-        //     </div>
-
-        //     <HoneypotWidget
-        //       updateFormData={updateFormData}
-        //       field={fieldHoney}
-        //     />
-        //     <GoogleReCaptchaWidget
-        //       key={action}
-        //       onVerify={onVerifyCaptcha}
-        //       action={action}
-        //     />
-
-        //     <div className="submit-wrapper">
-        //       <Button
-        //         type="submit"
-        //         content={intl.formatMessage(messages.submit)}
-        //         primary
-        //         disabled={captcha && !validToken}
-        //       />
-        //     </div>
-        //   </div>
-        //
-        // </Form>
         <Form onSubmit={sendFormData}>
           <div className="rating-container">
             <Rating
@@ -292,11 +199,12 @@ const FeedbackForm = () => {
               className="prev-action"
               disabled={!!(step - 1)}
               onClick={prevStep}
+              type="button"
             >
               {intl.formatMessage(messages.prev)}
             </button>
             {step !== numberOfSteps - 1 && (
-              <button onClick={nextStep} className="next-action">
+              <button onClick={nextStep} className="next-action" type="button">
                 {intl.formatMessage(messages.next)}
               </button>
             )}
@@ -310,9 +218,12 @@ const FeedbackForm = () => {
       )}
       {submitResults?.loading && <Loader active inline="centered" />}
       {submitResults?.loaded && (
-        <Message positive>
-          <p>{intl.formatMessage(messages.thank_you)}</p>
-        </Message>
+        <Message
+          success
+          icon="info circle"
+          header={intl.formatMessage(messages.feedback_sent)}
+          content={intl.formatMessage(messages.thank_you)}
+        />
       )}
     </div>
   );

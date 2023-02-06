@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {
   Container,
+  Confirm,
   Segment,
   Checkbox,
   Button,
@@ -13,21 +14,24 @@ import {
   Form,
   Input,
   Message,
+  Icon as SIcon,
 } from 'semantic-ui-react';
-
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
-import { Pagination, Toolbar, Unauthorized } from '@plone/volto/components';
+import {
+  Pagination,
+  Toolbar,
+  Unauthorized,
+  Toast,
+} from '@plone/volto/components';
 import { Helmet, flattenToAppURL } from '@plone/volto/helpers';
-
 import { FeedbackComments } from 'volto-feedback/components/manage';
-
 import {
   getFeedbacks,
   getFeedback,
   deleteFeedback,
   resetDeleteFeedback,
 } from 'volto-feedback/actions';
-import VFPanelMenu from './VFPanelMenu';
+import { VFPanelMenu } from 'volto-feedback/components/manage';
 import './vf-panel.css';
 
 const messages = defineMessages({
@@ -77,19 +81,35 @@ const messages = defineMessages({
   },
   confirm_delete_selected: {
     id: 'feedbacks_confirm_delete_selected',
-    defaultMessage: "Are you sure you want to reset this page's feedbacks?",
+    defaultMessage: 'Are you sure you want to reset the following feedbacks?',
   },
   error: {
     id: 'feedbacks_error',
     defaultMessage: 'An error has occurred',
+  },
+  success: {
+    id: 'feedbacks_success',
+    defaultMessage: 'Success',
+  },
+  delete_success: {
+    id: 'feedbacks_delete_success',
+    defaultMessage: 'Selected feedbacks deleted successfully!',
   },
   delete_error: {
     id: 'feedbacks_delete_error',
     defaultMessage:
       'An error has occurred while trying to delete feedbacks for {element}',
   },
+  cancel: {
+    id: 'feedbacks_cancel_delete',
+    defaultMessage: 'Cancel',
+  },
+  no_results: {
+    id: 'feedbacks_no_results',
+    defaultMessage: 'No results found',
+  },
 });
-const VFPanel = ({ moment: Moment }) => {
+const VFPanel = ({ moment: Moment, toastify }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -111,7 +131,6 @@ const VFPanel = ({ moment: Moment }) => {
 
   const [itemsSelected, setItemsSelected] = useState([]);
 
-  // TRY TO USE THIS
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       setText(searchableText);
@@ -121,8 +140,6 @@ const VFPanel = ({ moment: Moment }) => {
     return () => clearTimeout(delayDebounceFn);
   }, [searchableText]);
 
-  const [viewComments, setViewComments] = useState(false);
-  const [activeFeedback, setActiveFeedback] = useState(null);
   const feedbacks = useSelector((state) => state.getFeedbacks);
   const isUnauthorized = useMemo(
     () => feedbacks?.error && feedbacks?.error?.status === 401,
@@ -132,10 +149,18 @@ const VFPanel = ({ moment: Moment }) => {
   const deleteFeedbacksState = useSelector(
     (state) => state.deleteFeedbacks.subrequests,
   );
+  const deleteFeedbackState = useSelector(
+    (state) => state.deleteFeedback.subrequests,
+  );
 
   const deleteFeedbacksEnd =
     Object.keys(deleteFeedbacksState ?? [])?.filter(
       (k) => deleteFeedbacksState[k].loaded === true,
+    )?.length > 0;
+
+  const deleteFeedbackEnd =
+    Object.keys(deleteFeedbackState ?? [])?.filter(
+      (k) => deleteFeedbackState[k].loaded === true,
     )?.length > 0;
 
   useEffect(() => {
@@ -145,11 +170,11 @@ const VFPanel = ({ moment: Moment }) => {
   const doSearch = () => {
     return dispatch(
       getFeedbacks({
-        b_size,
-        b_start: currentPage * b_size,
+        b_size: isNaN(b_size) ? 10000000 : b_size,
+        b_start: currentPage * (isNaN(b_size) ? 10000000 : b_size),
         sort_on,
         sort_order,
-        text: text && text.length > 0 ? text + '*' : null,
+        title: text && text.length > 0 ? text + '*' : null,
       }),
     );
   };
@@ -157,7 +182,7 @@ const VFPanel = ({ moment: Moment }) => {
   useEffect(() => {
     doSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [b_size, currentPage, sort_order, sort_on, text]);
+  }, [b_size, currentPage, text, sort_on, sort_order]);
 
   const changeSort = (column) => {
     if (sort_on === column) {
@@ -179,6 +204,13 @@ const VFPanel = ({ moment: Moment }) => {
       });
       await Promise.all(asyncDeleteFuncs);
       setShowConfirmDelete(false);
+      toastify.toast.success(
+        <Toast
+          success
+          title={intl.formatMessage(messages.success)}
+          content={intl.formatMessage(messages.delete_success)}
+        />,
+      );
     } catch (e) {
       toastify.toast.error(
         <Toast
@@ -199,8 +231,19 @@ const VFPanel = ({ moment: Moment }) => {
       });
       dispatch(resetDeleteFeedback());
     }
+    if (deleteFeedbackEnd) {
+      doSearch().then(() => {
+        setItemsSelected([]);
+      });
+      dispatch(resetDeleteFeedback());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteFeedbacksEnd]);
+  }, [deleteFeedbacksEnd, deleteFeedbackEnd]);
+
+  // Semantic table ordering is the exact opposite of Plone
+  // ordering and it drove me nuts
+  const fixSemanticOrdering = () =>
+    sort_order === 'ascending' ? 'descending' : 'ascending';
 
   return (
     <>
@@ -212,7 +255,7 @@ const VFPanel = ({ moment: Moment }) => {
               {intl.formatMessage(messages.feedbacks_controlpanel)}
             </Segment>
 
-            <VFPanelMenu />
+            <VFPanelMenu doSearch={doSearch} />
 
             <Segment>
               {itemsSelected.length > 0 && (
@@ -224,9 +267,7 @@ const VFPanel = ({ moment: Moment }) => {
                   <div className="actions">
                     <Button
                       color="red"
-                      onClick={() => {
-                        resetFeedbacks(itemsSelected);
-                      }}
+                      onClick={() => setShowConfirmDelete(true)}
                     >
                       {intl.formatMessage(messages.reset_feedbacks)}
                     </Button>
@@ -247,16 +288,29 @@ const VFPanel = ({ moment: Moment }) => {
                       placeholder={intl.formatMessage(messages.filter_title)}
                     />
                   </Form>
-                  <Table selectable compact singleLine attached sortable fixed>
+                  <Table
+                    selectable
+                    compact
+                    singleLine
+                    attached
+                    sortable
+                    fixed
+                    striped
+                  >
                     <Table.Header>
                       <Table.Row>
                         <Table.HeaderCell
                           width={1}
                           textAlign="center"
-                          verticalAlign="center"
+                          verticalAlign="middle"
                         >
                           <Checkbox
                             title={intl.formatMessage(messages.select_all)}
+                            checked={
+                              feedbacks?.result?.items?.length !== 0 &&
+                              itemsSelected?.length ===
+                                feedbacks?.result?.items?.length
+                            }
                             onChange={(e, o) => {
                               if (o.checked) {
                                 setItemsSelected(feedbacks?.result?.items);
@@ -267,39 +321,57 @@ const VFPanel = ({ moment: Moment }) => {
                           />
                         </Table.HeaderCell>
                         <Table.HeaderCell
-                          sorted={sort_on === 'title' ? sort_order : null}
+                          sorted={
+                            sort_on === 'title' ? fixSemanticOrdering() : null
+                          }
                           onClick={() => changeSort('title')}
                           width={4}
                         >
                           {intl.formatMessage(messages.page)}
                         </Table.HeaderCell>
                         <Table.HeaderCell
-                          sorted={sort_on === 'vote' ? sort_order : null}
+                          sorted={
+                            sort_on === 'vote' ? fixSemanticOrdering() : null
+                          }
                           onClick={() => changeSort('vote')}
                           textAlign="center"
                         >
                           {intl.formatMessage(messages.vote)}
                         </Table.HeaderCell>
                         <Table.HeaderCell
-                          sorted={sort_on === 'last_vote' ? sort_order : null}
+                          sorted={
+                            sort_on === 'last_vote'
+                              ? fixSemanticOrdering()
+                              : null
+                          }
                           onClick={() => changeSort('last_vote')}
                           textAlign="center"
                           width={3}
                         >
                           {intl.formatMessage(messages.last_vote)}
                         </Table.HeaderCell>
-                        <Table.HeaderCell textAlign="center">
+                        <Table.HeaderCell
+                          textAlign="center"
+                          sorted={
+                            sort_on === 'comments'
+                              ? fixSemanticOrdering()
+                              : null
+                          }
+                          onClick={() => changeSort('comments')}
+                        >
                           {intl.formatMessage(messages.comments)}
                         </Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {feedbacks.result?.items?.map((item) => (
+                      {feedbacks?.result?.items?.map((item) => (
                         <tr key={item.uid}>
-                          <Table.Cell>
+                          <Table.Cell textAlign="center">
                             <Checkbox
                               title={intl.formatMessage(messages.select_item)}
-                              label={intl.formatMessage(messages.select_item)}
+                              checked={itemsSelected.some(
+                                (is) => is.url === item.url,
+                              )}
                               onChange={(e, o) => {
                                 if (o.checked) {
                                   let s = [...itemsSelected];
@@ -324,8 +396,10 @@ const VFPanel = ({ moment: Moment }) => {
                               {item.title}
                             </a>
                           </Table.Cell>
-                          <Table.Cell textAlign="center">{item.ok}</Table.Cell>
-                          <Table.Cell textAlign="center">{item.nok}</Table.Cell>
+                          <Table.Cell textAlign="center">
+                            <SIcon name="star" />
+                            {parseFloat(item.vote).toFixed(1)}
+                          </Table.Cell>
                           <Table.Cell textAlign="center">
                             {moment(item.last_vote).format(
                               'DD/MM/YYYY HH:mm:ss',
@@ -335,21 +409,17 @@ const VFPanel = ({ moment: Moment }) => {
                             textAlign="center"
                             className="comments-column"
                           >
-                            {item.comments?.length > 0 && (
-                              <Button
-                                size="mini"
-                                onClick={() => {
-                                  setViewComments(item);
-                                }}
-                              >
-                                {item.comments.length}
-                              </Button>
-                            )}
+                            {item.comments && <FeedbackComments item={item} />}
                           </Table.Cell>
                         </tr>
                       ))}
                     </Table.Body>
                   </Table>
+                  {feedbacks?.result?.items?.length === 0 && (
+                    <div className="no-results">
+                      {intl.formatMessage(messages.no_results)}
+                    </div>
+                  )}
 
                   <div className="contents-pagination">
                     <Pagination
@@ -365,42 +435,27 @@ const VFPanel = ({ moment: Moment }) => {
                   </div>
                 </>
               )}
-              <FeedbackComments
-                item={activeFeedback}
-                isOpen={viewComments}
-                setIsOpen={setViewComments}
-                onClose={() => {
-                  setViewComments(false);
-                }}
-              />
             </Segment>
           </Segment.Group>
           {showConfirmDelete && (
             <Confirm
               cancelButton={intl.formatMessage(messages.cancel)}
               open={showConfirmDelete}
-              header={intl.formatMessage(messages.delete_confirm)}
+              header={intl.formatMessage(messages.confirm_delete_selected)}
               content={
                 <div className="content ui ">
                   {itemsSelected?.map((item, i) => (
-                    <div key={item?.uid}>{item.title}</div>
+                    <div className="confirm-delete-item" key={item?.uid}>
+                      {item.title}
+                    </div>
                   ))}
                 </div>
               }
               onCancel={() => setShowConfirmDelete(false)}
               onConfirm={async () => {
                 await resetSelectedFeedbacks();
-                // toastify.toast.error(
-                //   <Toast
-                //     error
-                //     title={intl.formatMessage(messages.error)}
-                //     content={intl.formatMessage(
-                //       messages.rw_save_search_missing_name,
-                //     )}
-                //   />,
-                // );
               }}
-              size="mini"
+              size=""
             />
           )}
         </Container>
@@ -415,4 +470,4 @@ const VFPanel = ({ moment: Moment }) => {
     </>
   );
 };
-export default injectLazyLibs(['moment'])(VFPanel);
+export default injectLazyLibs(['moment', 'toastify'])(VFPanel);

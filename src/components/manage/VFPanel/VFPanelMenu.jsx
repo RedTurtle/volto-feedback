@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Menu, Button } from 'semantic-ui-react';
-
+import { Menu, Button, Confirm } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Icon } from '@plone/volto/components';
+import { Icon, Toast } from '@plone/volto/components';
 import downloadSVG from '@plone/volto/icons/download.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
-
+import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
 import {
   exportCsvFeedbackData,
   deleteAllFeedbacks,
@@ -25,11 +24,56 @@ const messages = defineMessages({
     id: 'feedback_confirm_delete_all',
     defaultMessage: 'Are you sure you want to delete all feedbacks?',
   },
+  cancel: {
+    id: 'feedbacks_cancel_delete_all',
+    defaultMessage: 'Cancel',
+  },
+  error_delete_all: {
+    id: 'feedbacks_error_delete_all',
+    defaultMessage: 'An error has occurred',
+  },
+  success_delete_all: {
+    id: 'feedbacks_success_delete_all',
+    defaultMessage: 'Success',
+  },
+  delete_all_success: {
+    id: 'feedbacks_delete_all_success',
+    defaultMessage: 'All feedbacks deleted successfully!',
+  },
+  delete_all_error: {
+    id: 'feedbacks_delete_all_error',
+    defaultMessage:
+      'An error has occurred while trying to delete all feedbacks',
+  },
 });
-const VFPanelMenu = () => {
+const VFPanelMenu = ({ toastify, doSearch }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const deleteAll = async () => {
+    try {
+      await dispatch(deleteAllFeedbacks());
+      setOpenConfirm(false);
+      toastify.toast.success(
+        <Toast
+          success
+          title={intl.formatMessage(messages.success_delete_all)}
+          content={intl.formatMessage(messages.delete_all_success)}
+        />,
+      );
+      doSearch();
+    } catch (e) {
+      toastify.toast.error(
+        <Toast
+          error
+          title={intl.formatMessage(messages.error_delete_all)}
+          content={intl.formatMessage(messages.delete_all_error, {
+            element: e?.item?.title ?? '',
+          })}
+        />,
+      );
+    }
+  };
   return (
     <Menu secondary>
       <Menu.Item>
@@ -54,14 +98,7 @@ const VFPanelMenu = () => {
             color="red"
             icon
             labelPosition="right"
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-alert
-                window.confirm(intl.formatMessage(messages.confirm_delete_all))
-              ) {
-                dispatch(deleteAllFeedbacks());
-              }
-            }}
+            onClick={() => setOpenConfirm(true)}
           >
             {intl.formatMessage(messages.delete_all)}
             <i className="icon">
@@ -70,8 +107,21 @@ const VFPanelMenu = () => {
           </Button>
         </Menu.Item>
       </Menu.Menu>
+      <Confirm
+        cancelButton={intl.formatMessage(messages.cancel)}
+        open={openConfirm}
+        header={intl.formatMessage(messages.delete_all)}
+        content={
+          <div className="content ui ">
+            {intl.formatMessage(messages.confirm_delete_all)}
+          </div>
+        }
+        onCancel={() => setOpenConfirm(false)}
+        onConfirm={deleteAll}
+        size=""
+      />
     </Menu>
   );
 };
 
-export default VFPanelMenu;
+export default injectLazyLibs(['toastify'])(VFPanelMenu);

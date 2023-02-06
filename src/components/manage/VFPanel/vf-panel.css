@@ -42,6 +42,42 @@
   justify-content: space-between;
 }
 
+#page-feedbacks .no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #c7d5d8;
+  border-left: 1px solid #c7d5d8;
+  margin: 0em -1px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.confirm-delete-item:not(:last-of-type) {
+  margin-bottom: 0.75rem;
+}
+
+.confirm-delete-item {
+  font-weight: 600;
+}
+
 #feedback-comments-modal .vote-label .icon {
   margin: 0;
+}
+
+#feedback-comments-modal .feedback-answer {
+  font-weight: 600;
+}
+
+#feedback-comments-modal .feedback-comment {
+  font-style: italic;
+}
+
+.ui.dimmer .ui.workaround.loader:before {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.ui.dimmer .ui.workaround.loader:after {
+  border-color: #767676 transparent transparent;
 }

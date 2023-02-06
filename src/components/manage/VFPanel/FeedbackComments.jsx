@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import {
   Modal,
@@ -7,16 +7,16 @@ import {
   Label,
   Segment,
   Icon as SIcon,
+  Loader,
 } from 'semantic-ui-react';
-
+import orderBy from 'lodash/orderBy';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from '@plone/volto/components';
 import clearSVG from '@plone/volto/icons/clear.svg';
 import { getFeedback } from 'volto-feedback/actions';
-
-// import ThumbsUp from '../../../icons/thumbs-up-regular.svg';
-// import ThumbsDown from '../../../icons/thumbs-down-regular.svg';
+import 'semantic-ui-css/components/icon.css';
+import { generateFeedbackCommentUUID } from 'volto-feedback/helpers';
 
 const messages = defineMessages({
   close: {
@@ -25,7 +25,7 @@ const messages = defineMessages({
   },
   comment: {
     id: 'feedback_comment',
-    defaultMessage: 'Comment',
+    defaultMessage: 'Feedback',
   },
   date: {
     id: 'feedback_comment_date',
@@ -35,83 +35,161 @@ const messages = defineMessages({
     id: 'feedbacks_comments_votes',
     defaultMessage: 'Vote',
   },
+  show_more: {
+    id: 'feedback_show_more',
+    defaultMessage: 'Read more',
+  },
+  show_less: {
+    id: 'feedback_show_less',
+    defaultMessage: '...show less',
+  },
+  no_feedback: {
+    id: 'feedback_no_feedback',
+    defaultMessage: 'No feedback provided',
+  },
 });
-const FeedbackComments = ({
-  item,
-  isOpen,
-  setIsOpen,
-  onClose = () => {},
-  moment: Moment,
-}) => {
+
+const ReadMore = ({ children, intl }) => {
+  const [isReadMore, setIsReadMore] = useState(true);
+  const needsShowMore = useMemo(() => children.length > 200, [children.length]);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  if (!children || !intl) return null;
+  return (
+    <p className="read-more-text">
+      {isReadMore
+        ? children.slice(0, 200) + (needsShowMore ? '...' : '')
+        : children}
+      {needsShowMore && (
+        <Button
+          onClick={toggleReadMore}
+          className="read-more-show-less"
+          title={
+            isReadMore
+              ? intl.formatMessage(messages.show_more)
+              : intl.formatMessage(messages.show_less)
+          }
+        >
+          {isReadMore
+            ? intl.formatMessage(messages.show_more)
+            : intl.formatMessage(messages.show_less)}
+        </Button>
+      )}
+    </p>
+  );
+};
+
+const FeedbackComments = ({ item, moment: Moment }) => {
   const intl = useIntl();
   const moment = Moment.default;
+  const [open, setOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState('ascending');
+  const [sortOn, setSortOn] = useState('date');
   moment.locale(intl.locale);
 
-  const feedbackCommentsResults = useSelector(
-    (state) => state.getFeedback.subrequests,
-  );
+  const feedbackCommentsResults = useSelector((state) => {
+    return state.getFeedback?.subrequests?.[item?.uid];
+  });
   const dispatch = useDispatch();
 
   const close = () => {
     setOpen(false);
-    onClose();
   };
 
-  const loadCommentsData = (item) => {
-    dispatch(getFeedback(item, item));
+  const changeSort = (column) => {
+    if (sortOn === column) {
+      if (sortOrder === 'ascending') {
+        setSortOrder('descending');
+      } else {
+        setSortOrder('ascending');
+      }
+    } else {
+      setSortOn(column);
+    }
   };
 
+  const loadCommentsData = async () => {
+    await dispatch(getFeedback(item.uid, item.uid));
+  };
   return (
     <Modal
-      onClose={() => close()}
-      onOpen={() => loadCommentsData(item)}
-      open={isOpen}
+      onClose={close}
+      onOpen={loadCommentsData}
+      open={open}
       id="feedback-comments-modal"
+      trigger={
+        <Button
+          size="mini"
+          type="button"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          {item.comments}
+        </Button>
+      }
     >
       <Modal.Header>{item?.title}</Modal.Header>
       <Modal.Content>
-        <Table selectable compact attached fixed>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell width={1}>
-                {intl.formatMessage(messages.vote)}
-              </Table.HeaderCell>
-              <Table.HeaderCell width={8}>
-                {intl.formatMessage(messages.comment)}
-              </Table.HeaderCell>
-              <Table.HeaderCell width={3}>
-                {intl.formatMessage(messages.date)}
-              </Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {feedbackCommentsResults?.comments?.map((c) => (
-              <tr key={c.date}>
-                <Table.Cell>
-                  <Label
-                    color={c.vote === 'ok' ? 'green' : 'red'}
-                    className="vote-label"
-                  >
+        {feedbackCommentsResults?.loading && (
+          <Loader active className="workaround" inline="centered" />
+        )}
+        {feedbackCommentsResults?.loaded && (
+          <Table compact attached fixed striped sortable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell
+                  width={2}
+                  textAlign="center"
+                  sorted={sortOn === 'vote' ? sortOrder : null}
+                  onClick={() => changeSort('vote')}
+                >
+                  {intl.formatMessage(messages.vote)}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={8}>
+                  {intl.formatMessage(messages.comment)}
+                </Table.HeaderCell>
+                <Table.HeaderCell
+                  width={3}
+                  sorted={sortOn === 'date' ? sortOrder : null}
+                  onClick={() => changeSort('date')}
+                >
+                  {intl.formatMessage(messages.date)}
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {orderBy(
+                feedbackCommentsResults?.items,
+                sortOn,
+                sortOrder === 'ascending' ? 'asc' : 'desc',
+              )?.map((c) => (
+                <tr key={generateFeedbackCommentUUID(c.date)}>
+                  <Table.Cell textAlign="center">
                     <SIcon name="star" />
-                    {c.vote}
-                  </Label>
-                </Table.Cell>
-                <Table.Cell>{c.comment}</Table.Cell>
-                <Table.Cell>
-                  {moment(c.date).format('DD/MM/YYYY HH:mm')}
-                </Table.Cell>
-              </tr>
-            ))}
-          </Table.Body>
-        </Table>
+                    {Math.fround(c.vote)}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className="feedback-answer">{c.answer}</div>
+                    <div className="feedback-comment">
+                      <ReadMore intl={intl}>{c.comment}</ReadMore>
+                      {!c.answer &&
+                        !c.comment &&
+                        intl.formatMessage(messages.no_feedback)}
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {moment(c.date).format('DD/MM/YYYY HH:mm')}
+                  </Table.Cell>
+                </tr>
+              ))}
+            </Table.Body>
+          </Table>
+        )}
       </Modal.Content>
       <Modal.Actions>
-        <Button
-          color="black"
-          onClick={() => {
-            close();
-          }}
-        >
+        <Button color="black" onClick={close}>
           {intl.formatMessage(messages.close)}
         </Button>
       </Modal.Actions>
