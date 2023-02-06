@@ -20,9 +20,9 @@ import { FeedbackForm } from 'volto-feedback';
 ...
 ```
 
-It features a set of fully customizable panes and questions for the form, which can be set using standard Volto config. Otherwise, it defaults to 5 positive and 5 negative set of questions, based on user rating, and an optional comment.
-The answers shown depend on user feedback, with a default threshold of 3.5 stars to set
-positive apart from negative feedback.
+It features a set of fully customizable form steps, rating threshold and questions for the form, which can be set using standard Volto config schema. Otherwise, it defaults to 5 positive and 5 negative set of questions (optional) and a comment (optional).
+Answers shown are dependant on user feedback, with a default threshold of 3.5 that sets positive and negative feedbacks answers apart.
+This is the default configuration:
 
 ```jsx
     ...
@@ -47,7 +47,7 @@ positive apart from negative feedback.
     ...
 ```
 
-All exported components, actions and helpers can be directly customized using standard Volto customization pattern. This is the list of exported components
+All exported components, actions and helpers can be directly customized using standard Volto customization pattern. This is the list of exported components:
 
 ```jsx
 export {
@@ -91,22 +91,37 @@ It needs this Plone addon to work.
 
 It also need a RAZZLE_RECAPTCHA_KEY in your .env to work or RAZZLE_HONEYPOT_FIELD env var..
 
+## Translations
+
+This addon has Italian and English localizations.
+
 ## Feedback Form
 
-show form
+FeedbackForm is a component that can be added anywhere.
+![image](https://user-images.githubusercontent.com/41484878/216962241-fa88d610-9fc7-4831-ac69-fd6e34655c71.png)
+
+Form fields, answers and comments section may vary depending on selected threshold and your own configurations, these are the default ones:
+![image](https://user-images.githubusercontent.com/41484878/216961741-404f357d-70fb-474b-989c-96bd51cfada1.png)
+![image](https://user-images.githubusercontent.com/41484878/216961998-a4c1e7fa-1bd1-4349-a15a-1083c11c60de.png)
+![image](https://user-images.githubusercontent.com/41484878/216962045-8086eb14-de68-4cbf-a6c4-6d2e4d993332.png)
+
+Once a feedback is submitted, a success message is shown to the user:
+![image](https://user-images.githubusercontent.com/41484878/216962200-b450216e-9a02-4d51-be3d-75b8a912df01.png)
+
 
 ## Panel
 
-This addon also adds a button to the toolbar to access customer satisfaction panel:
+This addon also adds a button to the toolbar to access feedbacks panel:
 
-<img alt="Toolbar button" src="./docs/toolbar-panel-button.png" width="50px" />
+![image](https://user-images.githubusercontent.com/41484878/216961401-527799d9-d336-488e-864e-cb919c4f4d8c.png)
+
 
 Into the panel, you can view a summary of feedbacks and answers/comments with respective ratings:
 
-<img alt="Customer satisfaction panel" src="./docs/panel.png" width="600" />
+![image](https://user-images.githubusercontent.com/41484878/216961272-72ecd260-9aa2-485e-9483-2a210b83901a.png)
 
-Comments are shown in a modal and are filterable:
-<img alt="Customer satisfaction panel" src="./docs/comments.png" width="600" />
+Comments are shown in a modal and are filterable by vote and rating datetime:
+![image](https://user-images.githubusercontent.com/41484878/216961506-b9d1e225-f36d-4c7f-a26c-c61794764fbc.png)
 
 ## Honeypot integration
 
