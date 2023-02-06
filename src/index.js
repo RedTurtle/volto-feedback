@@ -8,8 +8,7 @@ import {
   getFeedbacks,
   deleteFeedback,
 } from 'volto-feedback/reducers';
-import CommentsStep from 'volto-feedback/components/FeedbackForm/Steps/CommentsStep';
-import AnswersStep from 'volto-feedback/components/FeedbackForm/Steps/AnswersStep';
+import { CommentsStep, AnswersStep } from 'volto-feedback/components';
 import {
   NEGATIVE_FEEDBACK_QUESTIONS,
   POSITIVE_FEEDBACK_QUESTIONS,
@@ -32,13 +31,25 @@ export {
   getFeedbackQuestions,
   getFeedbackTreshold,
   getTranslatedQuestion,
+  generateFeedbackCommentUUID,
 } from 'volto-feedback/helpers';
-export { default as GoogleReCaptchaWidget } from 'volto-feedback/components/widgets/GoogleReCaptchaWidget';
-export { default as HoneypotWidget } from 'volto-feedback/components/widgets/HoneypotWidget/HoneypotWidget';
-export { default as Feedback } from 'volto-feedback/components/Feedback/Feedback';
-export AnswersSteps from 'volto-feedback/components/FeedbackForm/Steps/AnswersStep';
-export CommentsStep from 'volto-feedback/components/FeedbackForm/Steps/CommentsStep';
-export FeedbackForm from 'volto-feedback/components/FeedbackForm/FeedbackForm';
+export {
+  GoogleReCaptchaWidget,
+  HoneypotWidget,
+} from 'volto-feedback/components/widgets';
+export {
+  Feedback,
+  AnswersStep,
+  CommentsStep,
+  FeedbackForm,
+  FormHeader,
+} from 'volto-feedback/components';
+export {
+  VFPanel,
+  VFToolbar,
+  VFPanelMenu,
+  FeedbackComments,
+} from 'volto-feedback/components/manage';
 
 export default function applyConfig(config) {
   config.settings.loadables['GoogleReCaptcha'] = loadable(() =>
