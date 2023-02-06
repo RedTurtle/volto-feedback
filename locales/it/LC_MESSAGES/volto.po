@@ -280,7 +280,7 @@ msgstr "Elementi selezionati"
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Last vote
 msgid "feedbacks_last_vote"
-msgstr "Ultimo voto"
+msgstr "Ultimo feedback"
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: No results found
@@ -295,7 +295,7 @@ msgstr "Pagina"
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Reset feedbacks
 msgid "feedbacks_reset_feedbacks"
-msgstr "Reset feedback"
+msgstr "Resetta i feedback"
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Select/Deselect all
