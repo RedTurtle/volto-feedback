@@ -32,6 +32,7 @@ export {
   getFeedbackTreshold,
   getTranslatedQuestion,
   generateFeedbackCommentUUID,
+  getNumberOfSteps,
 } from 'volto-feedback/helpers';
 export {
   GoogleReCaptchaWidget,
