@@ -8,7 +8,8 @@
     "volto-addon",
     "volto",
     "plone",
-    "react"
+    "react",
+    "feedback"
   ],
   "scripts": {
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
@@ -20,6 +21,7 @@
     }
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "7.18.10",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@plone/scripts": "^2.0.0",

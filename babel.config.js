@@ -8,6 +8,7 @@ module.exports = function (api) {
         messagesDir: './build/messages/',
       },
     ],
+    '@babel/plugin-proposal-export-default-from',
   ];
 
   return {
