@@ -4,7 +4,7 @@ import {
 } from 'volto-feedback/helpers';
 import React, { useState, useEffect, useMemo } from 'react';
 import { usePrevious } from '@plone/volto/helpers';
-import { Form, Segment } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { getTranslatedQuestion } from 'volto-feedback';
 import { defineMessages } from 'react-intl';
 import { FormHeader } from 'volto-feedback/components';
@@ -30,16 +30,10 @@ const AnswersStep = ({
 }) => {
   const initializeState = (newState) => setState(newState);
   const threshold = useMemo(() => getFeedbackThreshold(), []);
+  const selectedAnswer = getFormFieldValue('answer');
   const getInitialState = () => {
-    if (userFeedback === null) return {};
-    const questions = getFeedbackQuestions(userFeedback);
-    return questions?.reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr]: false,
-      }),
-      {},
-    );
+    if (userFeedback === null) return [];
+    return getFeedbackQuestions(userFeedback);
   };
   const [state, setState] = useState(getInitialState());
   const prevFeedback = usePrevious(userFeedback);
@@ -59,12 +53,7 @@ const AnswersStep = ({
   }, [userFeedback]);
 
   const handleAnswerChange = (e, { value }) => {
-    const newState = Object.keys(state).reduce((acc, curr) => {
-      if (curr === value) return { ...acc, [curr]: true };
-      else return { ...acc, [curr]: false };
-    }, {});
     updateFormData('answer', value);
-    setState(newState);
   };
   return (
     <div
@@ -85,11 +74,11 @@ const AnswersStep = ({
       />
       <Form className="answers-form">
         <Form.Group widths={16}>
-          {Object.keys(state)?.map((s) => (
+          {state?.map((s) => (
             <Form.Radio
               label={getTranslatedQuestion(intl, s)}
               value={s}
-              checked={getFormFieldValue('answer') === s}
+              checked={selectedAnswer === s}
               onChange={handleAnswerChange}
             />
           ))}
