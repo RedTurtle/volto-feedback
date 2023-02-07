@@ -235,7 +235,7 @@ msgstr "Voto"
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Are you sure you want to reset the following feedbacks?
 msgid "feedbacks_confirm_delete_selected"
-msgstr "Sei sicuro di voler cancellare i seguenti feedback_"
+msgstr "Sei sicuro di voler cancellare i seguenti feedback?"
 
 #: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: An error has occurred while trying to delete all feedbacks
