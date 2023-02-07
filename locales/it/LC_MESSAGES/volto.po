@@ -125,7 +125,7 @@ msgstr "Si"
 #: helpers/index
 # defaultMessage: Some instructions were incomplete
 msgid "feedback_incomplete_instructions"
-msgstr "Le indicazioni erano complete"
+msgstr "Le indicazioni erano incomplete"
 
 #: components/Feedback/Feedback
 # defaultMessage: No

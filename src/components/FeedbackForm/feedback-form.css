@@ -126,6 +126,15 @@
   display: none;
 }
 
+.feedback-form .ui.radio.checkbox input[type='radio'] {
+  width: 20px;
+  height: 20px;
+}
+
+.feedback-form .ui.radio.checkbox {
+  padding: 0 1rem;
+}
+
 .feedback-form .ui.icon.message {
   position: relative;
   display: flex;

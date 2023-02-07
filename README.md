@@ -27,7 +27,7 @@ This is the default configuration:
 ```jsx
     ...
     config.settings['volto-feedback'] = {
-        feedbackTreshold: FEEDBACK_TRESHOLD,
+        feedbackThreshold: FEEDBACK_THRESHOLD,
         questions: {
         negativeFeedback: NEGATIVE_FEEDBACK_QUESTIONS,
         positiveFeedback: POSITIVE_FEEDBACK_QUESTIONS,
@@ -64,7 +64,7 @@ export {
   getFeedbackFormSteps,
   getFeedbackFormByStep,
   getFeedbackQuestions,
-  getFeedbackTreshold,
+  getFeedbackThreshold,
   getTranslatedQuestion,
   generateFeedbackCommentUUID,
 } from 'volto-feedback/helpers';
@@ -108,13 +108,11 @@ Form fields, answers and comments section may vary depending on selected thresho
 Once a feedback is submitted, a success message is shown to the user:
 ![image](https://user-images.githubusercontent.com/41484878/216962200-b450216e-9a02-4d51-be3d-75b8a912df01.png)
 
-
 ## Panel
 
 This addon also adds a button to the toolbar to access feedbacks panel:
 
 ![image](https://user-images.githubusercontent.com/41484878/216961401-527799d9-d336-488e-864e-cb919c4f4d8c.png)
-
 
 Into the panel, you can view a summary of feedbacks and answers/comments with respective ratings:
 

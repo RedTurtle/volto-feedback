@@ -12,7 +12,7 @@ import { CommentsStep, AnswersStep } from 'volto-feedback/components';
 import {
   NEGATIVE_FEEDBACK_QUESTIONS,
   POSITIVE_FEEDBACK_QUESTIONS,
-  FEEDBACK_TRESHOLD,
+  FEEDBACK_THRESHOLD,
 } from 'volto-feedback/helpers';
 
 export {
@@ -29,7 +29,7 @@ export {
   getFeedbackFormSteps,
   getFeedbackFormByStep,
   getFeedbackQuestions,
-  getFeedbackTreshold,
+  getFeedbackThreshold,
   getTranslatedQuestion,
   generateFeedbackCommentUUID,
   getNumberOfSteps,
@@ -73,7 +73,7 @@ export default function applyConfig(config) {
   };
 
   config.settings['volto-feedback'] = {
-    feedbackTreshold: FEEDBACK_TRESHOLD,
+    feedbackThreshold: FEEDBACK_THRESHOLD,
     questions: {
       negativeFeedback: NEGATIVE_FEEDBACK_QUESTIONS,
       positiveFeedback: POSITIVE_FEEDBACK_QUESTIONS,

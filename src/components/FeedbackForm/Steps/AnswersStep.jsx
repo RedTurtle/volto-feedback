@@ -1,6 +1,6 @@
 import {
   getFeedbackQuestions,
-  getFeedbackTreshold,
+  getFeedbackThreshold,
 } from 'volto-feedback/helpers';
 import React, { useState, useEffect, useMemo } from 'react';
 import { usePrevious } from '@plone/volto/helpers';
@@ -29,7 +29,7 @@ const AnswersStep = ({
   intl,
 }) => {
   const initializeState = (newState) => setState(newState);
-  const treshold = useMemo(() => getFeedbackTreshold(), []);
+  const threshold = useMemo(() => getFeedbackThreshold(), []);
   const getInitialState = () => {
     if (userFeedback === null) return {};
     const questions = getFeedbackQuestions(userFeedback);
@@ -47,14 +47,15 @@ const AnswersStep = ({
     if (userFeedback !== null) {
       if (
         (prevFeedback &&
-          prevFeedback <= treshold &&
-          userFeedback >= treshold) ||
-        (prevFeedback && prevFeedback >= treshold && userFeedback <= treshold)
+          prevFeedback <= threshold &&
+          userFeedback >= threshold) ||
+        (prevFeedback && prevFeedback >= threshold && userFeedback <= threshold)
       ) {
         updateFormData('answer', null);
       }
       if (prevFeedback !== userFeedback) initializeState(getInitialState());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userFeedback]);
 
   const handleAnswerChange = (e, { value }) => {
@@ -74,7 +75,7 @@ const AnswersStep = ({
     >
       <FormHeader
         title={
-          userFeedback > treshold
+          userFeedback > threshold
             ? intl.formatMessage(messages.header_positive)
             : intl.formatMessage(messages.header_negative)
         }
@@ -85,7 +86,7 @@ const AnswersStep = ({
       <Form className="answers-form">
         <Form.Group widths={16}>
           {Object.keys(state)?.map((s) => (
-            <Form.Checkbox
+            <Form.Radio
               label={getTranslatedQuestion(intl, s)}
               value={s}
               checked={getFormFieldValue('answer') === s}

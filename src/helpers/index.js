@@ -55,19 +55,19 @@ export const getFeedbackFormByStep = (step) => {
 };
 
 export const getFeedbackQuestions = (
-  treshold,
-  overrideTreshold = false,
-  newTreshold = null,
+  threshold,
+  overrideThreshold = false,
+  newThreshold = null,
 ) => {
-  let actualTreshold = treshold;
-  if (overrideTreshold && newTreshold) actualTreshold = newTreshold;
-  const tresholdValue = getFeedbackTreshold();
-  if (actualTreshold < tresholdValue)
+  let actualThreshold = threshold;
+  if (overrideThreshold && newThreshold) actualThreshold = newThreshold;
+  const tresholdValue = getFeedbackThreshold();
+  if (actualThreshold < tresholdValue)
     return config.settings['volto-feedback'].questions.negativeFeedback;
   else return config.settings['volto-feedback'].questions.positiveFeedback;
 };
-export const getFeedbackTreshold = () => {
-  return config.settings['volto-feedback'].feedbackTreshold;
+export const getFeedbackThreshold = () => {
+  return config.settings['volto-feedback'].feedbackThreshold;
 };
 export const getTranslatedQuestion = (intl, question_id) => {
   if (!intl) throw new Error('No intl provided');
@@ -114,4 +114,4 @@ export const POSITIVE_FEEDBACK_QUESTIONS = [
   'no_technical_problems',
   'other_positive',
 ];
-export const FEEDBACK_TRESHOLD = 3.5;
+export const FEEDBACK_THRESHOLD = 3.5;

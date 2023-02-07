@@ -84,7 +84,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   const intl = useIntl();
   const moment = Moment.default;
   const [open, setOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('ascending');
+  const [sortOrder, setSortOrder] = useState('descending');
   const [sortOn, setSortOn] = useState('date');
   moment.locale(intl.locale);
 
