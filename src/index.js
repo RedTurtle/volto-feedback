@@ -39,7 +39,6 @@ export {
   HoneypotWidget,
 } from 'volto-feedback/components/widgets';
 export {
-  Feedback,
   AnswersStep,
   CommentsStep,
   FeedbackForm,

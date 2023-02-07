@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2023-02-06T11:10:22.504Z\n"
+"POT-Creation-Date: 2023-02-07T14:26:42.028Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -129,11 +129,6 @@ msgstr ""
 msgid "feedback_incomplete_instructions"
 msgstr ""
 
-#: components/Feedback/Feedback
-# defaultMessage: No
-msgid "feedback_no"
-msgstr ""
-
 #: components/manage/VFPanel/FeedbackComments
 # defaultMessage: No feedback provided
 msgid "feedback_no_feedback"
@@ -169,29 +164,9 @@ msgstr ""
 msgid "feedback_show_more"
 msgstr ""
 
-#: components/Feedback/Feedback
-# defaultMessage: Submit your comment
-msgid "feedback_submit"
-msgstr ""
-
-#: components/Feedback/Feedback
-# defaultMessage: Explain us why, and help us improve the quality of the site
-msgid "feedback_suggestions_placeholder"
-msgstr ""
-
 #: helpers/index
 # defaultMessage: I ran into technical problems
 msgid "feedback_technical_problems"
-msgstr ""
-
-#: components/Feedback/Feedback
-# defaultMessage: Thank you for your feedback!
-msgid "feedback_thank_you"
-msgstr ""
-
-#: components/Feedback/Feedback
-# defaultMessage: Was this page useful to you?
-msgid "feedback_title"
 msgstr ""
 
 #: helpers/index
@@ -202,11 +177,6 @@ msgstr ""
 #: helpers/index
 # defaultMessage: Sometimes I couldn't understand if I was proceeding correctly
 msgid "feedback_unclear_proceeding"
-msgstr ""
-
-#: components/Feedback/Feedback
-# defaultMessage: Yes
-msgid "feedback_yes"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanel
@@ -282,6 +252,11 @@ msgstr ""
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Last vote
 msgid "feedbacks_last_vote"
+msgstr ""
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Loading...
+msgid "feedbacks_loading"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanel

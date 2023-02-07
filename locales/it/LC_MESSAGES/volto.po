@@ -127,11 +127,6 @@ msgstr "Si"
 msgid "feedback_incomplete_instructions"
 msgstr "Le indicazioni erano incomplete"
 
-#: components/Feedback/Feedback
-# defaultMessage: No
-msgid "feedback_no"
-msgstr "No"
-
 #: components/manage/VFPanel/FeedbackComments
 # defaultMessage: No feedback provided
 msgid "feedback_no_feedback"
@@ -167,30 +162,10 @@ msgstr "... mostra meno"
 msgid "feedback_show_more"
 msgstr "Leggi tutto"
 
-#: components/Feedback/Feedback
-# defaultMessage: Submit your comment
-msgid "feedback_submit"
-msgstr "Aggiungi il tuo commento"
-
-#: components/Feedback/Feedback
-# defaultMessage: Explain us why, and help us improve the quality of the site
-msgid "feedback_suggestions_placeholder"
-msgstr "Spiegaci perchè, e aiutaci a migliorare la qualità del sito"
-
 #: helpers/index
 # defaultMessage: I ran into technical problems
 msgid "feedback_technical_problems"
 msgstr "Ho avuto problemi tecnici"
-
-#: components/Feedback/Feedback
-# defaultMessage: Thank you for your feedback!
-msgid "feedback_thank_you"
-msgstr "Grazie per il tuo feedback!"
-
-#: components/Feedback/Feedback
-# defaultMessage: Was this page useful to you?
-msgid "feedback_title"
-msgstr "Questa pagina è stata utile per te?"
 
 #: helpers/index
 # defaultMessage: Some instructions were not clear and confusing
@@ -201,11 +176,6 @@ msgstr "A volte le indicazioni non erano complete"
 # defaultMessage: Sometimes I couldn't understand if I was proceeding correctly
 msgid "feedback_unclear_proceeding"
 msgstr "A volte non capivo se stavo procedendo correttamente"
-
-#: components/Feedback/Feedback
-# defaultMessage: Yes
-msgid "feedback_yes"
-msgstr "Si"
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: All
@@ -281,6 +251,11 @@ msgstr "Elementi selezionati"
 # defaultMessage: Last vote
 msgid "feedbacks_last_vote"
 msgstr "Ultimo feedback"
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Loading...
+msgid "feedbacks_loading"
+msgstr "Caricamento..."
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: No results found

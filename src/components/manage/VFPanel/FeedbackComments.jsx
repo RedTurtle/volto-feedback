@@ -174,9 +174,11 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                     <div className="feedback-answer">{c.answer}</div>
                     <div className="feedback-comment">
                       <ReadMore intl={intl}>{c.comment}</ReadMore>
-                      {!c.answer &&
-                        !c.comment &&
-                        intl.formatMessage(messages.no_feedback)}
+                      {!c.answer && !c.comment && (
+                        <div className="feedback-no-feedback">
+                          {intl.formatMessage(messages.no_feedback)}
+                        </div>
+                      )}
                     </div>
                   </Table.Cell>
                   <Table.Cell>

@@ -27,7 +27,6 @@ import { Helmet, flattenToAppURL } from '@plone/volto/helpers';
 import { FeedbackComments } from 'volto-feedback/components/manage';
 import {
   getFeedbacks,
-  getFeedback,
   deleteFeedback,
   resetDeleteFeedback,
 } from 'volto-feedback/actions';
@@ -107,6 +106,10 @@ const messages = defineMessages({
   no_results: {
     id: 'feedbacks_no_results',
     defaultMessage: 'No results found',
+  },
+  loading: {
+    id: 'feedbacks_loading',
+    defaultMessage: 'Loading...',
   },
 });
 const VFPanel = ({ moment: Moment, toastify }) => {
@@ -444,6 +447,11 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               header={intl.formatMessage(messages.confirm_delete_selected)}
               content={
                 <div className="content ui ">
+                  {deleteFeedbackEnd && (
+                    <Loader active inverted inline="centered" size="large">
+                      {intl.formatMessage(messages.loading)}
+                    </Loader>
+                  )}
                   {itemsSelected?.map((item, i) => (
                     <div className="confirm-delete-item" key={item?.uid}>
                       {item.title}

@@ -74,6 +74,11 @@
   font-style: italic;
 }
 
+#feedback-comments-modal .feedback-no-feedback {
+  color: rgba(0, 0, 0, 0.2);
+  font-style: italic;
+}
+
 .ui.dimmer .ui.workaround.loader:before {
   border-color: rgba(0, 0, 0, 0.1);
 }

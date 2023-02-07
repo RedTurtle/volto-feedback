@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Menu, Button, Confirm } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Menu, Button, Confirm, Loader } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Icon, Toast } from '@plone/volto/components';
 import downloadSVG from '@plone/volto/icons/download.svg';
@@ -45,11 +45,19 @@ const messages = defineMessages({
     defaultMessage:
       'An error has occurred while trying to delete all feedbacks',
   },
+  loading: {
+    id: 'feedbacks_loading',
+    defaultMessage: 'Loading...',
+  },
 });
 const VFPanelMenu = ({ toastify, doSearch }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [openConfirm, setOpenConfirm] = useState(false);
+  const deleteAllFeedbacksState = useSelector(
+    (state) => state.deleteAllFeedbacks,
+  );
+  console.log('dafs', deleteAllFeedbacksState);
   const deleteAll = async () => {
     try {
       await dispatch(deleteAllFeedbacks());
@@ -113,7 +121,15 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
         header={intl.formatMessage(messages.delete_all)}
         content={
           <div className="content ui ">
-            {intl.formatMessage(messages.confirm_delete_all)}
+            {!deleteAllFeedbacksState.loaded &&
+              deleteAllFeedbacksState.loading && (
+                <Loader active inverted inline="centered" size="large">
+                  {intl.formatMessage(messages.loading)}
+                </Loader>
+              )}
+            {!deleteAllFeedbacksState.loaded &&
+              !deleteAllFeedbacksState.loading &&
+              intl.formatMessage(messages.confirm_delete_all)}
           </div>
         }
         onCancel={() => setOpenConfirm(false)}

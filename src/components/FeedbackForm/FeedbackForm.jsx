@@ -109,6 +109,8 @@ const FeedbackForm = () => {
     setSatisfaction(null);
     setValidToken(null);
     return () => {
+      setSatisfaction(null);
+      setValidToken(null);
       dispatch(resetSubmitFeedback());
     };
   }, [path]);
