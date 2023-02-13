@@ -17,8 +17,10 @@ const messages = defineMessages({
 
 export const VFToolbar = () => {
   const intl = useIntl();
-  const token = useSelector((state) => state.userSession?.token);
-  return token ? (
+  const hasPermissions = useSelector((state) =>
+    state.actions?.user?.some((ua) => ua.id === 'feedback-dashboard'),
+  );
+  return hasPermissions ? (
     <Plug pluggable="main.toolbar.bottom" id="feedback-toolbar">
       <Link
         to="/feedback-panel"
