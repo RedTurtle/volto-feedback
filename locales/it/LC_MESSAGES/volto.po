@@ -255,7 +255,7 @@ msgstr "Ultimo feedback"
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Loading...
 msgid "feedbacks_loading"
-msgstr "Caricamento..."
+msgstr "Caricamento...yarn star"
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: No results found

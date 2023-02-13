@@ -14,6 +14,7 @@ import {
   Form,
   Input,
   Message,
+  Dimmer,
   Icon as SIcon,
 } from 'semantic-ui-react';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
@@ -156,15 +157,13 @@ const VFPanel = ({ moment: Moment, toastify }) => {
     (state) => state.deleteFeedback.subrequests,
   );
 
-  const deleteFeedbacksEnd =
-    Object.keys(deleteFeedbacksState ?? [])?.filter(
-      (k) => deleteFeedbacksState[k].loaded === true,
-    )?.length > 0;
+  const deleteFeedbacksEnd = !Object.keys(deleteFeedbacksState ?? [])?.some(
+    (k) => deleteFeedbacksState[k].loading === true,
+  );
 
-  const deleteFeedbackEnd =
-    Object.keys(deleteFeedbackState ?? [])?.filter(
-      (k) => deleteFeedbackState[k].loaded === true,
-    )?.length > 0;
+  const deleteFeedbackEnd = !Object.keys(deleteFeedbackState ?? [])?.some(
+    (k) => deleteFeedbackState[k].loaded === true,
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -202,8 +201,8 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   const resetSelectedFeedbacks = async () => {
     // eslint-disable-next-line no-unused-expressions
     try {
-      const asyncDeleteFuncs = itemsSelected?.map((item) => {
-        dispatch(deleteFeedback(item));
+      const asyncDeleteFuncs = itemsSelected?.map(async (item) => {
+        await dispatch(deleteFeedback(item));
       });
       await Promise.all(asyncDeleteFuncs);
       setShowConfirmDelete(false);
@@ -447,10 +446,12 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               header={intl.formatMessage(messages.confirm_delete_selected)}
               content={
                 <div className="content ui ">
-                  {deleteFeedbackEnd && (
-                    <Loader active inverted inline="centered" size="large">
-                      {intl.formatMessage(messages.loading)}
-                    </Loader>
+                  {!deleteFeedbackEnd && (
+                    <Dimmer active>
+                      <Loader inverted inline="centered" size="large">
+                        {intl.formatMessage(messages.loading)}
+                      </Loader>
+                    </Dimmer>
                   )}
                   {itemsSelected?.map((item, i) => (
                     <div className="confirm-delete-item" key={item?.uid}>

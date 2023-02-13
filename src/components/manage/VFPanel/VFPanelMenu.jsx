@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Menu, Button, Confirm, Loader } from 'semantic-ui-react';
+import { Menu, Button, Confirm, Loader, Dimmer } from 'semantic-ui-react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Icon, Toast } from '@plone/volto/components';
 import downloadSVG from '@plone/volto/icons/download.svg';
@@ -57,7 +57,6 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
   const deleteAllFeedbacksState = useSelector(
     (state) => state.deleteAllFeedbacks,
   );
-  console.log('dafs', deleteAllFeedbacksState);
   const deleteAll = async () => {
     try {
       await dispatch(deleteAllFeedbacks());
@@ -123,9 +122,11 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
           <div className="content ui ">
             {!deleteAllFeedbacksState.loaded &&
               deleteAllFeedbacksState.loading && (
-                <Loader active inverted inline="centered" size="large">
-                  {intl.formatMessage(messages.loading)}
-                </Loader>
+                <Dimmer active>
+                  <Loader inverted inline="centered" size="large">
+                    {intl.formatMessage(messages.loading)}
+                  </Loader>
+                </Dimmer>
               )}
             {!deleteAllFeedbacksState.loaded &&
               !deleteAllFeedbacksState.loading &&
