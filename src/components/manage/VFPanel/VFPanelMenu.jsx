@@ -128,8 +128,7 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
                   </Loader>
                 </Dimmer>
               )}
-            {!deleteAllFeedbacksState.loaded &&
-              !deleteAllFeedbacksState.loading &&
+            {!deleteAllFeedbacksState.loading &&
               intl.formatMessage(messages.confirm_delete_all)}
           </div>
         }

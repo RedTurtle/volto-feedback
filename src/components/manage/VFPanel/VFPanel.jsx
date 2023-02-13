@@ -150,20 +150,10 @@ const VFPanel = ({ moment: Moment, toastify }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [feedbacks?.error],
   );
-  const deleteFeedbacksState = useSelector(
-    (state) => state.deleteFeedbacks.subrequests,
-  );
-  const deleteFeedbackState = useSelector(
-    (state) => state.deleteFeedback.subrequests,
-  );
 
-  const deleteFeedbacksEnd = !Object.keys(deleteFeedbacksState ?? [])?.some(
-    (k) => deleteFeedbacksState[k].loading === true,
-  );
+  const deleteFeedbackState = useSelector((state) => state?.deleteFeedback);
 
-  const deleteFeedbackEnd = !Object.keys(deleteFeedbackState ?? [])?.some(
-    (k) => deleteFeedbackState[k].loaded === true,
-  );
+  const deleteFeedbackEnd = deleteFeedbackState?.delete?.loaded;
 
   useEffect(() => {
     setIsClient(true);
@@ -201,10 +191,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   const resetSelectedFeedbacks = async () => {
     // eslint-disable-next-line no-unused-expressions
     try {
-      const asyncDeleteFuncs = itemsSelected?.map(async (item) => {
-        await dispatch(deleteFeedback(item));
-      });
-      await Promise.all(asyncDeleteFuncs);
+      await dispatch(deleteFeedback(itemsSelected));
       setShowConfirmDelete(false);
       toastify.toast.success(
         <Toast
@@ -227,12 +214,6 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   };
 
   useEffect(() => {
-    if (deleteFeedbacksEnd) {
-      doSearch().then(() => {
-        setItemsSelected([]);
-      });
-      dispatch(resetDeleteFeedback());
-    }
     if (deleteFeedbackEnd) {
       doSearch().then(() => {
         setItemsSelected([]);
@@ -240,7 +221,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
       dispatch(resetDeleteFeedback());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteFeedbacksEnd, deleteFeedbackEnd]);
+  }, [deleteFeedbackEnd]);
 
   // Semantic table ordering is the exact opposite of Plone
   // ordering and it drove me nuts
@@ -446,18 +427,19 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               header={intl.formatMessage(messages.confirm_delete_selected)}
               content={
                 <div className="content ui ">
-                  {!deleteFeedbackEnd && (
+                  {deleteFeedbackState?.loading && !deleteFeedbackEnd && (
                     <Dimmer active>
                       <Loader inverted inline="centered" size="large">
                         {intl.formatMessage(messages.loading)}
                       </Loader>
                     </Dimmer>
                   )}
-                  {itemsSelected?.map((item, i) => (
-                    <div className="confirm-delete-item" key={item?.uid}>
-                      {item.title}
-                    </div>
-                  ))}
+                  {!deleteFeedbackState?.loading &&
+                    itemsSelected?.map((item, i) => (
+                      <div className="confirm-delete-item" key={item?.uid}>
+                        {item.title}
+                      </div>
+                    ))}
                 </div>
               }
               onCancel={() => setShowConfirmDelete(false)}

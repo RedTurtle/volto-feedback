@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,12 @@ const messages = defineMessages({
 
 export const VFToolbar = () => {
   const intl = useIntl();
-  const hasPermissions = useSelector((state) =>
-    state.actions?.user?.some((ua) => ua.id === 'feedback-dashboard'),
+  const actions = useSelector((state) => {
+    return state?.actions?.actions;
+  });
+  const hasPermissions = useMemo(
+    () => actions?.user?.some((ua) => ua?.id === 'feedback-dashboard'),
+    [actions],
   );
   return hasPermissions ? (
     <Plug pluggable="main.toolbar.bottom" id="feedback-toolbar">

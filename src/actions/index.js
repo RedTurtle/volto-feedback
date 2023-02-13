@@ -101,10 +101,15 @@ export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
 export function deleteFeedback(item) {
   return {
     type: DELETE_FEEDBACK,
-    subrequest: item.uid,
-    request: {
-      op: 'del',
-      path: '/@feedback-delete/' + item.uid,
-    },
+    mode: 'serial',
+    request: !Array.isArray(item)
+      ? {
+          op: 'del',
+          path: '/@feedback-delete/' + item?.uid,
+        }
+      : item?.map((it) => ({
+          op: 'del',
+          path: '/@feedback-delete/' + it?.uid,
+        })),
   };
 }
