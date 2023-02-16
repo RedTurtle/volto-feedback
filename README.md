@@ -122,4 +122,4 @@ Comments are shown in a modal and are filterable by vote and rating datetime:
 
 ## Honeypot integration
 
-If you want to use Honeypot, you have to set env var RAZZLE_HONEYPOT_FIELD with the same value of the HONEYPOT_FIELD env var setted on plone backend.
+If you want to use Honeypot, you have to set env var RAZZLE_HONEYPOT_FIELD with the same value of the HONEYPOT_FIELD env var set on plone backend.
