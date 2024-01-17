@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2023-02-07T14:26:42.028Z\n"
+"POT-Creation-Date: 2024-01-17T15:33:38.466Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -255,6 +255,7 @@ msgid "feedbacks_last_vote"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanel
+#: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: Loading...
 msgid "feedbacks_loading"
 msgstr ""
@@ -297,4 +298,9 @@ msgstr ""
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Vote
 msgid "feedbacks_votes"
+msgstr ""
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Sorting Button: Click to arrange items in this column. {sort}
+msgid "sorting_button"
 msgstr ""
