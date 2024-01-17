@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Portal } from 'react-portal';
 import { defineMessages, useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,6 +54,11 @@ const messages = defineMessages({
   page: {
     id: 'feedbacks_page',
     defaultMessage: 'Page',
+  },
+  sorting_button: {
+    id: 'sorting_button',
+    defaultMessage:
+      'Sorting Button: Click to arrange items in this column. {sort}',
   },
   vote: {
     id: 'feedbacks_votes',
@@ -228,6 +233,22 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   const fixSemanticOrdering = () =>
     sort_order === 'ascending' ? 'descending' : 'ascending';
 
+  //focus handle after table headers sort
+  const refs = {
+    title: useRef(null),
+    vote: useRef(null),
+    lastVote: useRef(null),
+    comments: useRef(null),
+  };
+
+  const focusHandle = (button) => {
+    if (button && button.current) {
+      setTimeout(() => {
+        button.current.focus();
+      }, 1000);
+    }
+  };
+
   return (
     <>
       {!isUnauthorized ? (
@@ -307,19 +328,43 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                           sorted={
                             sort_on === 'title' ? fixSemanticOrdering() : null
                           }
-                          onClick={() => changeSort('title')}
                           width={4}
                         >
-                          {intl.formatMessage(messages.page)}
+                          <Button
+                            basic
+                            onClick={() => {
+                              changeSort('title');
+                              focusHandle(refs.title);
+                            }}
+                            aria-description={intl.formatMessage(
+                              messages.sorting_button,
+                              { sort: sort_on === 'title' ? sort_order : '' },
+                            )}
+                            ref={refs.title}
+                          >
+                            {intl.formatMessage(messages.page)}
+                          </Button>
                         </Table.HeaderCell>
                         <Table.HeaderCell
                           sorted={
                             sort_on === 'vote' ? fixSemanticOrdering() : null
                           }
-                          onClick={() => changeSort('vote')}
                           textAlign="center"
                         >
-                          {intl.formatMessage(messages.vote)}
+                          <Button
+                            basic
+                            onClick={() => {
+                              changeSort('vote');
+                              focusHandle(refs.vote);
+                            }}
+                            aria-description={intl.formatMessage(
+                              messages.sorting_button,
+                              { sort: sort_on === 'vote' ? sort_order : '' },
+                            )}
+                            ref={refs.vote}
+                          >
+                            {intl.formatMessage(messages.vote)}
+                          </Button>
                         </Table.HeaderCell>
                         <Table.HeaderCell
                           sorted={
@@ -327,11 +372,25 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                               ? fixSemanticOrdering()
                               : null
                           }
-                          onClick={() => changeSort('last_vote')}
                           textAlign="center"
                           width={3}
                         >
-                          {intl.formatMessage(messages.last_vote)}
+                          <Button
+                            basic
+                            onClick={() => {
+                              changeSort('last_vote');
+                              focusHandle(refs.lastVote);
+                            }}
+                            aria-description={intl.formatMessage(
+                              messages.sorting_button,
+                              {
+                                sort: sort_on === 'last_vote' ? sort_order : '',
+                              },
+                            )}
+                            ref={refs.lastVote}
+                          >
+                            {intl.formatMessage(messages.last_vote)}
+                          </Button>
                         </Table.HeaderCell>
                         <Table.HeaderCell
                           textAlign="center"
@@ -340,9 +399,23 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                               ? fixSemanticOrdering()
                               : null
                           }
-                          onClick={() => changeSort('comments')}
                         >
-                          {intl.formatMessage(messages.comments)}
+                          <Button
+                            basic
+                            onClick={() => {
+                              changeSort('comments');
+                              focusHandle(refs.comments);
+                            }}
+                            aria-description={intl.formatMessage(
+                              messages.sorting_button,
+                              {
+                                sort: sort_on === 'comments' ? sort_order : '',
+                              },
+                            )}
+                            ref={refs.comments}
+                          >
+                            {intl.formatMessage(messages.comments)}
+                          </Button>
                         </Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>

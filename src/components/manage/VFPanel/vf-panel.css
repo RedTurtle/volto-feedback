@@ -17,14 +17,25 @@
 
 #page-feedbacks .ui.checkbox.toggle label {
   overflow: hidden;
-  width: 0;
-  height: 0;
-  margin: 0;
 }
 
 #page-feedbacks .ui.table.sortable thead th.sorted.descending:after {
   margin-bottom: 0;
   transform: rotate(45deg);
+}
+
+#page-feedbacks .ui.table.sortable thead .button {
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  padding: 0.2em;
+}
+
+#page-feedbacks .ui.table.sortable thead .button:hover {
+  background-color: unset !important;
+}
+
+#page-feedbacks .ui.table.sortable thead .button:focus {
+  border: 1px solid #995c00;
 }
 
 #page-feedbacks .ui.form.search-form .ui.fluid.input {
