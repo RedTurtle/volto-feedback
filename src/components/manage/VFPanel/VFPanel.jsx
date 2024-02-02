@@ -3,34 +3,12 @@ import { Portal } from 'react-portal';
 import { defineMessages, useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  Container,
-  Confirm,
-  Segment,
-  Checkbox,
-  Button,
-  Table,
-  Loader,
-  Form,
-  Input,
-  Message,
-  Dimmer,
-  Icon as SIcon,
-} from 'semantic-ui-react';
+import { Container, Confirm, Segment, Checkbox, Button, Table, Loader, Form, Input, Message, Dimmer, Icon as SIcon } from 'semantic-ui-react';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
-import {
-  Pagination,
-  Toolbar,
-  Unauthorized,
-  Toast,
-} from '@plone/volto/components';
+import { Pagination, Toolbar, Unauthorized, Toast } from '@plone/volto/components';
 import { Helmet, flattenToAppURL } from '@plone/volto/helpers';
 import { FeedbackComments } from 'volto-feedback/components/manage';
-import {
-  getFeedbacks,
-  deleteFeedback,
-  resetDeleteFeedback,
-} from 'volto-feedback/actions';
+import { getFeedbacks, deleteFeedback, resetDeleteFeedback } from 'volto-feedback/actions';
 import { VFPanelMenu } from 'volto-feedback/components/manage';
 import './vf-panel.css';
 
@@ -57,8 +35,15 @@ const messages = defineMessages({
   },
   sorting_button: {
     id: 'sorting_button',
-    defaultMessage:
-      'Sorting Button: Click to arrange items in this column. {sort}',
+    defaultMessage: 'Sorting Button: Click to arrange items in this column. {sort}',
+  },
+  ascending: {
+    id: 'ascending',
+    defaultMessage: 'Ascending',
+  },
+  descending: {
+    id: 'descending',
+    defaultMessage: 'Descending',
   },
   vote: {
     id: 'feedbacks_votes',
@@ -102,8 +87,7 @@ const messages = defineMessages({
   },
   delete_error: {
     id: 'feedbacks_delete_error',
-    defaultMessage:
-      'An error has occurred while trying to delete feedbacks for {element}',
+    defaultMessage: 'An error has occurred while trying to delete feedbacks for {element}',
   },
   cancel: {
     id: 'feedbacks_cancel_delete',
@@ -198,13 +182,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
     try {
       await dispatch(deleteFeedback(itemsSelected));
       setShowConfirmDelete(false);
-      toastify.toast.success(
-        <Toast
-          success
-          title={intl.formatMessage(messages.success)}
-          content={intl.formatMessage(messages.delete_success)}
-        />,
-      );
+      toastify.toast.success(<Toast success title={intl.formatMessage(messages.success)} content={intl.formatMessage(messages.delete_success)} />);
     } catch (e) {
       toastify.toast.error(
         <Toast
@@ -230,8 +208,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
 
   // Semantic table ordering is the exact opposite of Plone
   // ordering and it drove me nuts
-  const fixSemanticOrdering = () =>
-    sort_order === 'ascending' ? 'descending' : 'ascending';
+  const fixSemanticOrdering = () => (sort_order === 'ascending' ? 'descending' : 'ascending');
 
   //focus handle after table headers sort
   const refs = {
@@ -255,9 +232,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
         <Container id="page-feedbacks" className="controlpanel-feedbacks">
           <Helmet title={intl.formatMessage(messages.feedbacks_controlpanel)} />
           <Segment.Group raised>
-            <Segment className="primary">
-              {intl.formatMessage(messages.feedbacks_controlpanel)}
-            </Segment>
+            <Segment className="primary">{intl.formatMessage(messages.feedbacks_controlpanel)}</Segment>
 
             <VFPanelMenu doSearch={doSearch} />
 
@@ -265,14 +240,10 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               {itemsSelected.length > 0 && (
                 <Message className="selected-items" color="teal">
                   <div className="text">
-                    {itemsSelected?.length}{' '}
-                    {intl.formatMessage(messages.items_selected)}
+                    {itemsSelected?.length} {intl.formatMessage(messages.items_selected)}
                   </div>
                   <div className="actions">
-                    <Button
-                      color="red"
-                      onClick={() => setShowConfirmDelete(true)}
-                    >
+                    <Button color="red" onClick={() => setShowConfirmDelete(true)}>
                       {intl.formatMessage(messages.reset_feedbacks)}
                     </Button>
                   </div>
@@ -292,29 +263,13 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                       placeholder={intl.formatMessage(messages.filter_title)}
                     />
                   </Form>
-                  <Table
-                    selectable
-                    compact
-                    singleLine
-                    attached
-                    sortable
-                    fixed
-                    striped
-                  >
+                  <Table selectable compact singleLine attached sortable fixed striped>
                     <Table.Header>
                       <Table.Row>
-                        <Table.HeaderCell
-                          width={1}
-                          textAlign="center"
-                          verticalAlign="middle"
-                        >
+                        <Table.HeaderCell width={1} textAlign="center" verticalAlign="middle">
                           <Checkbox
                             title={intl.formatMessage(messages.select_all)}
-                            checked={
-                              feedbacks?.result?.items?.length !== 0 &&
-                              itemsSelected?.length ===
-                                feedbacks?.result?.items?.length
-                            }
+                            checked={feedbacks?.result?.items?.length !== 0 && itemsSelected?.length === feedbacks?.result?.items?.length}
                             onChange={(e, o) => {
                               if (o.checked) {
                                 setItemsSelected(feedbacks?.result?.items);
@@ -324,94 +279,57 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                             }}
                           />
                         </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'title' ? fixSemanticOrdering() : null
-                          }
-                          width={4}
-                        >
+                        <Table.HeaderCell sorted={sort_on === 'title' ? fixSemanticOrdering() : null} width={4}>
                           <Button
                             basic
                             onClick={() => {
                               changeSort('title');
                               focusHandle(refs.title);
                             }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              { sort: sort_on === 'title' ? sort_order : '' },
-                            )}
+                            aria-description={intl.formatMessage(messages.sorting_button, { sort: sort_on === 'title' ? (sort_order === 'ascending' ? intl.formatMessage(messages.ascending) : intl.formatMessage(messages.descending)) : '' })}
                             ref={refs.title}
                           >
                             {intl.formatMessage(messages.page)}
                           </Button>
                         </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'vote' ? fixSemanticOrdering() : null
-                          }
-                          textAlign="center"
-                        >
+                        <Table.HeaderCell sorted={sort_on === 'vote' ? fixSemanticOrdering() : null} textAlign="center">
                           <Button
                             basic
                             onClick={() => {
                               changeSort('vote');
                               focusHandle(refs.vote);
                             }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              { sort: sort_on === 'vote' ? sort_order : '' },
-                            )}
+                            aria-description={intl.formatMessage(messages.sorting_button, { sort: sort_on === 'vote' ? (sort_order === 'ascending' ? intl.formatMessage(messages.ascending) : intl.formatMessage(messages.descending)) : '' })}
                             ref={refs.vote}
                           >
                             {intl.formatMessage(messages.vote)}
                           </Button>
                         </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'last_vote'
-                              ? fixSemanticOrdering()
-                              : null
-                          }
-                          textAlign="center"
-                          width={3}
-                        >
+                        <Table.HeaderCell sorted={sort_on === 'last_vote' ? fixSemanticOrdering() : null} textAlign="center" width={3}>
                           <Button
                             basic
                             onClick={() => {
                               changeSort('last_vote');
                               focusHandle(refs.lastVote);
                             }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort: sort_on === 'last_vote' ? sort_order : '',
-                              },
-                            )}
+                            aria-description={intl.formatMessage(messages.sorting_button, {
+                              sort: sort_on === 'last_vote' ? (sort_order === 'ascending' ? intl.formatMessage(messages.ascending) : intl.formatMessage(messages.descending)) : '',
+                            })}
                             ref={refs.lastVote}
                           >
                             {intl.formatMessage(messages.last_vote)}
                           </Button>
                         </Table.HeaderCell>
-                        <Table.HeaderCell
-                          textAlign="center"
-                          sorted={
-                            sort_on === 'comments'
-                              ? fixSemanticOrdering()
-                              : null
-                          }
-                        >
+                        <Table.HeaderCell textAlign="center" sorted={sort_on === 'comments' ? fixSemanticOrdering() : null}>
                           <Button
                             basic
                             onClick={() => {
                               changeSort('comments');
                               focusHandle(refs.comments);
                             }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort: sort_on === 'comments' ? sort_order : '',
-                              },
-                            )}
+                            aria-description={intl.formatMessage(messages.sorting_button, {
+                              sort: sort_on === 'comments' ? (sort_order === 'ascending' ? intl.formatMessage(messages.ascending) : intl.formatMessage(messages.descending)) : '',
+                            })}
                             ref={refs.comments}
                           >
                             {intl.formatMessage(messages.comments)}
@@ -425,30 +343,20 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                           <Table.Cell textAlign="center">
                             <Checkbox
                               title={intl.formatMessage(messages.select_item)}
-                              checked={itemsSelected.some(
-                                (is) => is.url === item.url,
-                              )}
+                              checked={itemsSelected.some((is) => is.url === item.url)}
                               onChange={(e, o) => {
                                 if (o.checked) {
                                   let s = [...itemsSelected];
                                   s.push(item);
                                   setItemsSelected(s);
                                 } else {
-                                  setItemsSelected(
-                                    itemsSelected.filter(
-                                      (i) => i.url !== item.url,
-                                    ),
-                                  );
+                                  setItemsSelected(itemsSelected.filter((i) => i.url !== item.url));
                                 }
                               }}
                             />
                           </Table.Cell>
                           <Table.Cell>
-                            <a
-                              href={flattenToAppURL(item.url)}
-                              target="_blank"
-                              rel="noreferrer noopener"
-                            >
+                            <a href={flattenToAppURL(item.url)} target="_blank" rel="noreferrer noopener">
                               {item.title}
                             </a>
                           </Table.Cell>
@@ -456,26 +364,15 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                             <SIcon name="star" />
                             {parseFloat(item.vote).toFixed(1)}
                           </Table.Cell>
-                          <Table.Cell textAlign="center">
-                            {moment(item.last_vote).format(
-                              'DD/MM/YYYY HH:mm:ss',
-                            )}
-                          </Table.Cell>
-                          <Table.Cell
-                            textAlign="center"
-                            className="comments-column"
-                          >
+                          <Table.Cell textAlign="center">{moment(item.last_vote).format('DD/MM/YYYY HH:mm:ss')}</Table.Cell>
+                          <Table.Cell textAlign="center" className="comments-column">
                             {item.comments && <FeedbackComments item={item} />}
                           </Table.Cell>
                         </tr>
                       ))}
                     </Table.Body>
                   </Table>
-                  {feedbacks?.result?.items?.length === 0 && (
-                    <div className="no-results">
-                      {intl.formatMessage(messages.no_results)}
-                    </div>
-                  )}
+                  {feedbacks?.result?.items?.length === 0 && <div className="no-results">{intl.formatMessage(messages.no_results)}</div>}
 
                   <div className="contents-pagination">
                     <Pagination

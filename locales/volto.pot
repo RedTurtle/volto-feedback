@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2024-01-17T15:33:38.466Z\n"
+"POT-Creation-Date: 2024-02-02T09:37:50.145Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +21,16 @@ msgstr ""
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Feedbacks
 msgid "Feedbacks"
+msgstr ""
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Ascending
+msgid "ascending"
+msgstr ""
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Descending
+msgid "descending"
 msgstr ""
 
 #: components/FeedbackForm/Steps/AnswersStep
