@@ -241,22 +241,6 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   const fixSemanticOrdering = () =>
     sort_order === 'ascending' ? 'descending' : 'ascending';
 
-  //focus handle after table headers sort
-  const refs = {
-    title: useRef(null),
-    vote: useRef(null),
-    lastVote: useRef(null),
-    comments: useRef(null),
-  };
-
-  const focusHandle = (button) => {
-    if (button && button.current) {
-      setTimeout(() => {
-        button.current.focus();
-      }, 1000);
-    }
-  };
-
   return (
     <>
       {!isUnauthorized ? (
@@ -286,243 +270,224 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                   </div>
                 </Message>
               )}
-              {feedbacks?.loading && <Loader active inline="centered" />}
-              {feedbacks?.loaded && (
-                <>
-                  <Form className="search-form">
-                    <Input
-                      fluid
-                      icon="search"
-                      value={searchableText}
-                      onChange={(e) => {
-                        setSearchableText(e.target.value);
-                      }}
-                      placeholder={intl.formatMessage(messages.filter_title)}
-                    />
-                  </Form>
-                  <Table
-                    selectable
-                    compact
-                    singleLine
-                    attached
-                    sortable
-                    fixed
-                    striped
-                  >
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell
-                          width={1}
-                          textAlign="center"
-                          verticalAlign="middle"
-                        >
+              <Form className="search-form">
+                <Input
+                  fluid
+                  icon="search"
+                  value={searchableText}
+                  onChange={(e) => {
+                    setSearchableText(e.target.value);
+                  }}
+                  placeholder={intl.formatMessage(messages.filter_title)}
+                />
+              </Form>
+              <Table
+                selectable
+                compact
+                singleLine
+                attached
+                sortable
+                fixed
+                striped
+              >
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell
+                      width={1}
+                      textAlign="center"
+                      verticalAlign="middle"
+                    >
+                      <Checkbox
+                        title={intl.formatMessage(messages.select_all)}
+                        checked={
+                          feedbacks?.result?.items?.length !== 0 &&
+                          itemsSelected?.length ===
+                            feedbacks?.result?.items?.length
+                        }
+                        onChange={(e, o) => {
+                          if (o.checked) {
+                            setItemsSelected(feedbacks?.result?.items);
+                          } else {
+                            setItemsSelected([]);
+                          }
+                        }}
+                      />
+                    </Table.HeaderCell>
+                    <Table.HeaderCell
+                      sorted={
+                        sort_on === 'title' ? fixSemanticOrdering() : null
+                      }
+                      width={4}
+                    >
+                      <Button
+                        basic
+                        onClick={() => {
+                          changeSort('title');
+                        }}
+                        aria-description={intl.formatMessage(
+                          messages.sorting_button,
+                          {
+                            sort:
+                              sort_on === 'title'
+                                ? sort_order === 'ascending'
+                                  ? intl.formatMessage(messages.ascending)
+                                  : intl.formatMessage(messages.descending)
+                                : '',
+                          },
+                        )}
+                      >
+                        {intl.formatMessage(messages.page)}
+                      </Button>
+                    </Table.HeaderCell>
+                    <Table.HeaderCell
+                      sorted={sort_on === 'vote' ? fixSemanticOrdering() : null}
+                      textAlign="center"
+                    >
+                      <Button
+                        basic
+                        onClick={() => {
+                          changeSort('vote');
+                        }}
+                        aria-description={intl.formatMessage(
+                          messages.sorting_button,
+                          {
+                            sort:
+                              sort_on === 'vote'
+                                ? sort_order === 'ascending'
+                                  ? intl.formatMessage(messages.ascending)
+                                  : intl.formatMessage(messages.descending)
+                                : '',
+                          },
+                        )}
+                      >
+                        {intl.formatMessage(messages.vote)}
+                      </Button>
+                    </Table.HeaderCell>
+                    <Table.HeaderCell
+                      sorted={
+                        sort_on === 'last_vote' ? fixSemanticOrdering() : null
+                      }
+                      textAlign="center"
+                      width={3}
+                    >
+                      <Button
+                        basic
+                        onClick={() => {
+                          changeSort('last_vote');
+                        }}
+                        aria-description={intl.formatMessage(
+                          messages.sorting_button,
+                          {
+                            sort:
+                              sort_on === 'last_vote'
+                                ? sort_order === 'ascending'
+                                  ? intl.formatMessage(messages.ascending)
+                                  : intl.formatMessage(messages.descending)
+                                : '',
+                          },
+                        )}
+                      >
+                        {intl.formatMessage(messages.last_vote)}
+                      </Button>
+                    </Table.HeaderCell>
+                    <Table.HeaderCell
+                      textAlign="center"
+                      sorted={
+                        sort_on === 'comments' ? fixSemanticOrdering() : null
+                      }
+                    >
+                      <Button
+                        basic
+                        onClick={() => {
+                          changeSort('comments');
+                        }}
+                        aria-description={intl.formatMessage(
+                          messages.sorting_button,
+                          {
+                            sort:
+                              sort_on === 'comments'
+                                ? sort_order === 'ascending'
+                                  ? intl.formatMessage(messages.ascending)
+                                  : intl.formatMessage(messages.descending)
+                                : '',
+                          },
+                        )}
+                      >
+                        {intl.formatMessage(messages.comments)}
+                      </Button>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {feedbacks?.loaded &&
+                    feedbacks.result?.items?.map((item) => (
+                      <tr key={item.uid}>
+                        <Table.Cell textAlign="center">
                           <Checkbox
-                            title={intl.formatMessage(messages.select_all)}
-                            checked={
-                              feedbacks?.result?.items?.length !== 0 &&
-                              itemsSelected?.length ===
-                                feedbacks?.result?.items?.length
-                            }
+                            title={intl.formatMessage(messages.select_item)}
+                            checked={itemsSelected.some(
+                              (is) => is.url === item.url,
+                            )}
                             onChange={(e, o) => {
                               if (o.checked) {
-                                setItemsSelected(feedbacks?.result?.items);
+                                let s = [...itemsSelected];
+                                s.push(item);
+                                setItemsSelected(s);
                               } else {
-                                setItemsSelected([]);
+                                setItemsSelected(
+                                  itemsSelected.filter(
+                                    (i) => i.url !== item.url,
+                                  ),
+                                );
                               }
                             }}
                           />
-                        </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'title' ? fixSemanticOrdering() : null
-                          }
-                          width={4}
-                        >
-                          <Button
-                            basic
-                            onClick={() => {
-                              changeSort('title');
-                              focusHandle(refs.title);
-                            }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort:
-                                  sort_on === 'title'
-                                    ? sort_order === 'ascending'
-                                      ? intl.formatMessage(messages.ascending)
-                                      : intl.formatMessage(messages.descending)
-                                    : '',
-                              },
-                            )}
-                            ref={refs.title}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <a
+                            href={flattenToAppURL(item.url)}
+                            target="_blank"
+                            rel="noreferrer noopener"
                           >
-                            {intl.formatMessage(messages.page)}
-                          </Button>
-                        </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'vote' ? fixSemanticOrdering() : null
-                          }
+                            {item.title}
+                          </a>
+                        </Table.Cell>
+                        <Table.Cell textAlign="center">
+                          <SIcon name="star" />
+                          {parseFloat(item.vote).toFixed(1)}
+                        </Table.Cell>
+                        <Table.Cell textAlign="center">
+                          {moment(item.last_vote).format('DD/MM/YYYY HH:mm:ss')}
+                        </Table.Cell>
+                        <Table.Cell
                           textAlign="center"
+                          className="comments-column"
                         >
-                          <Button
-                            basic
-                            onClick={() => {
-                              changeSort('vote');
-                              focusHandle(refs.vote);
-                            }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort:
-                                  sort_on === 'vote'
-                                    ? sort_order === 'ascending'
-                                      ? intl.formatMessage(messages.ascending)
-                                      : intl.formatMessage(messages.descending)
-                                    : '',
-                              },
-                            )}
-                            ref={refs.vote}
-                          >
-                            {intl.formatMessage(messages.vote)}
-                          </Button>
-                        </Table.HeaderCell>
-                        <Table.HeaderCell
-                          sorted={
-                            sort_on === 'last_vote'
-                              ? fixSemanticOrdering()
-                              : null
-                          }
-                          textAlign="center"
-                          width={3}
-                        >
-                          <Button
-                            basic
-                            onClick={() => {
-                              changeSort('last_vote');
-                              focusHandle(refs.lastVote);
-                            }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort:
-                                  sort_on === 'last_vote'
-                                    ? sort_order === 'ascending'
-                                      ? intl.formatMessage(messages.ascending)
-                                      : intl.formatMessage(messages.descending)
-                                    : '',
-                              },
-                            )}
-                            ref={refs.lastVote}
-                          >
-                            {intl.formatMessage(messages.last_vote)}
-                          </Button>
-                        </Table.HeaderCell>
-                        <Table.HeaderCell
-                          textAlign="center"
-                          sorted={
-                            sort_on === 'comments'
-                              ? fixSemanticOrdering()
-                              : null
-                          }
-                        >
-                          <Button
-                            basic
-                            onClick={() => {
-                              changeSort('comments');
-                              focusHandle(refs.comments);
-                            }}
-                            aria-description={intl.formatMessage(
-                              messages.sorting_button,
-                              {
-                                sort:
-                                  sort_on === 'comments'
-                                    ? sort_order === 'ascending'
-                                      ? intl.formatMessage(messages.ascending)
-                                      : intl.formatMessage(messages.descending)
-                                    : '',
-                              },
-                            )}
-                            ref={refs.comments}
-                          >
-                            {intl.formatMessage(messages.comments)}
-                          </Button>
-                        </Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {feedbacks?.result?.items?.map((item) => (
-                        <tr key={item.uid}>
-                          <Table.Cell textAlign="center">
-                            <Checkbox
-                              title={intl.formatMessage(messages.select_item)}
-                              checked={itemsSelected.some(
-                                (is) => is.url === item.url,
-                              )}
-                              onChange={(e, o) => {
-                                if (o.checked) {
-                                  let s = [...itemsSelected];
-                                  s.push(item);
-                                  setItemsSelected(s);
-                                } else {
-                                  setItemsSelected(
-                                    itemsSelected.filter(
-                                      (i) => i.url !== item.url,
-                                    ),
-                                  );
-                                }
-                              }}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <a
-                              href={flattenToAppURL(item.url)}
-                              target="_blank"
-                              rel="noreferrer noopener"
-                            >
-                              {item.title}
-                            </a>
-                          </Table.Cell>
-                          <Table.Cell textAlign="center">
-                            <SIcon name="star" />
-                            {parseFloat(item.vote).toFixed(1)}
-                          </Table.Cell>
-                          <Table.Cell textAlign="center">
-                            {moment(item.last_vote).format(
-                              'DD/MM/YYYY HH:mm:ss',
-                            )}
-                          </Table.Cell>
-                          <Table.Cell
-                            textAlign="center"
-                            className="comments-column"
-                          >
-                            {item.comments && <FeedbackComments item={item} />}
-                          </Table.Cell>
-                        </tr>
-                      ))}
-                    </Table.Body>
-                  </Table>
-                  {feedbacks?.result?.items?.length === 0 && (
-                    <div className="no-results">
-                      {intl.formatMessage(messages.no_results)}
-                    </div>
-                  )}
-
-                  <div className="contents-pagination">
-                    <Pagination
-                      current={currentPage}
-                      total={Math.ceil(feedbacks?.result?.items_total / b_size)}
-                      pageSize={b_size}
-                      pageSizes={[50, intl.formatMessage(messages.all)]}
-                      onChangePage={(e, p) => {
-                        setCurrentPage(p.value);
-                      }}
-                      onChangePageSize={(e, s) => setB_size(s.value)}
-                    />
-                  </div>
-                </>
+                          {item.comments && <FeedbackComments item={item} />}
+                        </Table.Cell>
+                      </tr>
+                    ))}
+                </Table.Body>
+              </Table>
+              {feedbacks?.loading && <Loader active inline="centered" />}
+              {feedbacks?.result?.items?.length === 0 && (
+                <div className="no-results">
+                  {intl.formatMessage(messages.no_results)}
+                </div>
               )}
+
+              <div className="contents-pagination">
+                <Pagination
+                  current={currentPage}
+                  total={Math.ceil(feedbacks?.result?.items_total / b_size)}
+                  pageSize={b_size}
+                  pageSizes={[50, intl.formatMessage(messages.all)]}
+                  onChangePage={(e, p) => {
+                    setCurrentPage(p.value);
+                  }}
+                  onChangePageSize={(e, s) => setB_size(s.value)}
+                />
+              </div>
             </Segment>
           </Segment.Group>
           {showConfirmDelete && (
