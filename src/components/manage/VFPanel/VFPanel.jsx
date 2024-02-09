@@ -262,6 +262,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                   </div>
                   <div className="actions">
                     <Button
+                      type="button"
                       color="red"
                       onClick={() => setShowConfirmDelete(true)}
                     >
@@ -320,6 +321,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                       width={4}
                     >
                       <Button
+                        type="button"
                         basic
                         onClick={() => {
                           changeSort('title');
@@ -344,6 +346,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                       textAlign="center"
                     >
                       <Button
+                        type="button"
                         basic
                         onClick={() => {
                           changeSort('vote');
@@ -371,6 +374,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                       width={3}
                     >
                       <Button
+                        type="button"
                         basic
                         onClick={() => {
                           changeSort('last_vote');
@@ -397,6 +401,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                       }
                     >
                       <Button
+                        type="button"
                         basic
                         onClick={() => {
                           changeSort('comments');

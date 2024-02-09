@@ -3,14 +3,16 @@
   align-items: center;
   justify-content: center;
 }
-
-#page-feedbacks .ui.table.sortable thead th.sorted:after {
+#page-feedbacks .ui.table.sortable thead th {
+  padding: 0;
+}
+#page-feedbacks .ui.table.sortable thead th.sorted .button:after {
   width: 0px;
   height: 0px;
   border-top: 0px solid transparent;
   border-bottom: 8px solid transparent;
   border-left: 8px solid #000;
-  margin-bottom: 4px;
+  margin-left: 1em;
   content: '';
   transform: rotate(-135deg);
 }
@@ -19,15 +21,27 @@
   overflow: hidden;
 }
 
-#page-feedbacks .ui.table.sortable thead th.sorted.descending:after {
+#page-feedbacks .ui.table.sortable thead th.sorted.descending .button:after {
   margin-bottom: 0;
   transform: rotate(45deg);
 }
 
 #page-feedbacks .ui.table.sortable thead .button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 1.5em 0.5em;
   border: 1px solid transparent;
   text-transform: uppercase;
-  padding: 0.2em;
+}
+@media only screen and (min-width: 768px) and (max-width: 1071px) {
+  #page-feedbacks .ui.table.sortable thead .button {
+    flex-direction: column;
+  }
+  #page-feedbacks .ui.table.sortable thead th.sorted .button:after {
+    margin-left: 0;
+    margin-top: 0.5em;
+  }
 }
 
 #page-feedbacks .ui.table.sortable thead .button:hover {
