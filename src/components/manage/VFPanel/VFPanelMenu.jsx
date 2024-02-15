@@ -6,10 +6,7 @@ import { Icon, Toast } from '@plone/volto/components';
 import downloadSVG from '@plone/volto/icons/download.svg';
 import trashSVG from '@plone/volto/icons/delete.svg';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
-import {
-  exportCsvFeedbackData,
-  deleteAllFeedbacks,
-} from 'volto-feedback/actions';
+import { exportCsvFeedbackData, deleteAllFeedbacks } from 'volto-feedback/actions';
 
 const messages = defineMessages({
   export_csv: {
@@ -42,32 +39,23 @@ const messages = defineMessages({
   },
   delete_all_error: {
     id: 'feedbacks_delete_all_error',
-    defaultMessage:
-      'An error has occurred while trying to delete all feedbacks',
+    defaultMessage: 'An error has occurred while trying to delete all feedbacks',
   },
   loading: {
     id: 'feedbacks_loading',
     defaultMessage: 'Loading...',
   },
 });
-const VFPanelMenu = ({ toastify, doSearch }) => {
+const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [openConfirm, setOpenConfirm] = useState(false);
-  const deleteAllFeedbacksState = useSelector(
-    (state) => state.deleteAllFeedbacks,
-  );
+  const deleteAllFeedbacksState = useSelector((state) => state.deleteAllFeedbacks);
   const deleteAll = async () => {
     try {
       await dispatch(deleteAllFeedbacks());
       setOpenConfirm(false);
-      toastify.toast.success(
-        <Toast
-          success
-          title={intl.formatMessage(messages.success_delete_all)}
-          content={intl.formatMessage(messages.delete_all_success)}
-        />,
-      );
+      toastify.toast.success(<Toast success title={intl.formatMessage(messages.success_delete_all)} content={intl.formatMessage(messages.delete_all_success)} />);
       doSearch();
     } catch (e) {
       toastify.toast.error(
@@ -99,37 +87,32 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
         </Button>
       </Menu.Item>
 
-      <Menu.Menu position="right">
-        <Menu.Item>
-          <Button
-            color="red"
-            icon
-            labelPosition="right"
-            onClick={() => setOpenConfirm(true)}
-          >
-            {intl.formatMessage(messages.delete_all)}
-            <i className="icon">
-              <Icon name={trashSVG} size="20px" />
-            </i>
-          </Button>
-        </Menu.Item>
-      </Menu.Menu>
+      {can_delete_feedbacks && (
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Button color="red" icon labelPosition="right" onClick={() => setOpenConfirm(true)}>
+              {intl.formatMessage(messages.delete_all)}
+              <i className="icon">
+                <Icon name={trashSVG} size="20px" />
+              </i>
+            </Button>
+          </Menu.Item>
+        </Menu.Menu>
+      )}
       <Confirm
         cancelButton={intl.formatMessage(messages.cancel)}
         open={openConfirm}
         header={intl.formatMessage(messages.delete_all)}
         content={
           <div className="content ui ">
-            {!deleteAllFeedbacksState.loaded &&
-              deleteAllFeedbacksState.loading && (
-                <Dimmer active>
-                  <Loader inverted inline="centered" size="large">
-                    {intl.formatMessage(messages.loading)}
-                  </Loader>
-                </Dimmer>
-              )}
-            {!deleteAllFeedbacksState.loading &&
-              intl.formatMessage(messages.confirm_delete_all)}
+            {!deleteAllFeedbacksState.loaded && deleteAllFeedbacksState.loading && (
+              <Dimmer active>
+                <Loader inverted inline="centered" size="large">
+                  {intl.formatMessage(messages.loading)}
+                </Loader>
+              </Dimmer>
+            )}
+            {!deleteAllFeedbacksState.loading && intl.formatMessage(messages.confirm_delete_all)}
           </div>
         }
         onCancel={() => setOpenConfirm(false)}
