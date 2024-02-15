@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2023-02-07T14:26:42.028Z\n"
+"POT-Creation-Date: 2024-02-15T11:32:59.731Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,11 @@ msgstr ""
 #: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: Delete all feedbacks
 msgid "feedback_delete_all"
+msgstr ""
+
+#: components/FeedbackForm/FeedbackForm
+# defaultMessage: Error
+msgid "feedback_error"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanelMenu
@@ -255,6 +260,7 @@ msgid "feedbacks_last_vote"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanel
+#: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: Loading...
 msgid "feedbacks_loading"
 msgstr ""

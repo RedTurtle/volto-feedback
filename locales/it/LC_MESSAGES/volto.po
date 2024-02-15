@@ -76,6 +76,11 @@ msgstr "Sei sicuro di voler cancellare tutti i feedback?"
 msgid "feedback_delete_all"
 msgstr "Cancella tutti i feedback"
 
+#: components/FeedbackForm/FeedbackForm
+# defaultMessage: Error
+msgid "feedback_error"
+msgstr "Errore"
+
 #: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: Export in CSV
 msgid "feedback_export_csv"
@@ -253,6 +258,7 @@ msgid "feedbacks_last_vote"
 msgstr "Ultimo feedback"
 
 #: components/manage/VFPanel/VFPanel
+#: components/manage/VFPanel/VFPanelMenu
 # defaultMessage: Loading...
 msgid "feedbacks_loading"
 msgstr "Caricamento..."

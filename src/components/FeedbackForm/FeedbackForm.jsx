@@ -3,28 +3,14 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useIntl, defineMessages } from 'react-intl';
-import {
-  Form,
-  Button,
-  TextArea,
-  Loader,
-  Message,
-  Rating,
-} from 'semantic-ui-react';
+import { Form, Button, TextArea, Loader, Message, Rating } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 import { isCmsUi } from '@plone/volto/helpers';
-import {
-  HoneypotWidget,
-  GoogleReCaptchaWidget,
-} from 'volto-feedback/components/widgets';
+import { HoneypotWidget, GoogleReCaptchaWidget } from 'volto-feedback/components/widgets';
 
 import { submitFeedback, resetSubmitFeedback } from 'volto-feedback/actions';
 import './feedback-form.css';
-import {
-  getFeedbackFormByStep,
-  getNumberOfSteps,
-  getTranslatedQuestion,
-} from 'volto-feedback/helpers';
+import { getFeedbackFormByStep, getNumberOfSteps, getTranslatedQuestion } from 'volto-feedback/helpers';
 import 'semantic-ui-css/components/rating.css';
 
 const messages = defineMessages({
@@ -42,8 +28,7 @@ const messages = defineMessages({
   },
   suggestions_placeholder: {
     id: 'feedback_form_suggestions_placeholder',
-    defaultMessage:
-      'Explain us why, and help us improve the quality of the site',
+    defaultMessage: 'Explain us why, and help us improve the quality of the site',
   },
   submit: {
     id: 'feedback_form_submit',
@@ -64,6 +49,10 @@ const messages = defineMessages({
   feedback_sent: {
     id: 'feedback_sent',
     defaultMessage: 'Your feedback was sent!',
+  },
+  error: {
+    id: 'feedback_error',
+    defaultMessage: 'Error',
   },
 });
 
@@ -159,16 +148,7 @@ const FeedbackForm = () => {
   const renderFormStep = () => {
     if (step === undefined) return null;
     const StepToRender = getFeedbackFormByStep(step);
-    return (
-      <StepToRender
-        updateFormData={updateFormData}
-        userFeedback={satisfaction}
-        intl={intl}
-        step={step}
-        totalSteps={numberOfSteps}
-        getFormFieldValue={getFormFieldValue}
-      />
-    );
+    return <StepToRender updateFormData={updateFormData} userFeedback={satisfaction} intl={intl} step={step} totalSteps={numberOfSteps} getFormFieldValue={getFormFieldValue} />;
   };
   return (
     <div className="feedback-form">
@@ -177,32 +157,13 @@ const FeedbackForm = () => {
       {!submitResults?.loading && !submitResults.loaded && (
         <Form onSubmit={sendFormData}>
           <div className="rating-container">
-            <Rating
-              maxRating={5}
-              clearable={false}
-              size="huge"
-              aria-controls="vf-more"
-              className="volto-feedback-rating"
-              onRate={changeSatisfaction}
-            />
+            <Rating maxRating={5} clearable={false} size="huge" aria-controls="vf-more" className="volto-feedback-rating" onRate={changeSatisfaction} />
           </div>
           {renderFormStep()}
           <HoneypotWidget updateFormData={updateFormData} field={fieldHoney} />
-          <GoogleReCaptchaWidget
-            key={action}
-            onVerify={onVerifyCaptcha}
-            action={action}
-          />
-          <div
-            className="form-step-actions"
-            aria-hidden={satisfaction === null}
-          >
-            <button
-              className="prev-action"
-              disabled={!!(step - 1)}
-              onClick={prevStep}
-              type="button"
-            >
+          <GoogleReCaptchaWidget key={action} onVerify={onVerifyCaptcha} action={action} />
+          <div className="form-step-actions" aria-hidden={satisfaction === null}>
+            <button className="prev-action" disabled={!!(step - 1)} onClick={prevStep} type="button">
               {intl.formatMessage(messages.prev)}
             </button>
             {step !== numberOfSteps - 1 && (
@@ -219,14 +180,8 @@ const FeedbackForm = () => {
         </Form>
       )}
       {submitResults?.loading && <Loader active inline="centered" />}
-      {submitResults?.loaded && (
-        <Message
-          success
-          icon="info circle"
-          header={intl.formatMessage(messages.feedback_sent)}
-          content={intl.formatMessage(messages.thank_you)}
-        />
-      )}
+      {submitResults?.loaded && <Message success icon="info circle" header={intl.formatMessage(messages.feedback_sent)} content={intl.formatMessage(messages.thank_you)} />}
+      {!submitResults?.loaded && !submitResults.loading && submitResults.error?.response?.body?.message && <Message negative header={`${intl.formatMessage(messages.error)} ${submitResults.error?.response.status}: ${submitResults.error?.response.statusText}`} content={submitResults.error?.response?.body?.message} />}
     </div>
   );
 };
