@@ -6,6 +6,15 @@
 #page-feedbacks .ui.table.sortable thead th {
   padding: 0;
 }
+
+#page-feedbacks .ui.sortable.table thead th.descending:after {
+  display: none;
+}
+
+#page-feedbacks .ui.sortable.table thead th.ascending:after {
+  display: none;
+}
+
 #page-feedbacks .ui.table.sortable thead th.sorted .button:after {
   width: 0px;
   height: 0px;
