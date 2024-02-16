@@ -35,5 +35,6 @@
   "dependencies": {
     "react-google-recaptcha-v3": "1.9.5",
     "semantic-ui-css": "2.5.0"
-  }
+  },
+  "packageManager": "yarn@3.2.3"
 }
