@@ -1,5 +1,5 @@
-import React from 'react';
-import './honeypot_widget.css';
+import React from "react";
+import "./honeypot_widget.css";
 
 const HoneypotWidget = ({ updateFormData, field }) => {
   return field ? (
@@ -10,6 +10,7 @@ const HoneypotWidget = ({ updateFormData, field }) => {
         onChange={(e) => {
           updateFormData(field, e.target.value);
         }}
+        aria-label={field}
       />
     </div>
   ) : (
