@@ -50,7 +50,7 @@ const messages = defineMessages({
     defaultMessage: 'Loading...',
   },
 });
-const VFPanelMenu = ({ toastify, doSearch }) => {
+const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -99,21 +99,23 @@ const VFPanelMenu = ({ toastify, doSearch }) => {
         </Button>
       </Menu.Item>
 
-      <Menu.Menu position="right">
-        <Menu.Item>
-          <Button
-            color="red"
-            icon
-            labelPosition="right"
-            onClick={() => setOpenConfirm(true)}
-          >
-            {intl.formatMessage(messages.delete_all)}
-            <i className="icon">
-              <Icon name={trashSVG} size="20px" />
-            </i>
-          </Button>
-        </Menu.Item>
-      </Menu.Menu>
+      {can_delete_feedbacks && (
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Button
+              color="red"
+              icon
+              labelPosition="right"
+              onClick={() => setOpenConfirm(true)}
+            >
+              {intl.formatMessage(messages.delete_all)}
+              <i className="icon">
+                <Icon name={trashSVG} size="20px" />
+              </i>
+            </Button>
+          </Menu.Item>
+        </Menu.Menu>
+      )}
       <Confirm
         cancelButton={intl.formatMessage(messages.cancel)}
         open={openConfirm}

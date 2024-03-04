@@ -158,6 +158,11 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   }, [searchableText]);
 
   const feedbacks = useSelector((state) => state.getFeedbacks);
+  const can_delete_feedbacks = useSelector(
+    (state) =>
+      state.getFeedbacks.result?.actions?.can_delete_feedbacks ?? false,
+  );
+
   const isUnauthorized = useMemo(
     () => feedbacks?.error && feedbacks?.error?.status === 401,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -251,7 +256,10 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               {intl.formatMessage(messages.feedbacks_controlpanel)}
             </Segment>
 
-            <VFPanelMenu doSearch={doSearch} />
+            <VFPanelMenu
+              doSearch={doSearch}
+              can_delete_feedbacks={can_delete_feedbacks}
+            />
 
             <Segment>
               {itemsSelected.length > 0 && (
@@ -261,13 +269,15 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                     {intl.formatMessage(messages.items_selected)}
                   </div>
                   <div className="actions">
-                    <Button
-                      type="button"
-                      color="red"
-                      onClick={() => setShowConfirmDelete(true)}
-                    >
-                      {intl.formatMessage(messages.reset_feedbacks)}
-                    </Button>
+                    {can_delete_feedbacks && (
+                      <Button
+                        type="button"
+                        color="red"
+                        onClick={() => setShowConfirmDelete(true)}
+                      >
+                        {intl.formatMessage(messages.reset_feedbacks)}
+                      </Button>
+                    )}
                   </div>
                 </Message>
               )}
@@ -293,27 +303,29 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               >
                 <Table.Header>
                   <Table.Row>
-                    <Table.HeaderCell
-                      width={1}
-                      textAlign="center"
-                      verticalAlign="middle"
-                    >
-                      <Checkbox
-                        title={intl.formatMessage(messages.select_all)}
-                        checked={
-                          feedbacks?.result?.items?.length !== 0 &&
-                          itemsSelected?.length ===
-                            feedbacks?.result?.items?.length
-                        }
-                        onChange={(e, o) => {
-                          if (o.checked) {
-                            setItemsSelected(feedbacks?.result?.items);
-                          } else {
-                            setItemsSelected([]);
+                    {can_delete_feedbacks && (
+                      <Table.HeaderCell
+                        width={1}
+                        textAlign="center"
+                        verticalAlign="middle"
+                      >
+                        <Checkbox
+                          title={intl.formatMessage(messages.select_all)}
+                          checked={
+                            feedbacks?.result?.items?.length !== 0 &&
+                            itemsSelected?.length ===
+                              feedbacks?.result?.items?.length
                           }
-                        }}
-                      />
-                    </Table.HeaderCell>
+                          onChange={(e, o) => {
+                            if (o.checked) {
+                              setItemsSelected(feedbacks?.result?.items);
+                            } else {
+                              setItemsSelected([]);
+                            }
+                          }}
+                        />
+                      </Table.HeaderCell>
+                    )}
                     <Table.HeaderCell
                       sorted={
                         sort_on === 'title' ? fixSemanticOrdering() : null
@@ -427,27 +439,29 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                   {feedbacks?.loaded &&
                     feedbacks.result?.items?.map((item) => (
                       <tr key={item.uid}>
-                        <Table.Cell textAlign="center">
-                          <Checkbox
-                            title={intl.formatMessage(messages.select_item)}
-                            checked={itemsSelected.some(
-                              (is) => is.url === item.url,
-                            )}
-                            onChange={(e, o) => {
-                              if (o.checked) {
-                                let s = [...itemsSelected];
-                                s.push(item);
-                                setItemsSelected(s);
-                              } else {
-                                setItemsSelected(
-                                  itemsSelected.filter(
-                                    (i) => i.url !== item.url,
-                                  ),
-                                );
-                              }
-                            }}
-                          />
-                        </Table.Cell>
+                        {can_delete_feedbacks && (
+                          <Table.Cell textAlign="center">
+                            <Checkbox
+                              title={intl.formatMessage(messages.select_item)}
+                              checked={itemsSelected.some(
+                                (is) => is.url === item.url,
+                              )}
+                              onChange={(e, o) => {
+                                if (o.checked) {
+                                  let s = [...itemsSelected];
+                                  s.push(item);
+                                  setItemsSelected(s);
+                                } else {
+                                  setItemsSelected(
+                                    itemsSelected.filter(
+                                      (i) => i.url !== item.url,
+                                    ),
+                                  );
+                                }
+                              }}
+                            />
+                          </Table.Cell>
+                        )}
                         <Table.Cell>
                           <a
                             href={flattenToAppURL(item.url)}
