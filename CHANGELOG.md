@@ -1,3 +1,20 @@
+## [0.2.0](https://github.com/redturtle/volto-feedback/compare/v0.1.5...v0.2.0) (2024-02-16)
+
+
+### Features
+
+* **a11y:** new focus handle and aria-description ([#1](https://github.com/redturtle/volto-feedback/issues/1)) ([299973a](https://github.com/redturtle/volto-feedback/commit/299973a5724b47920307450116692df6c646e02a))
+
+
+### Bug Fixes
+
+* handle errors ([3176897](https://github.com/redturtle/volto-feedback/commit/3176897535f5e5810d1c5966e96524487539682a))
+
+
+### Maintenance
+
+* linting and new yarn version ([ea440f6](https://github.com/redturtle/volto-feedback/commit/ea440f681785a547ec5443e12ec331f9c53db404))
+
 ### [0.1.5](https://github.com/redturtle/volto-feedback/compare/0.1.4...v0.1.5) (2023-02-16)
 
 

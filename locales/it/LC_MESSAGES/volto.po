@@ -21,6 +21,16 @@ msgstr "Pannello di controllo feedback"
 msgid "Feedbacks"
 msgstr "Feedback"
 
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Ascending
+msgid "ascending"
+msgstr "Crescente"
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Descending
+msgid "descending"
+msgstr "Decrescente"
+
 #: components/FeedbackForm/Steps/AnswersStep
 # defaultMessage: Where did you encounter the biggest problems?
 msgid "feedback_answers_header_negative"
@@ -302,3 +312,8 @@ msgstr "Successo"
 # defaultMessage: Vote
 msgid "feedbacks_votes"
 msgstr "Voto"
+
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Sorting Button: Click to arrange items in this column. {sort}
+msgid "sorting_button"
+msgstr "Ordina per: Clicca per ordinare gli elementi in questa colonna. {sort}"
