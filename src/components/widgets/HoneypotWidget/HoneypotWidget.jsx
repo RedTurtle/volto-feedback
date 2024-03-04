@@ -10,6 +10,7 @@ const HoneypotWidget = ({ updateFormData, field }) => {
         onChange={(e) => {
           updateFormData(field, e.target.value);
         }}
+        aria-label={field}
       />
     </div>
   ) : (
