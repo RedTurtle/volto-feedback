@@ -1,3 +1,20 @@
+## [0.3.0](https://github.com/RedTurtle/volto-feedback/compare/v0.2.0...v0.3.0) (2024-03-12)
+
+
+### Features
+
+* enable delete feedback based on user permissions ([#2](https://github.com/RedTurtle/volto-feedback/issues/2)) ([ece04e8](https://github.com/RedTurtle/volto-feedback/commit/ece04e8485935ccc5324c01593dbfbe0e4d80020))
+
+
+### Bug Fixes
+
+* **a11y:** added aria-label to honeypot widget ([#3](https://github.com/RedTurtle/volto-feedback/issues/3)) ([9c36693](https://github.com/RedTurtle/volto-feedback/commit/9c366934f0c8f31f1c708fb129989ea5e2abba6a))
+
+
+### Maintenance
+
+* Update README.md ([71169f4](https://github.com/RedTurtle/volto-feedback/commit/71169f4555c7675bb7ca0fec9122a41aa3c7758c))
+
 ## [0.2.0](https://github.com/redturtle/volto-feedback/compare/v0.1.5...v0.2.0) (2024-02-16)
 
 
