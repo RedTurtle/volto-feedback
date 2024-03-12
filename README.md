@@ -8,6 +8,8 @@ Install with mrs-developer (see [Volto docs](https://docs.voltocms.com/customizi
 yarn add volto-feedback
 ```
 
+It requires https://github.com/RedTurtle/collective.feedback installed into the backend.
+
 ## Usage
 
 This addons exports FeedbackForm component that could be added in your site pages to get feedback from users on the usefulness of the page through rating, commenting and choosing an answer from a predefined set.
