@@ -1,4 +1,25 @@
-export { FormHeader } from './FeedbackForm/Steps/Commons';
-export FeedbackForm from './FeedbackForm/FeedbackForm';
-export AnswersStep from './FeedbackForm/Steps/AnswersStep';
-export CommentsStep from './FeedbackForm/Steps/CommentsStep';
+import loadable from '@loadable/component';
+
+/*--------------------------------
+--- BOUNDLE VoltoFeedbackView ---
+---------------------------------*/
+export const FormHeader = loadable(() =>
+  import(
+    /* webpackChunkName: "VoltoFeedbackView" */ './FeedbackForm/Steps/Commons/FormHeader'
+  ),
+);
+export const FeedbackForm = loadable(() =>
+  import(
+    /* webpackChunkName: "VoltoFeedbackView" */ './FeedbackForm/FeedbackForm'
+  ),
+);
+export const AnswersStep = loadable(() =>
+  import(
+    /* webpackChunkName: "VoltoFeedbackView" */ './FeedbackForm/Steps/AnswersStep'
+  ),
+);
+export const CommentsStep = loadable(() =>
+  import(
+    /* webpackChunkName: "VoltoFeedbackView" */ './FeedbackForm/Steps/CommentsStep'
+  ),
+);
