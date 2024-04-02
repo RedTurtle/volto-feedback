@@ -1,7 +1,7 @@
 import loadable from '@loadable/component';
 
 /*--------------------------------
---- BOUNDLE VoltoFeedbackManage ---
+--- BUNDLE VoltoFeedbackManage ---
 ---------------------------------*/
 export const VFPanel = loadable(() =>
   import(/* webpackChunkName: "VoltoFeedbackManage" */ './VFPanel/VFPanel'),
