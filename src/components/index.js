@@ -1,7 +1,7 @@
 import loadable from '@loadable/component';
 
 /*--------------------------------
---- BOUNDLE VoltoFeedbackView ---
+--- BUNDLE VoltoFeedbackView ---
 ---------------------------------*/
 export const FormHeader = loadable(() =>
   import(
