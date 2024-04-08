@@ -1,4 +1,19 @@
-export VFPanel from './VFPanel/VFPanel';
-export VFPanelMenu from './VFPanel/VFPanelMenu';
-export FeedbackComments from './VFPanel/FeedbackComments';
-export VFToolbar from './VFToolbar';
+import loadable from '@loadable/component';
+
+/*--------------------------------
+--- BUNDLE VoltoFeedbackManage ---
+---------------------------------*/
+export const VFPanel = loadable(() =>
+  import(/* webpackChunkName: "VoltoFeedbackManage" */ './VFPanel/VFPanel'),
+);
+export const VFPanelMenu = loadable(() =>
+  import(/* webpackChunkName: "VoltoFeedbackManage" */ './VFPanel/VFPanelMenu'),
+);
+export const FeedbackComments = loadable(() =>
+  import(
+    /* webpackChunkName: "VoltoFeedbackManage" */ './VFPanel/FeedbackComments'
+  ),
+);
+export const VFToolbar = loadable(() =>
+  import(/* webpackChunkName: "VoltoFeedbackManage" */ './VFToolbar'),
+);

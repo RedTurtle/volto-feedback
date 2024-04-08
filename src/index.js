@@ -34,6 +34,7 @@ export {
   generateFeedbackCommentUUID,
   getNumberOfSteps,
 } from 'volto-feedback/helpers';
+
 export {
   GoogleReCaptchaWidget,
   HoneypotWidget,
