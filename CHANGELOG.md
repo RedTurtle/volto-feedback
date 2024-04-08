@@ -1,3 +1,10 @@
+### [0.3.1](https://github.com/redturtle/volto-feedback/compare/v0.3.0...v0.3.1) (2024-04-08)
+
+
+### Maintenance
+
+* lazy loading components to improve bundle size ([#4](https://github.com/redturtle/volto-feedback/issues/4)) ([102445b](https://github.com/redturtle/volto-feedback/commit/102445b0826a14743a8c74635e3e21fdf7cc7574))
+
 ## [0.3.0](https://github.com/RedTurtle/volto-feedback/compare/v0.2.0...v0.3.0) (2024-03-12)
 
 
