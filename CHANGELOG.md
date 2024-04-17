@@ -1,3 +1,10 @@
+### [0.3.2](https://github.com/RedTurtle/volto-feedback/compare/v0.3.1...v0.3.2) (2024-04-17)
+
+
+### Bug Fixes
+
+* bundle ([ee7e95d](https://github.com/RedTurtle/volto-feedback/commit/ee7e95d5fb220a4c127c6f8a06742b6139755ac2))
+
 ### [0.3.1](https://github.com/redturtle/volto-feedback/compare/v0.3.0...v0.3.1) (2024-04-08)
 
 
