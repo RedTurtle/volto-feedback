@@ -13,6 +13,7 @@ import {
   NEGATIVE_FEEDBACK_QUESTIONS,
   POSITIVE_FEEDBACK_QUESTIONS,
   FEEDBACK_THRESHOLD,
+  FEEDBACK_MESSAGES,
 } from 'volto-feedback/helpers';
 
 export {
@@ -77,6 +78,7 @@ export default function applyConfig(config) {
     questions: {
       negativeFeedback: NEGATIVE_FEEDBACK_QUESTIONS,
       positiveFeedback: POSITIVE_FEEDBACK_QUESTIONS,
+      messages: FEEDBACK_MESSAGES,
     },
 
     formSteps: [

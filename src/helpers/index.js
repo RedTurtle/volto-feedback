@@ -1,7 +1,23 @@
 import config from '@plone/volto/registry';
 import { defineMessages } from 'react-intl';
 
-const messages = defineMessages({
+export const FEEDBACK_THRESHOLD = 3.5;
+export const NEGATIVE_FEEDBACK_QUESTIONS = [
+  'unclear_instructions',
+  'incomplete_instructions',
+  'unclear_proceeding',
+  'technical_problems',
+  'other_negative',
+];
+export const POSITIVE_FEEDBACK_QUESTIONS = [
+  'clear_instructions',
+  'complete_instructions',
+  'clear_proceeding',
+  'no_technical_problems',
+  'other_positive',
+];
+
+export const FEEDBACK_MESSAGES = defineMessages({
   unclear_instructions: {
     id: 'feedback_unclear_instructions',
     defaultMessage: 'Some instructions were not clear and confusing',
@@ -73,7 +89,9 @@ export const getTranslatedQuestion = (intl, question_id) => {
   if (!intl) throw new Error('No intl provided');
   if (!question_id) return null;
   try {
-    return intl.formatMessage(messages[question_id]);
+    return intl.formatMessage(
+      config.settings['volto-feedback'].questions.messages[question_id],
+    );
   } catch (e) {
     throw new Error(
       `Cannot translate ${question_id}, no linked translation exists for given parameter`,
@@ -101,19 +119,3 @@ export const generateFeedbackCommentUUID = (date) => {
   // the backend addon work.
   return new Date(date).getTime().toString(36);
 };
-
-export const NEGATIVE_FEEDBACK_QUESTIONS = [
-  'unclear_instructions',
-  'incomplete_instructions',
-  'unclear_proceeding',
-  'technical_problems',
-  'other_negative',
-];
-export const POSITIVE_FEEDBACK_QUESTIONS = [
-  'clear_instructions',
-  'complete_instructions',
-  'clear_proceeding',
-  'no_technical_problems',
-  'other_positive',
-];
-export const FEEDBACK_THRESHOLD = 3.5;
