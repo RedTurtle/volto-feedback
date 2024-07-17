@@ -1,3 +1,10 @@
+### [0.3.3](https://github.com/RedTurtle/volto-feedback/compare/v0.3.2...v0.3.3) (2024-07-17)
+
+
+### Bug Fixes
+
+* getQuestionIndex to use questions from config ([e29a76b](https://github.com/RedTurtle/volto-feedback/commit/e29a76b118ab0d7681eab45d76a6cd9a21b8fc10))
+
 ### [0.3.2](https://github.com/RedTurtle/volto-feedback/compare/v0.3.1...v0.3.2) (2024-04-17)
 
 
