@@ -1,3 +1,10 @@
+## [0.4.0](https://github.com/RedTurtle/volto-feedback/compare/v0.3.3...v0.4.0) (2024-07-17)
+
+
+### Features
+
+* make new questions translatable ([7b3b222](https://github.com/RedTurtle/volto-feedback/commit/7b3b222e650778670a5d4f45399969eada90003f))
+
 ### [0.3.3](https://github.com/RedTurtle/volto-feedback/compare/v0.3.2...v0.3.3) (2024-07-17)
 
 
