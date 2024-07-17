@@ -82,8 +82,10 @@ export const getTranslatedQuestion = (intl, question_id) => {
 };
 
 export const getQuestionIndex = (question_id) => {
-  const allQuestions = NEGATIVE_FEEDBACK_QUESTIONS.concat(
-    POSITIVE_FEEDBACK_QUESTIONS,
+  const allQuestions = config.settings[
+    'volto-feedback'
+  ].questions.negativeFeedback.concat(
+    config.settings['volto-feedback'].questions.positiveFeedback,
   );
   return allQuestions.findIndex((q) => q.id === question_id);
 };
