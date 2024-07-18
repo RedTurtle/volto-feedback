@@ -67,7 +67,7 @@
 #page-feedbacks .ui.button.open-feedback-comments {
   position: relative;
 }
-#page-feedbacks .ui.button.open-feedback-comments .unreaded-items {
+#page-feedbacks .ui.button.open-feedback-comments .unread-items {
   position: absolute;
   width: 0.5rem;
   height: 0.5rem;

@@ -49,10 +49,10 @@ const messages = defineMessages({
     id: 'feedback_no_feedback',
     defaultMessage: 'No feedback provided',
   },
-  readed: { id: 'feedbacks_comments_readed', defaultMessage: 'Readed' },
+  read: { id: 'feedbacks_comments_read', defaultMessage: 'Read' },
   comments_button: {
     id: 'feedbacks_comments_button_open',
-    defaultMessage: '{total} comments. {unreaded} to read.',
+    defaultMessage: '{total} comments. {unread} to read.',
   },
 });
 
@@ -120,10 +120,10 @@ const FeedbackComments = ({ item, moment: Moment }) => {
     await dispatch(getFeedback(item.uid, item.uid));
   };
 
-  const toggleReaded = (comment, readed) => {
-    dispatch(updateFeedback(item.uid, { uid: comment.uid, readed: readed }));
+  const toggleRead = (comment, read) => {
+    dispatch(updateFeedback(item.uid, { uid: comment.uid, read: read }));
     let new_comments = [...comments];
-    new_comments.filter((c) => c.uid === comment.uid)[0].readed = readed;
+    new_comments.filter((c) => c.uid === comment.uid)[0].read = read;
     setComments(new_comments);
   };
 
@@ -153,12 +153,12 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           className="open-feedback-comments"
           title={intl.formatMessage(messages.comments_button, {
             total: item.comments ?? 0,
-            unreaded: item.unreaded ?? 0,
+            unread: item.unread ?? 0,
           })}
         >
           {item.comments}
 
-          {item.unreaded > 0 && <span className="unreaded-items"></span>}
+          {item.unread > 0 && <span className="unread-items"></span>}
         </Button>
       }
       size="fullscreen"
@@ -196,7 +196,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                   </Table.HeaderCell>
                 ))}
                 <Table.HeaderCell width={1} textAlign="center">
-                  {intl.formatMessage(messages.readed)}
+                  {intl.formatMessage(messages.read)}
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -208,7 +208,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
               )?.map((c) => (
                 <tr
                   key={generateFeedbackCommentUUID(c.date)}
-                  className={c.readed ? '' : 'comment-to-read'}
+                  className={c.read ? '' : 'comment-to-read'}
                 >
                   <Table.Cell textAlign="center">
                     <SIcon name="star" />
@@ -235,8 +235,8 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                   ))}
                   <Table.Cell textAlign="center">
                     <Checkbox
-                      checked={c.readed}
-                      onChange={(e, data) => toggleReaded(c, data.checked)}
+                      checked={c.read}
+                      onChange={(e, data) => toggleRead(c, data.checked)}
                     />
                   </Table.Cell>
                 </tr>
