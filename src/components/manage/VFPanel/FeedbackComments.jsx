@@ -18,6 +18,7 @@ import clearSVG from '@plone/volto/icons/clear.svg';
 import { getFeedback, updateFeedback } from 'volto-feedback/actions';
 import 'semantic-ui-css/components/icon.css';
 import { generateFeedbackCommentUUID } from 'volto-feedback/helpers';
+import config from '@plone/volto/registry';
 
 const messages = defineMessages({
   close: {
@@ -134,6 +135,8 @@ const FeedbackComments = ({ item, moment: Moment }) => {
 
   const [comments, setComments] = useState([]);
 
+  const additionalColumns =
+    config.settings['volto-feedback'].additionalCommentFields ?? [];
   return (
     <Modal
       onClose={close}
@@ -154,6 +157,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           })}
         >
           {item.comments}
+
           {item.unreaded > 0 && <span className="unreaded-items"></span>}
         </Button>
       }
@@ -186,6 +190,11 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                 >
                   {intl.formatMessage(messages.date)}
                 </Table.HeaderCell>
+                {additionalColumns.map((column, i) => (
+                  <Table.HeaderCell width={1} key={i}>
+                    {column.label}
+                  </Table.HeaderCell>
+                ))}
                 <Table.HeaderCell width={1} textAlign="center">
                   {intl.formatMessage(messages.readed)}
                 </Table.HeaderCell>
@@ -219,6 +228,11 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                   <Table.Cell>
                     {moment(c.date).format('DD/MM/YYYY HH:mm')}
                   </Table.Cell>
+                  {additionalColumns.map((column, i) => (
+                    <Table.Cell key={i + 'colcontent'}>
+                      {column.component ? column.component(c) : c[column.id]}
+                    </Table.Cell>
+                  ))}
                   <Table.Cell textAlign="center">
                     <Checkbox
                       checked={c.readed}

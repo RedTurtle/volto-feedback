@@ -94,6 +94,15 @@ export default function applyConfig(config) {
         pane: CommentsStep,
       },
     ],
+
+    additionalCommentFields: [
+      /*
+      Additional columns to display in comments table, for example if i customize steps.
+      If component attribute is undefined, the simple value is displayed.
+      Example:
+      { id: 'email', label: 'Email', component: null },
+      */
+    ],
   };
 
   config.settings.appExtras = [
