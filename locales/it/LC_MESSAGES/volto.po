@@ -213,6 +213,16 @@ msgid "feedbacks_comments"
 msgstr "Commenti"
 
 #: components/manage/VFPanel/FeedbackComments
+# defaultMessage: {total} comments. {unreaded} to read.
+msgid "feedbacks_comments_button_open"
+msgstr "{total} commenti. {unreaded} da leggere."
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Readed
+msgid "feedbacks_comments_readed"
+msgstr "Letto"
+
+#: components/manage/VFPanel/FeedbackComments
 # defaultMessage: Vote
 msgid "feedbacks_comments_votes"
 msgstr "Voto"

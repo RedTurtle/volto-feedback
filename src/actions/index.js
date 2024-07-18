@@ -113,3 +113,19 @@ export function deleteFeedback(item) {
         })),
   };
 }
+
+/**
+ * DELETE_FEEDBACK action
+ * @module actions/getFeedbacks
+ */
+export const UPDATE_FEEDBACK = 'UPDATE_FEEDBACK';
+export function updateFeedback(parent_uid, item) {
+  return {
+    type: UPDATE_FEEDBACK,
+    request: {
+      op: 'patch',
+      path: '/@feedback/' + parent_uid,
+      data: item,
+    },
+  };
+}

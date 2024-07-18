@@ -8,13 +8,14 @@ import {
   Segment,
   Icon as SIcon,
   Loader,
+  Checkbox,
 } from 'semantic-ui-react';
 import orderBy from 'lodash/orderBy';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from '@plone/volto/components';
 import clearSVG from '@plone/volto/icons/clear.svg';
-import { getFeedback } from 'volto-feedback/actions';
+import { getFeedback, updateFeedback } from 'volto-feedback/actions';
 import 'semantic-ui-css/components/icon.css';
 import { generateFeedbackCommentUUID } from 'volto-feedback/helpers';
 
@@ -46,6 +47,11 @@ const messages = defineMessages({
   no_feedback: {
     id: 'feedback_no_feedback',
     defaultMessage: 'No feedback provided',
+  },
+  readed: { id: 'feedbacks_comments_readed', defaultMessage: 'Readed' },
+  comments_button: {
+    id: 'feedbacks_comments_button_open',
+    defaultMessage: '{total} comments. {unreaded} to read.',
   },
 });
 
@@ -112,6 +118,22 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   const loadCommentsData = async () => {
     await dispatch(getFeedback(item.uid, item.uid));
   };
+
+  const toggleReaded = (comment, readed) => {
+    dispatch(updateFeedback(item.uid, { uid: comment.uid, readed: readed }));
+    let new_comments = [...comments];
+    new_comments.filter((c) => c.uid === comment.uid)[0].readed = readed;
+    setComments(new_comments);
+  };
+
+  useEffect(() => {
+    if (feedbackCommentsResults?.loaded) {
+      setComments(feedbackCommentsResults.items);
+    }
+  }, [feedbackCommentsResults]);
+
+  const [comments, setComments] = useState([]);
+
   return (
     <Modal
       onClose={close}
@@ -125,10 +147,17 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           onClick={() => {
             setOpen(true);
           }}
+          className="open-feedback-comments"
+          title={intl.formatMessage(messages.comments_button, {
+            total: item.comments ?? 0,
+            unreaded: item.unreaded ?? 0,
+          })}
         >
           {item.comments}
+          {item.unreaded > 0 && <span className="unreaded-items"></span>}
         </Button>
       }
+      size="fullscreen"
     >
       <Modal.Header>{item?.title}</Modal.Header>
       <Modal.Content>
@@ -140,7 +169,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell
-                  width={2}
+                  width={1}
                   textAlign="center"
                   sorted={sortOn === 'vote' ? sortOrder : null}
                   onClick={() => changeSort('vote')}
@@ -151,21 +180,27 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                   {intl.formatMessage(messages.comment)}
                 </Table.HeaderCell>
                 <Table.HeaderCell
-                  width={3}
+                  width={2}
                   sorted={sortOn === 'date' ? sortOrder : null}
                   onClick={() => changeSort('date')}
                 >
                   {intl.formatMessage(messages.date)}
                 </Table.HeaderCell>
+                <Table.HeaderCell width={1} textAlign="center">
+                  {intl.formatMessage(messages.readed)}
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {orderBy(
-                feedbackCommentsResults?.items,
+                comments,
                 sortOn,
                 sortOrder === 'ascending' ? 'asc' : 'desc',
               )?.map((c) => (
-                <tr key={generateFeedbackCommentUUID(c.date)}>
+                <tr
+                  key={generateFeedbackCommentUUID(c.date)}
+                  className={c.readed ? '' : 'comment-to-read'}
+                >
                   <Table.Cell textAlign="center">
                     <SIcon name="star" />
                     {Math.fround(c.vote)}
@@ -183,6 +218,12 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                   </Table.Cell>
                   <Table.Cell>
                     {moment(c.date).format('DD/MM/YYYY HH:mm')}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    <Checkbox
+                      checked={c.readed}
+                      onChange={(e, data) => toggleReaded(c, data.checked)}
+                    />
                   </Table.Cell>
                 </tr>
               ))}
