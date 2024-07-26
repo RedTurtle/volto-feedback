@@ -121,7 +121,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   };
 
   const toggleRead = (comment, read) => {
-    dispatch(updateFeedback(item.uid, { uid: comment.uid, read: read }));
+    dispatch(updateFeedback(comment.id, { read: read }));
     let new_comments = [...comments];
     new_comments.filter((c) => c.uid === comment.uid)[0].read = read;
     setComments(new_comments);
