@@ -52,7 +52,7 @@ const messages = defineMessages({
   read: { id: 'feedbacks_comments_read', defaultMessage: 'Read' },
   comments_button: {
     id: 'feedbacks_comments_button_open',
-    defaultMessage: '{total} comments. {unread} to read.',
+    defaultMessage: '{total} comments.',
   },
 });
 
@@ -123,7 +123,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   const toggleRead = (comment, read) => {
     dispatch(updateFeedback(comment.id, { read: read }));
     let new_comments = [...comments];
-    new_comments.filter((c) => c.uid === comment.uid)[0].read = read;
+    new_comments.filter((c) => c.id === comment.id)[0].read = read;
     setComments(new_comments);
   };
 
@@ -137,6 +137,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
 
   const additionalColumns =
     config.settings['volto-feedback'].additionalCommentFields ?? [];
+
   return (
     <Modal
       onClose={close}
@@ -153,12 +154,11 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           className="open-feedback-comments"
           title={intl.formatMessage(messages.comments_button, {
             total: item.comments ?? 0,
-            unread: item.unread ?? 0,
           })}
         >
           {item.comments}
 
-          {item.unread > 0 && <span className="unread-items"></span>}
+          {item.has_unread && <span className="unread-items"></span>}
         </Button>
       }
       size="fullscreen"
