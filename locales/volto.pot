@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2024-07-18T09:32:17.028Z\n"
+"POT-Creation-Date: 2024-07-30T08:32:41.891Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -215,13 +215,18 @@ msgid "feedbacks_comments"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments
-# defaultMessage: {total} comments. {unreaded} to read.
+# defaultMessage: {total} comments.
 msgid "feedbacks_comments_button_open"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments
-# defaultMessage: Readed
-msgid "feedbacks_comments_readed"
+# defaultMessage: Show comments to read.
+msgid "feedbacks_comments_filter_unread"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Read
+msgid "feedbacks_comments_read"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments

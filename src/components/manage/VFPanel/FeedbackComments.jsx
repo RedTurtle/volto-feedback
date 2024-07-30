@@ -8,6 +8,7 @@ import {
   Segment,
   Icon as SIcon,
   Loader,
+  Form,
   Checkbox,
 } from 'semantic-ui-react';
 import orderBy from 'lodash/orderBy';
@@ -54,6 +55,10 @@ const messages = defineMessages({
     id: 'feedbacks_comments_button_open',
     defaultMessage: '{total} comments.',
   },
+  filter_unread: {
+    id: 'feedbacks_comments_filter_unread',
+    defaultMessage: 'Show comments to read.',
+  },
 });
 
 const ReadMore = ({ children, intl }) => {
@@ -93,6 +98,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   const [open, setOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('descending');
   const [sortOn, setSortOn] = useState('date');
+  const [filters, setFilters] = useState({});
   moment.locale(intl.locale);
 
   const feedbackCommentsResults = useSelector((state) => {
@@ -169,80 +175,104 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           <Loader active className="workaround" inline="centered" />
         )}
         {feedbackCommentsResults?.loaded && (
-          <Table compact attached fixed striped sortable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell
-                  width={1}
-                  textAlign="center"
-                  sorted={sortOn === 'vote' ? sortOrder : null}
-                  onClick={() => changeSort('vote')}
-                >
-                  {intl.formatMessage(messages.vote)}
-                </Table.HeaderCell>
-                <Table.HeaderCell width={8}>
-                  {intl.formatMessage(messages.comment)}
-                </Table.HeaderCell>
-                <Table.HeaderCell
-                  width={2}
-                  sorted={sortOn === 'date' ? sortOrder : null}
-                  onClick={() => changeSort('date')}
-                >
-                  {intl.formatMessage(messages.date)}
-                </Table.HeaderCell>
-                {additionalColumns.map((column, i) => (
-                  <Table.HeaderCell width={1} key={i}>
-                    {column.label}
+          <>
+            <Form className="search-comments-form">
+              <Checkbox
+                slider
+                label={intl.formatMessage(messages.filter_unread)}
+                onChange={(e, data) =>
+                  setFilters({ ...filters, unread: data.checked })
+                }
+                checked={filters.unread}
+              />
+            </Form>
+            <Table compact attached fixed striped sortable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell
+                    width={1}
+                    textAlign="center"
+                    sorted={sortOn === 'vote' ? sortOrder : null}
+                    onClick={() => changeSort('vote')}
+                  >
+                    {intl.formatMessage(messages.vote)}
                   </Table.HeaderCell>
-                ))}
-                <Table.HeaderCell width={1} textAlign="center">
-                  {intl.formatMessage(messages.read)}
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {orderBy(
-                comments,
-                sortOn,
-                sortOrder === 'ascending' ? 'asc' : 'desc',
-              )?.map((c) => (
-                <tr
-                  key={generateFeedbackCommentUUID(c.date)}
-                  className={c.read ? '' : 'comment-to-read'}
-                >
-                  <Table.Cell textAlign="center">
-                    <SIcon name="star" />
-                    {Math.fround(c.vote)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <div className="feedback-answer">{c.answer}</div>
-                    <div className="feedback-comment">
-                      <ReadMore intl={intl}>{c.comment}</ReadMore>
-                      {!c.answer && !c.comment && (
-                        <div className="feedback-no-feedback">
-                          {intl.formatMessage(messages.no_feedback)}
-                        </div>
-                      )}
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    {moment(c.date).format('DD/MM/YYYY HH:mm')}
-                  </Table.Cell>
+                  <Table.HeaderCell width={8}>
+                    {intl.formatMessage(messages.comment)}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell
+                    width={2}
+                    sorted={sortOn === 'date' ? sortOrder : null}
+                    onClick={() => changeSort('date')}
+                  >
+                    {intl.formatMessage(messages.date)}
+                  </Table.HeaderCell>
                   {additionalColumns.map((column, i) => (
-                    <Table.Cell key={i + 'colcontent'}>
-                      {column.component ? column.component(c) : c[column.id]}
-                    </Table.Cell>
+                    <Table.HeaderCell width={1} key={i}>
+                      {column.label}
+                    </Table.HeaderCell>
                   ))}
-                  <Table.Cell textAlign="center">
-                    <Checkbox
-                      checked={c.read}
-                      onChange={(e, data) => toggleRead(c, data.checked)}
-                    />
-                  </Table.Cell>
-                </tr>
-              ))}
-            </Table.Body>
-          </Table>
+                  <Table.HeaderCell width={1} textAlign="center">
+                    {intl.formatMessage(messages.read)}
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {orderBy(
+                  comments.filter((c) => {
+                    let show = true;
+                    Object.keys(filters).forEach((f) => {
+                      if (f == 'unread') {
+                        if (filters[f] && c.read) {
+                          show = false;
+                        }
+                      } else if (c[f] != filters[f]) {
+                        show = false;
+                      }
+                    });
+                    return show;
+                  }),
+                  sortOn,
+                  sortOrder === 'ascending' ? 'asc' : 'desc',
+                )?.map((c) => (
+                  <tr
+                    key={generateFeedbackCommentUUID(c.date)}
+                    className={c.read ? '' : 'comment-to-read'}
+                  >
+                    <Table.Cell textAlign="center">
+                      <SIcon name="star" />
+                      {Math.fround(c.vote)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="feedback-answer">{c.answer}</div>
+                      <div className="feedback-comment">
+                        <ReadMore intl={intl}>{c.comment}</ReadMore>
+                        {!c.answer && !c.comment && (
+                          <div className="feedback-no-feedback">
+                            {intl.formatMessage(messages.no_feedback)}
+                          </div>
+                        )}
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {moment(c.date).format('DD/MM/YYYY HH:mm')}
+                    </Table.Cell>
+                    {additionalColumns.map((column, i) => (
+                      <Table.Cell key={i + 'colcontent'}>
+                        {column.component ? column.component(c) : c[column.id]}
+                      </Table.Cell>
+                    ))}
+                    <Table.Cell textAlign="center">
+                      <Checkbox
+                        checked={c.read}
+                        onChange={(e, data) => toggleRead(c, data.checked)}
+                      />
+                    </Table.Cell>
+                  </tr>
+                ))}
+              </Table.Body>
+            </Table>
+          </>
         )}
       </Modal.Content>
       <Modal.Actions>

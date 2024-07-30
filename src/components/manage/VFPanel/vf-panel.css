@@ -112,6 +112,12 @@
   font-weight: 600;
 }
 
+#feedback-comments-modal .ui.form.search-comments-form {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
 #feedback-comments-modal .vote-label .icon {
   margin: 0;
 }
