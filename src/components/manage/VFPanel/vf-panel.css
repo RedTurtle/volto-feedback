@@ -77,13 +77,36 @@
   right: -0.25rem;
 }
 
+#page-feedbacks .ui.form.search-form {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
+#page-feedbacks .ui.form.search-form .search-filter {
+  flex: 1 1 auto;
+  min-width: 25rem;
+}
+
+#page-feedbacks .ui.form.search-form .search-filter.read {
+  display: flex;
+  vertical-align: middle;
+  justify-content: flex-end;
+}
+#page-feedbacks .ui.form.search-form .search-filter.read .ui.ui.checkbox {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
 #page-feedbacks .ui.form.search-form .ui.fluid.input {
   justify-content: flex-end;
   margin-bottom: 0.5rem;
 }
 
 #page-feedbacks .ui.form.search-form .ui.fluid.input input {
-  max-width: 23rem;
+  max-width: 25rem;
 }
 
 #page-feedbacks .ui.message.selected-items {

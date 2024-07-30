@@ -125,6 +125,10 @@ const messages = defineMessages({
     id: 'feedbacks_loading',
     defaultMessage: 'Loading...',
   },
+  filter_unread: {
+    id: 'feedbacks_comments_filter_unread',
+    defaultMessage: 'Show comments to read.',
+  },
 });
 const VFPanel = ({ moment: Moment, toastify }) => {
   const intl = useIntl();
@@ -142,7 +146,8 @@ const VFPanel = ({ moment: Moment, toastify }) => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchableText, setSearchableText] = useState('');
-  const [text, setText] = useState('');
+
+  const [filters, setFilters] = useState({ text: '' });
   const [isClient, setIsClient] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
@@ -150,7 +155,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      setText(searchableText);
+      setFilters({ ...filters, text: searchableText });
       // Send Axios request here
     }, 1200);
 
@@ -184,7 +189,9 @@ const VFPanel = ({ moment: Moment, toastify }) => {
         b_start: currentPage * (isNaN(b_size) ? 10000000 : b_size),
         sort_on,
         sort_order,
-        title: text && text.length > 0 ? text + '*' : null,
+        title:
+          filters.text && filters.text.length > 0 ? filters.text + '*' : null,
+        has_unread: filters.has_unread,
       }),
     );
   };
@@ -192,7 +199,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
   useEffect(() => {
     doSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [b_size, currentPage, text, sort_on, sort_order]);
+  }, [b_size, currentPage, sort_on, sort_order, filters]);
 
   const changeSort = (column) => {
     if (sort_on === column) {
@@ -282,15 +289,27 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                 </Message>
               )}
               <Form className="search-form">
-                <Input
-                  fluid
-                  icon="search"
-                  value={searchableText}
-                  onChange={(e) => {
-                    setSearchableText(e.target.value);
-                  }}
-                  placeholder={intl.formatMessage(messages.filter_title)}
-                />
+                <div className="search-filter">
+                  <Input
+                    fluid
+                    icon="search"
+                    value={searchableText}
+                    onChange={(e) => {
+                      setSearchableText(e.target.value);
+                    }}
+                    placeholder={intl.formatMessage(messages.filter_title)}
+                  />
+                </div>
+                <div className="search-filter read">
+                  <Checkbox
+                    slider
+                    label={intl.formatMessage(messages.filter_unread)}
+                    onChange={(e, data) =>
+                      setFilters({ ...filters, has_unread: data.checked })
+                    }
+                    checked={filters.has_unread}
+                  />
+                </div>
               </Form>
               <Table
                 selectable
