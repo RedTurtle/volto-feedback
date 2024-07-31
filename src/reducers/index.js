@@ -7,6 +7,7 @@ import {
   GET_FEEDBACKS,
   DELETE_FEEDBACK,
   RESET_DELETE_FEEDBACK,
+  UPDATE_FEEDBACK,
 } from 'volto-feedback/actions';
 
 const RESET_GET_FEEDBACK = 'RESET_GET_FEEDBACK';
@@ -373,6 +374,81 @@ export const deleteFeedback = (state = initialState, action = {}) => {
       return {
         ...initialState,
       };
+    default:
+      return state;
+  }
+};
+
+export const updateFeedback = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case `${UPDATE_FEEDBACK}_PENDING`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                ...(state.subrequests[action.subrequest] || {
+                  data: null,
+                }),
+                loaded: false,
+                loading: true,
+                error: null,
+              },
+            },
+          }
+        : {
+            ...state,
+            result: {
+              loading: true,
+              loaded: false,
+              error: null,
+            },
+          };
+    case `${UPDATE_FEEDBACK}_SUCCESS`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                loading: false,
+                loaded: true,
+                error: null,
+              },
+            },
+          }
+        : {
+            ...state,
+            result: {
+              loading: false,
+              loaded: true,
+              error: null,
+            },
+          };
+    case `${UPDATE_FEEDBACK}_FAIL`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                data: null,
+                loading: false,
+                loaded: false,
+                error: action.error,
+              },
+            },
+          }
+        : {
+            ...state,
+            data: null,
+            result: {
+              loading: false,
+              loaded: false,
+              error: action.error,
+            },
+          };
     default:
       return state;
   }

@@ -14,6 +14,9 @@
 #page-feedbacks .ui.sortable.table thead th.ascending:after {
   display: none;
 }
+#page-feedbacks .ui.table thead th.center.aligned .button {
+  justify-content: center;
+}
 
 #page-feedbacks .ui.table.sortable thead th.sorted .button:after {
   width: 0px;
@@ -61,13 +64,49 @@
   border: 1px solid #995c00;
 }
 
+#page-feedbacks .ui.button.open-feedback-comments {
+  position: relative;
+}
+#page-feedbacks .ui.button.open-feedback-comments .unread-items {
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #ff7f50;
+  border-radius: 100%;
+  top: -0.25rem;
+  right: -0.25rem;
+}
+
+#page-feedbacks .ui.form.search-form {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+
+#page-feedbacks .ui.form.search-form .search-filter {
+  flex: 1 1 auto;
+  min-width: 25rem;
+}
+
+#page-feedbacks .ui.form.search-form .search-filter.read {
+  display: flex;
+  vertical-align: middle;
+  justify-content: flex-end;
+}
+#page-feedbacks .ui.form.search-form .search-filter.read .ui.ui.checkbox {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
 #page-feedbacks .ui.form.search-form .ui.fluid.input {
   justify-content: flex-end;
   margin-bottom: 0.5rem;
 }
 
 #page-feedbacks .ui.form.search-form .ui.fluid.input input {
-  max-width: 23rem;
+  max-width: 25rem;
 }
 
 #page-feedbacks .ui.message.selected-items {
@@ -96,21 +135,30 @@
   font-weight: 600;
 }
 
+#feedback-comments-modal .ui.form.search-comments-form {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
 #feedback-comments-modal .vote-label .icon {
   margin: 0;
 }
 
-#feedback-comments-modal .feedback-answer {
-  font-weight: 600;
-}
-
 #feedback-comments-modal .feedback-comment {
   font-style: italic;
+  font-size: 0.9rem;
+  font-weight: 300;
 }
 
 #feedback-comments-modal .feedback-no-feedback {
   color: rgba(0, 0, 0, 0.2);
   font-style: italic;
+}
+
+#feedback-comments-modal tr.comment-to-read,
+#feedback-comments-modal tr.comment-to-read .feedback-comment {
+  font-weight: 600;
 }
 
 .ui.dimmer .ui.workaround.loader:before {
