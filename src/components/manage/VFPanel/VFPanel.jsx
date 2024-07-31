@@ -305,7 +305,10 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                     slider
                     label={intl.formatMessage(messages.filter_unread)}
                     onChange={(e, data) =>
-                      setFilters({ ...filters, has_unread: data.checked })
+                      setFilters({
+                        ...filters,
+                        has_unread: data.checked === true ? true : null,
+                      })
                     }
                     checked={filters.has_unread}
                   />
