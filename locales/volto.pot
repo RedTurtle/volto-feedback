@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2024-07-30T08:32:41.891Z\n"
+"POT-Creation-Date: 2024-10-22T10:25:31.772Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -215,11 +215,17 @@ msgid "feedbacks_comments"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments
+# defaultMessage: All comments
+msgid "feedbacks_comments_all"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
 # defaultMessage: {total} comments.
 msgid "feedbacks_comments_button_open"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments
+#: components/manage/VFPanel/VFPanel
 # defaultMessage: Show comments to read.
 msgid "feedbacks_comments_filter_unread"
 msgstr ""
@@ -227,6 +233,36 @@ msgstr ""
 #: components/manage/VFPanel/FeedbackComments
 # defaultMessage: Read
 msgid "feedbacks_comments_read"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Set all as read.
+msgid "feedbacks_comments_set_all_read"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Set all as...
+msgid "feedbacks_comments_set_all_read_confirm_title"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Are you sure you want to set all visible comments as "read"?
+msgid "feedbacks_comments_set_all_read_confirm_title_read"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Are you sure you want to set all visible comments as "unread"?
+msgid "feedbacks_comments_set_all_read_confirm_title_unread"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: No
+msgid "feedbacks_comments_toggle_all_cancel"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Yes
+msgid "feedbacks_comments_toggle_all_yes"
 msgstr ""
 
 #: components/manage/VFPanel/FeedbackComments

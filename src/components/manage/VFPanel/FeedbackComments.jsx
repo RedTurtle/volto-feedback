@@ -73,6 +73,10 @@ const messages = defineMessages({
     id: 'feedbacks_comments_toggle_all_yes',
     defaultMessage: 'Yes',
   },
+  cancelButton: {
+    id: 'feedbacks_comments_toggle_all_cancel',
+    defaultMessage: 'No',
+  },
   set_all_read_confirm_title: {
     id: 'feedbacks_comments_set_all_read_confirm_title',
     defaultMessage: 'Set all as...',
@@ -358,6 +362,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
       <Confirm
         open={modalConfirmOpen}
         confirmButton={intl.formatMessage(messages.yes)}
+        cancelButton={intl.formatMessage(messages.cancel)}
         header={intl.formatMessage(messages.set_all_read_confirm_title)}
         content={
           <div className="content">
