@@ -213,6 +213,57 @@ msgid "feedbacks_comments"
 msgstr "Commenti"
 
 #: components/manage/VFPanel/FeedbackComments
+# defaultMessage: All comments
+msgid "feedbacks_comments_all"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: {total} comments.
+msgid "feedbacks_comments_button_open"
+msgstr "{total} commenti. {unreaded} da leggere."
+
+#: components/manage/VFPanel/FeedbackComments
+#: components/manage/VFPanel/VFPanel
+# defaultMessage: Show comments to read.
+msgid "feedbacks_comments_filter_unread"
+msgstr "Mostra i commenti da leggere"
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Read
+msgid "feedbacks_comments_read"
+msgstr "Letto"
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Set all as read.
+msgid "feedbacks_comments_set_all_read"
+msgstr "Imposta tutti come 'letti'"
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Set all as...
+msgid "feedbacks_comments_set_all_read_confirm_title"
+msgstr "Imposta tutti come..."
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Are you sure you want to set all visible comments as "read"?
+msgid "feedbacks_comments_set_all_read_confirm_title_read"
+msgstr "Sei sicuro di volere impostare tutti i commenti visibili come 'letti'?"
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Are you sure you want to set all visible comments as "unread"?
+msgid "feedbacks_comments_set_all_read_confirm_title_unread"
+msgstr "Sei sicuro di volere impostare tutti i commenti visibili come 'non letti'?"
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: No
+msgid "feedbacks_comments_toggle_all_cancel"
+msgstr ""
+
+#: components/manage/VFPanel/FeedbackComments
+# defaultMessage: Yes
+msgid "feedbacks_comments_toggle_all_yes"
+msgstr "Si"
+
+#: components/manage/VFPanel/FeedbackComments
 # defaultMessage: Vote
 msgid "feedbacks_comments_votes"
 msgstr "Voto"

@@ -7,6 +7,8 @@ import {
   getFeedback,
   getFeedbacks,
   deleteFeedback,
+  updateFeedback,
+  updateFeedbackList,
 } from 'volto-feedback/reducers';
 import { CommentsStep, AnswersStep } from 'volto-feedback/components';
 import {
@@ -25,6 +27,8 @@ export {
   deleteFeedback,
   resetSubmitFeedback,
   resetDeleteFeedback,
+  updateFeedback,
+  updateFeedbackList,
 } from 'volto-feedback/actions';
 export {
   getFeedbackFormSteps,
@@ -71,6 +75,8 @@ export default function applyConfig(config) {
     getFeedback,
     getFeedbacks,
     deleteFeedback,
+    updateFeedback,
+    updateFeedbackList,
   };
 
   config.settings['volto-feedback'] = {
@@ -90,6 +96,15 @@ export default function applyConfig(config) {
         step: 1,
         pane: CommentsStep,
       },
+    ],
+
+    additionalCommentFields: [
+      /*
+      Additional columns to display in comments table, for example if i customize steps.
+      If component attribute is undefined, the simple value is displayed.
+      Example:
+      { id: 'email', label: 'Email', component: null },
+      */
     ],
   };
 
