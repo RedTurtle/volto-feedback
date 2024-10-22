@@ -8,6 +8,7 @@ import {
   getFeedbacks,
   deleteFeedback,
   updateFeedback,
+  updateFeedbackList,
 } from 'volto-feedback/reducers';
 import { CommentsStep, AnswersStep } from 'volto-feedback/components';
 import {
@@ -27,6 +28,7 @@ export {
   resetSubmitFeedback,
   resetDeleteFeedback,
   updateFeedback,
+  updateFeedbackList,
 } from 'volto-feedback/actions';
 export {
   getFeedbackFormSteps,
@@ -56,8 +58,8 @@ export {
 } from 'volto-feedback/components/manage';
 
 export default function applyConfig(config) {
-  config.settings.loadables['GoogleReCaptcha'] = loadable(
-    () => import('react-google-recaptcha-v3'),
+  config.settings.loadables['GoogleReCaptcha'] = loadable(() =>
+    import('react-google-recaptcha-v3'),
   );
 
   config.settings.nonContentRoutes = [
@@ -74,6 +76,7 @@ export default function applyConfig(config) {
     getFeedbacks,
     deleteFeedback,
     updateFeedback,
+    updateFeedbackList,
   };
 
   config.settings['volto-feedback'] = {

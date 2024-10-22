@@ -1,0 +1,7 @@
+#feedback-comments-modal .contents-pagination .right.menu {
+  display: none;
+}
+
+#feedback-comments-modal #read-head-col .ui.checkbox {
+  margin-left: 0.5rem;
+}

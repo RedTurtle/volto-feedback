@@ -8,7 +8,9 @@ import {
   DELETE_FEEDBACK,
   RESET_DELETE_FEEDBACK,
   UPDATE_FEEDBACK,
+  UPDATE_FEEDBACK_LIST,
 } from 'volto-feedback/actions';
+import { omit } from 'lodash';
 
 const RESET_GET_FEEDBACK = 'RESET_GET_FEEDBACK';
 
@@ -211,7 +213,6 @@ export const getFeedback = (state = initialState, action = {}) => {
                 ...(state.subrequests[action.subrequest] || {
                   items: [],
                   total: 0,
-                  batching: {},
                 }),
                 error: null,
                 loaded: false,
@@ -238,7 +239,6 @@ export const getFeedback = (state = initialState, action = {}) => {
                 total: action.result.items_total,
                 loaded: true,
                 loading: false,
-                batching: { ...action.result.batching },
               },
             },
           }
@@ -249,7 +249,6 @@ export const getFeedback = (state = initialState, action = {}) => {
             total: action.result.items_total,
             loaded: true,
             loading: false,
-            batching: { ...action.result.batching },
           };
     case `${GET_FEEDBACK}_FAIL`:
       return action.subrequest
@@ -263,7 +262,6 @@ export const getFeedback = (state = initialState, action = {}) => {
                 total: 0,
                 loading: false,
                 loaded: false,
-                batching: {},
               },
             },
           }
@@ -274,7 +272,6 @@ export const getFeedback = (state = initialState, action = {}) => {
             total: 0,
             loading: false,
             loaded: false,
-            batching: {},
           };
     case RESET_GET_FEEDBACK:
       return action.subrequest
@@ -427,6 +424,81 @@ export const updateFeedback = (state = initialState, action = {}) => {
             },
           };
     case `${UPDATE_FEEDBACK}_FAIL`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                data: null,
+                loading: false,
+                loaded: false,
+                error: action.error,
+              },
+            },
+          }
+        : {
+            ...state,
+            data: null,
+            result: {
+              loading: false,
+              loaded: false,
+              error: action.error,
+            },
+          };
+    default:
+      return state;
+  }
+};
+
+export const updateFeedbackList = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case `${UPDATE_FEEDBACK_LIST}_PENDING`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                ...(state.subrequests[action.subrequest] || {
+                  data: null,
+                }),
+                loaded: false,
+                loading: true,
+                error: null,
+              },
+            },
+          }
+        : {
+            ...state,
+            result: {
+              loading: true,
+              loaded: false,
+              error: null,
+            },
+          };
+    case `${UPDATE_FEEDBACK_LIST}_SUCCESS`:
+      return action.subrequest
+        ? {
+            ...state,
+            subrequests: {
+              ...state.subrequests,
+              [action.subrequest]: {
+                loading: false,
+                loaded: true,
+                error: null,
+              },
+            },
+          }
+        : {
+            ...state,
+            result: {
+              loading: false,
+              loaded: true,
+              error: null,
+            },
+          };
+    case `${UPDATE_FEEDBACK_LIST}_FAIL`:
       return action.subrequest
         ? {
             ...state,

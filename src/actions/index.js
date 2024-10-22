@@ -82,20 +82,33 @@ export function getFeedbacks(data) {
  * @module actions/getFeedback
  */
 export const GET_FEEDBACK = 'GET_FEEDBACK';
-export function getFeedback(uid, subrequest) {
+export function getFeedback(uid, subrequest, search_params) {
+  const search = {
+    b_start: 0,
+    b_size: 25,
+    sort_on: 'date',
+    sort_order: 'descending',
+    show_unread: null,
+    ...search_params,
+  };
+  let path = `/@feedback/${uid}?b_start=${search.b_start}&b_size=${search.b_size}&sort_on=${search.sort_on}&sort_order=${search.sort_order}`;
+  if (search.show_unread) {
+    path += `&unread=true`;
+  }
+
   return {
     type: GET_FEEDBACK,
     subrequest,
     request: {
       op: 'get',
-      path: `/@feedback/${uid}`,
+      path,
     },
   };
 }
 
 /**
  * DELETE_FEEDBACK action
- * @module actions/getFeedbacks
+ * @module actions/deleteFeedback
  */
 export const DELETE_FEEDBACK = 'DELETE_FEEDBACK';
 export function deleteFeedback(item) {
@@ -115,8 +128,8 @@ export function deleteFeedback(item) {
 }
 
 /**
- * DELETE_FEEDBACK action
- * @module actions/getFeedbacks
+ * UPDATE_FEEDBACK action
+ * @module actions/updateFeedback
  */
 export const UPDATE_FEEDBACK = 'UPDATE_FEEDBACK';
 export function updateFeedback(parent_uid, item) {
@@ -126,6 +139,22 @@ export function updateFeedback(parent_uid, item) {
       op: 'patch',
       path: '/@feedback/' + parent_uid,
       data: item,
+    },
+  };
+}
+
+/**
+ * UPDATE_FEEDBACK action
+ * @module actions/updateFeedback
+ */
+export const UPDATE_FEEDBACK_LIST = 'UPDATE_FEEDBACK_LIST';
+export function updateFeedbackList(feedbacks) {
+  return {
+    type: UPDATE_FEEDBACK,
+    request: {
+      op: 'patch',
+      path: '/@feedback-list/',
+      data: feedbacks,
     },
   };
 }
