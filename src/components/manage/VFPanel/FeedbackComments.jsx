@@ -329,7 +329,11 @@ const FeedbackComments = ({ item, moment: Moment }) => {
                       ))}
                       <Table.Cell textAlign="center">
                         <Checkbox
-                          checked={c.read}
+                          checked={
+                            typeof c.read == 'string'
+                              ? c.read === 'true'
+                              : c.read
+                          }
                           onChange={(e, data) => toggleRead(c, data.checked)}
                         />
                       </Table.Cell>
@@ -362,7 +366,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
       <Confirm
         open={modalConfirmOpen}
         confirmButton={intl.formatMessage(messages.yes)}
-        cancelButton={intl.formatMessage(messages.cancel)}
+        cancelButton={intl.formatMessage(messages.cancelButton)}
         header={intl.formatMessage(messages.set_all_read_confirm_title)}
         content={
           <div className="content">
@@ -383,7 +387,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           toggleAllRead(checkAllRead);
           setModalConfirmOpen(false);
         }}
-        size="medium"
+        size="small"
       />
     </>
   );

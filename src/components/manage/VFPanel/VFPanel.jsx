@@ -557,7 +557,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
               onConfirm={async () => {
                 await resetSelectedFeedbacks();
               }}
-              size=""
+              size="small"
             />
           )}
         </Container>
