@@ -1,3 +1,24 @@
+## [0.5.0](https://github.com/RedTurtle/volto-feedback/compare/v0.4.0...v0.5.0) (2024-11-07)
+
+
+### Features
+
+* added additionalCommentFields to display custom columns in feedback table ([11e843f](https://github.com/RedTurtle/volto-feedback/commit/11e843f6ba23b86feee8171d478b1f397f304dc2))
+* added filter on 'read' field ([362e415](https://github.com/RedTurtle/volto-feedback/commit/362e415687cd37d015e5d7133426165459f04fd0))
+* added readed flag in comments modal, to mark comment as readed ([b1fa12a](https://github.com/RedTurtle/volto-feedback/commit/b1fa12afb3e9f3881b05ab49bb55eee750de619b))
+* added unread filter in feedback list ([d257103](https://github.com/RedTurtle/volto-feedback/commit/d2571037a127a703992f5b3ae60354ffb7dc88f5))
+* feedback comments pagination an toggle all as read/unread ([75b563a](https://github.com/RedTurtle/volto-feedback/commit/75b563a058c5003a0f90c24415a7660588906e8c))
+
+
+### Bug Fixes
+
+* has_unread filter ([e751c01](https://github.com/RedTurtle/volto-feedback/commit/e751c01a70b9ce01367ae04c9b7636d99bd31de8))
+* locales ([2e3fe6c](https://github.com/RedTurtle/volto-feedback/commit/2e3fe6cf1dce92aaba1ac6452278e8f02ed4777c))
+* read flag and has_unread in feedback list ([e59b838](https://github.com/RedTurtle/volto-feedback/commit/e59b838ed81f38c8d3955848cfdfdabbaa12670c))
+* readed to read ([2e6550a](https://github.com/RedTurtle/volto-feedback/commit/2e6550a063e3a9956525b26dc8d3cc0f1b09cfee))
+* toggtoggle read api call ([c1da551](https://github.com/RedTurtle/volto-feedback/commit/c1da551b897067a92ac7864b16e1a24061a32d5b))
+* translations and warning ([a743b50](https://github.com/RedTurtle/volto-feedback/commit/a743b508c2d57cf7681bad9f00ee0cd3ec264cd2))
+
 ## [0.4.0](https://github.com/RedTurtle/volto-feedback/compare/v0.3.3...v0.4.0) (2024-07-17)
 
 
