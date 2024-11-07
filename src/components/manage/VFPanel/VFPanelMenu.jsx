@@ -136,7 +136,7 @@ const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
         }
         onCancel={() => setOpenConfirm(false)}
         onConfirm={deleteAll}
-        size=""
+        size="small"
       />
     </Menu>
   );
