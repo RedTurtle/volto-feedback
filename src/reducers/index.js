@@ -461,7 +461,7 @@ export const updateFeedbackList = (state = initialState, action = {}) => {
               ...state.subrequests,
               [action.subrequest]: {
                 ...(state.subrequests[action.subrequest] || {
-                  data: null,
+                  result: null,
                 }),
                 loaded: false,
                 loading: true,
@@ -471,11 +471,9 @@ export const updateFeedbackList = (state = initialState, action = {}) => {
           }
         : {
             ...state,
-            result: {
-              loading: true,
-              loaded: false,
-              error: null,
-            },
+            loading: true,
+            loaded: false,
+            error: null,
           };
     case `${UPDATE_FEEDBACK_LIST}_SUCCESS`:
       return action.subrequest
@@ -486,17 +484,17 @@ export const updateFeedbackList = (state = initialState, action = {}) => {
               [action.subrequest]: {
                 loading: false,
                 loaded: true,
+                result: action.result,
                 error: null,
               },
             },
           }
         : {
             ...state,
-            result: {
-              loading: false,
-              loaded: true,
-              error: null,
-            },
+            loading: false,
+            loaded: true,
+            result: action.result,
+            error: null,
           };
     case `${UPDATE_FEEDBACK_LIST}_FAIL`:
       return action.subrequest
@@ -505,21 +503,19 @@ export const updateFeedbackList = (state = initialState, action = {}) => {
             subrequests: {
               ...state.subrequests,
               [action.subrequest]: {
-                data: null,
                 loading: false,
                 loaded: false,
                 error: action.error,
+                result: null,
               },
             },
           }
         : {
             ...state,
-            data: null,
-            result: {
-              loading: false,
-              loaded: false,
-              error: action.error,
-            },
+            loading: false,
+            loaded: false,
+            error: action.error,
+            result: null,
           };
     default:
       return state;

@@ -150,7 +150,7 @@ export function updateFeedback(parent_uid, item) {
 export const UPDATE_FEEDBACK_LIST = 'UPDATE_FEEDBACK_LIST';
 export function updateFeedbackList(feedbacks) {
   return {
-    type: UPDATE_FEEDBACK,
+    type: UPDATE_FEEDBACK_LIST,
     request: {
       op: 'patch',
       path: '/@feedback-list/',

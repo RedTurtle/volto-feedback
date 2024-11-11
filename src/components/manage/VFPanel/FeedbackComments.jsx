@@ -142,6 +142,10 @@ const FeedbackComments = ({ item, moment: Moment }) => {
     return state.getFeedback?.subrequests?.[item?.uid];
   });
 
+  const updateFeedbackListResult = useSelector((state) => {
+    return state.updateFeedbackList;
+  });
+
   useEffect(() => {
     if (feedbackCommentsResults?.loaded) {
       setComments(feedbackCommentsResults.items);
@@ -196,8 +200,12 @@ const FeedbackComments = ({ item, moment: Moment }) => {
       return acc;
     }, {});
     dispatch(updateFeedbackList(feedbacks));
-    loadCommentsData();
   };
+  useEffect(() => {
+    if (!updateFeedbackListResult.loading && updateFeedbackListResult.loaded) {
+      loadCommentsData();
+    }
+  }, [updateFeedbackListResult.loaded]);
 
   useEffect(() => {
     loadCommentsData();
