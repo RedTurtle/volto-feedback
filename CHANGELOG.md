@@ -1,3 +1,10 @@
+### [0.5.1](https://github.com/RedTurtle/volto-feedback/compare/v0.5.0...v0.5.1) (2024-11-11)
+
+
+### Bug Fixes
+
+* toggle all read flag ([f1d5832](https://github.com/RedTurtle/volto-feedback/commit/f1d58323f42ae1483e3c2e21283db6ddb735edce))
+
 ## [0.5.0](https://github.com/RedTurtle/volto-feedback/compare/v0.4.0...v0.5.0) (2024-11-07)
 
 
