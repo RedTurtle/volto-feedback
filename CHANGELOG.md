@@ -1,3 +1,10 @@
+### [0.5.2](https://github.com/RedTurtle/volto-feedback/compare/v0.5.1...v0.5.2) (2024-12-16)
+
+
+### Bug Fixes
+
+* a11y message and modal ([c7558f5](https://github.com/RedTurtle/volto-feedback/commit/c7558f59d011fcb1bdbb8c1bf7a708cddaa3ce3a))
+
 ### [0.5.1](https://github.com/RedTurtle/volto-feedback/compare/v0.5.0...v0.5.1) (2024-11-11)
 
 
