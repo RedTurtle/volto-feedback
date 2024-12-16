@@ -117,6 +117,8 @@ const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
         </Menu.Menu>
       )}
       <Confirm
+        role="dialog"
+        aria-modal="true"
         cancelButton={intl.formatMessage(messages.cancel)}
         open={openConfirm}
         header={intl.formatMessage(messages.delete_all)}

@@ -270,7 +270,7 @@ const VFPanel = ({ moment: Moment, toastify }) => {
 
             <Segment>
               {itemsSelected.length > 0 && (
-                <Message className="selected-items" color="teal">
+                <Message className="selected-items" color="teal" role="alert">
                   <div className="text">
                     {itemsSelected?.length}{' '}
                     {intl.formatMessage(messages.items_selected)}
@@ -533,6 +533,8 @@ const VFPanel = ({ moment: Moment, toastify }) => {
           </Segment.Group>
           {showConfirmDelete && (
             <Confirm
+              role="dialog"
+              aria-modal="true"
               cancelButton={intl.formatMessage(messages.cancel)}
               open={showConfirmDelete}
               header={intl.formatMessage(messages.confirm_delete_selected)}

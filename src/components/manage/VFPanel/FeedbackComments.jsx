@@ -372,6 +372,8 @@ const FeedbackComments = ({ item, moment: Moment }) => {
       </Modal>
 
       <Confirm
+        role="dialog"
+        aria-modal="true"
         open={modalConfirmOpen}
         confirmButton={intl.formatMessage(messages.yes)}
         cancelButton={intl.formatMessage(messages.cancelButton)}
