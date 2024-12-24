@@ -3,7 +3,7 @@ import {
   getFeedbackThreshold,
 } from 'volto-feedback/helpers';
 import React, { useState, useEffect, useMemo } from 'react';
-import { usePrevious } from '@plone/volto/helpers';
+import { usePrevious } from '@plone/volto/helpers/Utils/usePrevious';
 import { Form } from 'semantic-ui-react';
 import { getTranslatedQuestion } from 'volto-feedback';
 import { defineMessages } from 'react-intl';

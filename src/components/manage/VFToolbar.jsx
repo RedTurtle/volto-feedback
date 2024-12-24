@@ -3,7 +3,7 @@ import { useIntl, defineMessages } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Icon } from '@plone/volto/components';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import { Plug } from '@plone/volto/components/manage/Pluggable';
 import FeedbackSVG from '../../icons/feedback.svg';
 import './vf-toolbar.css';

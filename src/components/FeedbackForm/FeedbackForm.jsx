@@ -11,8 +11,8 @@ import {
   Message,
   Rating,
 } from 'semantic-ui-react';
-import { Icon } from '@plone/volto/components';
-import { isCmsUi } from '@plone/volto/helpers';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import { isCmsUi } from '@plone/volto/helpers/Url/Url';
 import {
   HoneypotWidget,
   GoogleReCaptchaWidget,

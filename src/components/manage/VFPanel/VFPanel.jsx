@@ -18,13 +18,12 @@ import {
   Icon as SIcon,
 } from 'semantic-ui-react';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
-import {
-  Pagination,
-  Toolbar,
-  Unauthorized,
-  Toast,
-} from '@plone/volto/components';
-import { Helmet, flattenToAppURL } from '@plone/volto/helpers';
+import Pagination from '@plone/volto/components/theme/Pagination/Pagination';
+import Toolbar from '@plone/volto/components/manage/Toolbar/Toolbar';
+import Unauthorized from '@plone/volto/components/theme/Unauthorized/Unauthorized';
+import Toast from '@plone/volto/components/manage/Toast/Toast';
+import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
+import Helmet from '@plone/volto/helpers/Helmet/Helmet';
 import { FeedbackComments } from 'volto-feedback/components/manage';
 import {
   getFeedbacks,

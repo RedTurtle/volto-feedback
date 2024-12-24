@@ -11,7 +11,7 @@ import {
   Checkbox,
   Confirm,
 } from 'semantic-ui-react';
-import { Pagination } from '@plone/volto/components';
+import Pagination from '@plone/volto/components/theme/Pagination/Pagination';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
 import {
   getFeedback,
