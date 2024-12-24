@@ -1,3 +1,10 @@
+### [0.5.3](https://github.com/RedTurtle/volto-feedback/compare/v0.5.2...v0.5.3) (2024-12-24)
+
+
+### Maintenance
+
+* removed volto imports from barrel files ([7c233d3](https://github.com/RedTurtle/volto-feedback/commit/7c233d3b7a3bee398ed11d6986152a23f879b48c))
+
 ### [0.5.2](https://github.com/RedTurtle/volto-feedback/compare/v0.5.1...v0.5.2) (2024-12-16)
 
 
