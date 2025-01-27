@@ -97,6 +97,11 @@ msgid "feedback_export_csv"
 msgstr "Export in CSV"
 
 #: components/FeedbackForm/FeedbackForm
+# defaultMessage: Feedback form
+msgid "feedback_form_aria_title"
+msgstr ""
+
+#: components/FeedbackForm/FeedbackForm
 # defaultMessage: Next
 msgid "feedback_form_button_next"
 msgstr "Avanti"
