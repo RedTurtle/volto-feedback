@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { useIntl, defineMessages } from "react-intl";
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { useIntl, defineMessages } from 'react-intl';
 import {
   Form,
   Button,
@@ -10,80 +10,80 @@ import {
   Loader,
   Message,
   Rating,
-} from "semantic-ui-react";
-import Icon from "@plone/volto/components/theme/Icon/Icon";
-import { isCmsUi } from "@plone/volto/helpers/Url/Url";
+} from 'semantic-ui-react';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
+import { isCmsUi } from '@plone/volto/helpers/Url/Url';
 import {
   HoneypotWidget,
   GoogleReCaptchaWidget,
-} from "volto-feedback/components/widgets";
+} from 'volto-feedback/components/widgets';
 
-import { submitFeedback, resetSubmitFeedback } from "volto-feedback/actions";
-import "./feedback-form.css";
+import { submitFeedback, resetSubmitFeedback } from 'volto-feedback/actions';
+import './feedback-form.css';
 import {
   getFeedbackFormByStep,
   getNumberOfSteps,
   getTranslatedQuestion,
-} from "volto-feedback/helpers";
-import "semantic-ui-css/components/rating.css";
+} from 'volto-feedback/helpers';
+import 'semantic-ui-css/components/rating.css';
 
 const messages = defineMessages({
   title: {
-    id: "feedback_form_title",
-    defaultMessage: "Was this page useful to you?",
+    id: 'feedback_form_title',
+    defaultMessage: 'Was this page useful to you?',
   },
   aria_title_feedback: {
     id: "feedback_form_aria_title",
     defaultMessage: "Feedback form",
   },
   yes: {
-    id: "feedback_form_yes",
-    defaultMessage: "Yes",
+    id: 'feedback_form_yes',
+    defaultMessage: 'Yes',
   },
   no: {
-    id: "feedback_form_no",
-    defaultMessage: "No",
+    id: 'feedback_form_no',
+    defaultMessage: 'No',
   },
   suggestions_placeholder: {
-    id: "feedback_form_suggestions_placeholder",
+    id: 'feedback_form_suggestions_placeholder',
     defaultMessage:
-      "Explain us why, and help us improve the quality of the site",
+      'Explain us why, and help us improve the quality of the site',
   },
   submit: {
-    id: "feedback_form_submit",
-    defaultMessage: "Submit your comment",
+    id: 'feedback_form_submit',
+    defaultMessage: 'Submit your comment',
   },
   thank_you: {
-    id: "feedback_form_thank_you",
-    defaultMessage: "Thank you for your feedback!",
+    id: 'feedback_form_thank_you',
+    defaultMessage: 'Thank you for your feedback!',
   },
   next: {
-    id: "feedback_form_button_next",
-    defaultMessage: "Next",
+    id: 'feedback_form_button_next',
+    defaultMessage: 'Next',
   },
   prev: {
-    id: "feedback_form_button_prev",
-    defaultMessage: "Previous",
+    id: 'feedback_form_button_prev',
+    defaultMessage: 'Previous',
   },
   feedback_sent: {
-    id: "feedback_sent",
-    defaultMessage: "Your feedback was sent!",
+    id: 'feedback_sent',
+    defaultMessage: 'Your feedback was sent!',
   },
   error: {
-    id: "feedback_error",
-    defaultMessage: "Error",
+    id: 'feedback_error',
+    defaultMessage: 'Error',
   },
 });
 
 const FeedbackForm = () => {
   const intl = useIntl();
   const location = useLocation();
-  const path = location.pathname ?? "/";
+  const path = location.pathname ?? '/';
   const dispatch = useDispatch();
   const [satisfaction, setSatisfaction] = useState(null);
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
-  const captcha = !!process.env.RAZZLE_RECAPTCHA_KEY ? "GoogleReCaptcha" : null;
+  const captcha = !!process.env.RAZZLE_RECAPTCHA_KEY ? 'GoogleReCaptcha' : null;
   const submitResults = useSelector((state) => state.submitFeedback);
   const [validToken, setValidToken] = useState(null);
   let fieldHoney = process.env.RAZZLE_HONEYPOT_FIELD;
@@ -124,14 +124,14 @@ const FeedbackForm = () => {
   }, [path]);
 
   useEffect(() => {
-    updateFormData("vote", satisfaction ?? null);
+    updateFormData('vote', satisfaction ?? null);
     setStep(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [satisfaction]);
 
   // initialized honeypot field
   useEffect(() => {
-    updateFormData(fieldHoney, "");
+    updateFormData(fieldHoney, '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldHoney]);
 
@@ -141,23 +141,23 @@ const FeedbackForm = () => {
         setValidToken(token);
       }
     },
-    [satisfaction, setValidToken, validToken]
+    [satisfaction, setValidToken, validToken],
   );
 
   const sendFormData = () => {
     const data = {
       ...formData,
-      ...(captcha && { "g-recaptcha-response": validToken }),
+      ...(captcha && { 'g-recaptcha-response': validToken }),
       answer: getTranslatedQuestion(intl, formData.answer),
     };
     dispatch(submitFeedback(path, data));
   };
 
-  let action = path?.length > 1 ? path.replace(/\//g, "") : path;
+  let action = path?.length > 1 ? path.replace(/\//g, '') : path;
   if (action?.length > 0) {
-    action = action?.replace(/-/g, "_");
+    action = action?.replace(/-/g, '_');
   } else {
-    action = "homepage";
+    action = 'homepage';
   }
 
   if (isCmsUi(path)) {
@@ -179,11 +179,11 @@ const FeedbackForm = () => {
     );
   };
   return (
-    <div
-      className="feedback-form"
+    <div 
+      className="feedback-form"       
       role="form"
-      aria-label={intl.formatMessage(messages.aria_title_feedback)}
-    >
+      aria-label={intl.formatMessage(messages.title)}
+      >
       <h2 id="vf-radiogroup-label">{intl.formatMessage(messages.title)}</h2>
 
       {!submitResults?.loading && !submitResults.loaded && (
@@ -223,7 +223,7 @@ const FeedbackForm = () => {
               </button>
             )}
             {step === numberOfSteps - 1 && (
-              <button className="next-action" type={"submit"}>
+              <button className="next-action" type={'submit'}>
                 {intl.formatMessage(messages.next)}
               </button>
             )}
