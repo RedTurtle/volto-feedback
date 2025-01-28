@@ -32,6 +32,10 @@ const messages = defineMessages({
     id: 'feedback_form_title',
     defaultMessage: 'Was this page useful to you?',
   },
+  aria_title_feedback: {
+    id: "feedback_form_aria_title",
+    defaultMessage: "Feedback form",
+  },
   yes: {
     id: 'feedback_form_yes',
     defaultMessage: 'Yes',
@@ -175,7 +179,11 @@ const FeedbackForm = () => {
     );
   };
   return (
-    <div className="feedback-form">
+    <div 
+      className="feedback-form"       
+      role="form"
+      aria-label={intl.formatMessage(messages.title)}
+      >
       <h2 id="vf-radiogroup-label">{intl.formatMessage(messages.title)}</h2>
 
       {!submitResults?.loading && !submitResults.loaded && (
