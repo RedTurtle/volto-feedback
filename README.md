@@ -8,7 +8,9 @@ Install with mrs-developer (see [Volto docs](https://docs.voltocms.com/customizi
 yarn add volto-feedback
 ```
 
-It requires https://github.com/RedTurtle/collective.feedback installed into the backend.
+It requires <https://github.com/RedTurtle/collective.feedback> installed into the backend.
+
+**Please consult Version and breaking changes section for more information on versions and breaking changes**
 
 ## Usage
 
@@ -45,11 +47,25 @@ This is the default configuration:
             pane: CommentsStep,
         },
         ],
+        /*
+        Additional columns to display in comments table, for example if i customize steps.
+        If component attribute is undefined, the simple value is displayed.
+        Example:
+        { id: 'email', label: 'Email', component: null },
+        */
+        additionalCommentFields: [
+        ],
+        /* Enable Feedback component in your CMS/Non content routes.
+        Example:
+        { path: '/sitemap', feedbackTitle: messages.sitemap_ft },
+        { path: '/search', feedbackTitle: messages.search_brdc },
+        */
+        feedbackEnabledNonContentRoutes: [],
     };
     ...
 ```
 
-All exported components, actions and helpers can be directly customized using standard Volto customization pattern. This is the list of exported components:
+All exported components, actions and helpers can be directly customized using standard Volto customization pattern. This is the list of available exports:
 
 ```jsx
 export {
@@ -61,6 +77,8 @@ export {
   deleteFeedback,
   resetSubmitFeedback,
   resetDeleteFeedback,
+  updateFeedback,
+  updateFeedbackList,
 } from 'volto-feedback/actions';
 export {
   getFeedbackFormSteps,
@@ -69,7 +87,13 @@ export {
   getFeedbackThreshold,
   getTranslatedQuestion,
   generateFeedbackCommentUUID,
+  getNumberOfSteps,
+  isFeedbackEnabledForRoute,
+  getFeedbackEnabledNonContentRoutes,
+  getStaticFeedbackRouteTitle,
+  getFeedbackEnabledNonContentRoutesPathList,
 } from 'volto-feedback/helpers';
+
 export {
   GoogleReCaptchaWidget,
   HoneypotWidget,
@@ -88,9 +112,44 @@ export {
 } from 'volto-feedback/components/manage';
 ```
 
-It needs this Plone addon to work.
+It also need a RAZZLE_RECAPTCHA_KEY in your .env to work or RAZZLE_HONEYPOT_FIELD env var.
 
-It also need a RAZZLE_RECAPTCHA_KEY in your .env to work or RAZZLE_HONEYPOT_FIELD env var..
+## Versions and breaking changes
+
+### Important notice
+
+Version 0.6.x includes breaking changes to the underlying service `@feedback-add`.
+For full compatibility, you must install version 1.2.x in the backend.
+
+Version 0.6.x adds optional configuration to enable feedback for non content routes/cms routes. To do this, the call to the associated Plone service is no longer contextual. Determining the context is done via a new param in the body of the request: `content`.
+
+```jsx
+ const path = location.pathname ?? '/';
+ ...
+ const sendFormData = () => {
+    const data = {
+      ...formData,
+      ...(captcha && { 'g-recaptcha-response': validToken }),
+      answer: getTranslatedQuestion(intl, formData.answer),
+      content:
+        !isFeedbackEnabledForRoute(path) && isCmsUi(path)
+          ? getStaticFeedbackRouteTitle(path)
+          : path,
+    };
+    dispatch(submitFeedback(path, data));
+  };
+  ...
+```
+
+This will be the current pathname, or the title of the non content routes/cms routes enabled in the configuration settings:
+
+```js
+        /* Enable Feedback component in your CMS/Non content routes. */
+        feedbackEnabledNonContentRoutes: [
+          { path: '/sitemap', feedbackTitle: messages.sitemap_ft },
+          { path: '/search', feedbackTitle: messages.search_brdc }
+        ],
+```
 
 ## Translations
 

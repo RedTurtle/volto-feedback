@@ -1,5 +1,7 @@
 import config from '@plone/volto/registry';
 import { defineMessages } from 'react-intl';
+import memoize from 'lodash/memoize';
+import { isCmsUi } from '@plone/volto/helpers';
 
 export const FEEDBACK_THRESHOLD = 3.5;
 export const NEGATIVE_FEEDBACK_QUESTIONS = [
@@ -118,4 +120,39 @@ export const generateFeedbackCommentUUID = (date) => {
   // uid of the content that was rated due to how Soup and
   // the backend addon work.
   return new Date(date).getTime().toString(36);
+};
+
+export const getFeedbackEnabledNonContentRoutes = () =>
+  config.settings['volto-feedback'].feedbackEnabledNonContentRoutes;
+
+export const getFeedbackEnabledNonContentRoutesPathList = () =>
+  config.settings['volto-feedback'].feedbackEnabledNonContentRoutes?.map(
+    (r) => r.path,
+  );
+
+const normalizePath = (path) => path?.replace(/\?.*$/, '');
+
+export const isFeedbackEnabledForRoute = memoize((path) => {
+  console.log(isCmsUi(path));
+  if (!isCmsUi(path)) return true;
+  const feedbackEnabledPaths = getFeedbackEnabledNonContentRoutesPathList();
+  return feedbackEnabledPaths.some((route) => {
+    const fullPath = normalizePath(path);
+    return (
+      feedbackEnabledPaths.includes(route) && new RegExp(route).test(fullPath)
+    );
+  });
+});
+
+export const getStaticFeedbackRouteTitle = (path) => {
+  const feedbackEnabledPaths = getFeedbackEnabledNonContentRoutes();
+  const feedbackEnabledPathsList = getFeedbackEnabledNonContentRoutesPathList();
+  debugger;
+  return (
+    feedbackEnabledPaths.find(
+      (route) =>
+        feedbackEnabledPathsList.includes(route.path) &&
+        new RegExp(route.path).test(normalizePath(path)),
+    )?.feedbackTitle || path
+  );
 };

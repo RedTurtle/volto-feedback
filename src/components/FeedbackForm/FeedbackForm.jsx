@@ -24,6 +24,8 @@ import {
   getFeedbackFormByStep,
   getNumberOfSteps,
   getTranslatedQuestion,
+  isFeedbackEnabledForRoute,
+  getStaticFeedbackRouteTitle,
 } from 'volto-feedback/helpers';
 import 'semantic-ui-css/components/rating.css';
 
@@ -33,8 +35,8 @@ const messages = defineMessages({
     defaultMessage: 'Was this page useful to you?',
   },
   aria_title_feedback: {
-    id: "feedback_form_aria_title",
-    defaultMessage: "Feedback form",
+    id: 'feedback_form_aria_title',
+    defaultMessage: 'Feedback form',
   },
   yes: {
     id: 'feedback_form_yes',
@@ -149,6 +151,10 @@ const FeedbackForm = () => {
       ...formData,
       ...(captcha && { 'g-recaptcha-response': validToken }),
       answer: getTranslatedQuestion(intl, formData.answer),
+      content:
+        !isFeedbackEnabledForRoute(path) && isCmsUi(path)
+          ? getStaticFeedbackRouteTitle(path)
+          : path,
     };
     dispatch(submitFeedback(path, data));
   };
@@ -179,11 +185,11 @@ const FeedbackForm = () => {
     );
   };
   return (
-    <div 
-      className="feedback-form"       
+    <div
+      className="feedback-form"
       role="form"
       aria-label={intl.formatMessage(messages.title)}
-      >
+    >
       <h2 id="vf-radiogroup-label">{intl.formatMessage(messages.title)}</h2>
 
       {!submitResults?.loading && !submitResults.loaded && (

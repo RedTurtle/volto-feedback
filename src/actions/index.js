@@ -8,12 +8,12 @@ export const RESET_DELETE_FEEDBACK = 'RESET_DELETE_FEEDBACK_FEEDBACK';
  * @param {string} path
  * @param {Object} data
  */
-export function submitFeedback(path = '', data) {
+export function submitFeedback(data) {
   return {
     type: SUBMIT_FEEDBACK_ACTION,
     request: {
       op: 'post',
-      path: path + '/@feedback-add',
+      path: '/@feedback-add',
       data,
     },
   };
