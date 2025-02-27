@@ -1,3 +1,13 @@
+
+
+## [0.6.0](https://github.com/redturtle/volto-feedback/compare/v0.5.3...v0.6.0) (2025-02-27)
+
+
+### Features
+
+* a11y aria ([#6](https://github.com/redturtle/volto-feedback/issues/6)) ([f6d7c33](https://github.com/redturtle/volto-feedback/commit/f6d7c33518101ca4cad9f9d4155020d06e5a88f1))
+* added feedback collection options for noncontentroutes ([#7](https://github.com/redturtle/volto-feedback/issues/7)) ([89bfa3f](https://github.com/redturtle/volto-feedback/commit/89bfa3f8ead2f9b557bf8e2135a5b0e3622fa175))
+
 ### [0.5.3](https://github.com/RedTurtle/volto-feedback/compare/v0.5.2...v0.5.3) (2024-12-24)
 
 
@@ -167,4 +177,3 @@
 
 * fix it translations ([274e210](https://github.com/redturtle/volto-feedback/commit/274e210baf11ca4f3496cf0e3834ba087aaaad3c))
 * it translations ([9a1c5e0](https://github.com/redturtle/volto-feedback/commit/9a1c5e0b04cd6fe8777848750fe61341c084e9d7))
-
