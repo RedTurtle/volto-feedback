@@ -484,13 +484,17 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                           </Table.Cell>
                         )}
                         <Table.Cell>
-                          <a
-                            href={flattenToAppURL(item.url)}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {item.title}
-                          </a>
+                          {item.url ? (
+                            <a
+                              href={flattenToAppURL(item.url)}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              {item.title}
+                            </a>
+                          ) : (
+                            <span>{item.title}</span>
+                          )}
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                           <SIcon name="star" />

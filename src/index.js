@@ -38,6 +38,10 @@ export {
   getTranslatedQuestion,
   generateFeedbackCommentUUID,
   getNumberOfSteps,
+  isFeedbackEnabledForRoute,
+  getFeedbackEnabledNonContentRoutes,
+  getStaticFeedbackRouteTitle,
+  getFeedbackEnabledNonContentRoutesPathList,
 } from 'volto-feedback/helpers';
 
 export {
@@ -106,6 +110,8 @@ export default function applyConfig(config) {
       { id: 'email', label: 'Email', component: null },
       */
     ],
+    // Enable Feedback component in your CMS/Non content routes
+    feedbackEnabledNonContentRoutes: [],
   };
 
   config.settings.appExtras = [
