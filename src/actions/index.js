@@ -118,11 +118,11 @@ export function deleteFeedback(item) {
     request: !Array.isArray(item)
       ? {
           op: 'del',
-          path: '/@feedback-delete/' + item?.uid,
+          path: `/@feedback-delete/${item?.uid ? item?.uid : item?.title}`,
         }
       : item?.map((it) => ({
           op: 'del',
-          path: '/@feedback-delete/' + it?.uid,
+          path: `/@feedback-delete/${it?.uid ? it?.uid : it?.title}`,
         })),
   };
 }

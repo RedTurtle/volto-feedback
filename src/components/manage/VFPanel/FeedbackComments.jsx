@@ -107,6 +107,7 @@ const ReadMore = ({ children, intl }) => {
         : children}
       {needsShowMore && (
         <Button
+          type="button"
           onClick={toggleReadMore}
           className="read-more-show-less"
           title={
@@ -365,7 +366,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
           )}
         </Modal.Content>
         <Modal.Actions>
-          <Button color="black" onClick={close}>
+          <Button color="black" onClick={close} type="button">
             {intl.formatMessage(messages.close)}
           </Button>
         </Modal.Actions>

@@ -133,7 +133,6 @@ export const getFeedbackEnabledNonContentRoutesPathList = () =>
 const normalizePath = (path) => path?.replace(/\?.*$/, '');
 
 export const isFeedbackEnabledForRoute = memoize((path) => {
-  console.log(isCmsUi(path));
   if (!isCmsUi(path)) return true;
   const feedbackEnabledPaths = getFeedbackEnabledNonContentRoutesPathList();
   return feedbackEnabledPaths.some((route) => {
@@ -144,10 +143,9 @@ export const isFeedbackEnabledForRoute = memoize((path) => {
   });
 });
 
-export const getStaticFeedbackRouteTitle = (path) => {
+export const getStaticFeedbackRouteTitle = memoize((path) => {
   const feedbackEnabledPaths = getFeedbackEnabledNonContentRoutes();
   const feedbackEnabledPathsList = getFeedbackEnabledNonContentRoutesPathList();
-  debugger;
   return (
     feedbackEnabledPaths.find(
       (route) =>
@@ -155,4 +153,4 @@ export const getStaticFeedbackRouteTitle = (path) => {
         new RegExp(route.path).test(normalizePath(path)),
     )?.feedbackTitle || path
   );
-};
+});

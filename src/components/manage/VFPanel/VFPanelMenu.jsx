@@ -86,6 +86,7 @@ const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
     <Menu secondary>
       <Menu.Item>
         <Button
+          type="button"
           primary
           icon
           labelPosition="right"
@@ -104,6 +105,7 @@ const VFPanelMenu = ({ toastify, doSearch, can_delete_feedbacks }) => {
         <Menu.Menu position="right">
           <Menu.Item>
             <Button
+              type="button"
               color="red"
               icon
               labelPosition="right"

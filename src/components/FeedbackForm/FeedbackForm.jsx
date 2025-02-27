@@ -147,17 +147,24 @@ const FeedbackForm = () => {
   );
 
   const sendFormData = () => {
+    let content =
+      isFeedbackEnabledForRoute(path) && isCmsUi(path)
+        ? getStaticFeedbackRouteTitle(path)
+        : path;
+    if (typeof content === 'object' && content.id)
+      content = intl.formatMessage(content);
     const data = {
       ...formData,
       ...(captcha && { 'g-recaptcha-response': validToken }),
       answer: getTranslatedQuestion(intl, formData.answer),
-      content:
-        !isFeedbackEnabledForRoute(path) && isCmsUi(path)
-          ? getStaticFeedbackRouteTitle(path)
-          : path,
+      content,
     };
     dispatch(submitFeedback(path, data));
   };
+
+  if (!isFeedbackEnabledForRoute(path)) {
+    return null;
+  }
 
   let action = path?.length > 1 ? path.replace(/\//g, '') : path;
   if (action?.length > 0) {
