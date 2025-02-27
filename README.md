@@ -132,7 +132,7 @@ Version 0.6.x adds optional configuration to enable feedback for non content rou
       ...(captcha && { 'g-recaptcha-response': validToken }),
       answer: getTranslatedQuestion(intl, formData.answer),
       content:
-        !isFeedbackEnabledForRoute(path) && isCmsUi(path)
+        isFeedbackEnabledForRoute(path) && isCmsUi(path)
           ? getStaticFeedbackRouteTitle(path)
           : path,
     };
@@ -144,11 +144,14 @@ Version 0.6.x adds optional configuration to enable feedback for non content rou
 This will be the current pathname, or the title of the non content routes/cms routes enabled in the configuration settings:
 
 ```js
+    'volto-feedback': {
+      ...config.settings['volto-feedback'],
         /* Enable Feedback component in your CMS/Non content routes. */
-        feedbackEnabledNonContentRoutes: [
-          { path: '/sitemap', feedbackTitle: messages.sitemap_ft },
-          { path: '/search', feedbackTitle: messages.search_brdc }
-        ],
+      feedbackEnabledNonContentRoutes: [
+        { path: '/sitemap', feedbackTitle: messages.sitemap_ft },
+        { path: '/search', feedbackTitle: messages.search_brdc }
+      ],
+    }
 ```
 
 ## Translations
