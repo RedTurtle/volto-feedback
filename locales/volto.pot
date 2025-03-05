@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2025-01-27T15:52:23.769Z\n"
+"POT-Creation-Date: 2025-03-05T15:55:09.908Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -342,7 +342,7 @@ msgid "feedbacks_page"
 msgstr ""
 
 #: components/manage/VFPanel/VFPanel
-# defaultMessage: Reset feedbacks
+# defaultMessage: Reset all feedbacks
 msgid "feedbacks_reset_feedbacks"
 msgstr ""
 

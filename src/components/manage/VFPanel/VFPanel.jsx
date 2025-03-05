@@ -89,7 +89,7 @@ const messages = defineMessages({
   },
   reset_feedbacks: {
     id: 'feedbacks_reset_feedbacks',
-    defaultMessage: 'Reset feedbacks',
+    defaultMessage: 'Reset all feedbacks',
   },
   confirm_delete_selected: {
     id: 'feedbacks_confirm_delete_selected',

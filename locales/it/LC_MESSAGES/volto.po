@@ -340,9 +340,9 @@ msgid "feedbacks_page"
 msgstr "Pagina"
 
 #: components/manage/VFPanel/VFPanel
-# defaultMessage: Reset feedbacks
+# defaultMessage: Reset all feedbacks
 msgid "feedbacks_reset_feedbacks"
-msgstr "Resetta i feedback"
+msgstr "Cancella i feedback selezionati"
 
 #: components/manage/VFPanel/VFPanel
 # defaultMessage: Select/Deselect all
