@@ -1,3 +1,10 @@
+### [0.6.1](https://github.com/RedTurtle/volto-feedback/compare/v0.6.0...v0.6.1) (2025-03-06)
+
+
+### Bug Fixes
+
+* changed msg for VFPanel reset button ([2f83eb3](https://github.com/RedTurtle/volto-feedback/commit/2f83eb3d9957aa9527f7e5d0ed1473e5e29da887))
+
 
 
 ## [0.6.0](https://github.com/redturtle/volto-feedback/compare/v0.5.3...v0.6.0) (2025-02-27)
