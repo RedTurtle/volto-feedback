@@ -1,3 +1,12 @@
+
+
+### [0.6.2](https://github.com/RedTurtle/volto-feedback/compare/v0.6.1...v0.6.2) (2025-03-21)
+
+
+### Bug Fixes
+
+* test nonContentRoutesPublic for volto18 ([#8](https://github.com/RedTurtle/volto-feedback/issues/8)) ([376d4b3](https://github.com/RedTurtle/volto-feedback/commit/376d4b30725b334929e1d5018cc80247df843e60))
+
 ### [0.6.1](https://github.com/RedTurtle/volto-feedback/compare/v0.6.0...v0.6.1) (2025-03-06)
 
 
