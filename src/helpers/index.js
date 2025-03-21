@@ -133,7 +133,18 @@ export const getFeedbackEnabledNonContentRoutesPathList = () =>
 const normalizePath = (path) => path?.replace(/\?.*$/, '');
 
 export const isFeedbackEnabledForRoute = memoize((path) => {
-  if (!isCmsUi(path)) return true;
+  //test if is isNonContentRoutPublic (for volto 18)
+  const nonContentRoutesPublic = config.settings.nonContentRoutesPublic ?? [];
+  const fullPath = path.replace(/\?.*$/, '');
+  const isNonContentRoutPublic = nonContentRoutesPublic.reduce(
+    (acc, route) =>
+      acc ||
+      (nonContentRoutesPublic.includes(route) && new RegExp(route).test(path)),
+    false,
+  );
+
+  if (!isCmsUi(path) && !isNonContentRoutPublic) return true;
+
   const feedbackEnabledPaths = getFeedbackEnabledNonContentRoutesPathList();
   return feedbackEnabledPaths.some((route) => {
     const fullPath = normalizePath(path);
