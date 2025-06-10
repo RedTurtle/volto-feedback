@@ -125,7 +125,13 @@ const ReadMore = ({ children, intl }) => {
   );
 };
 
-const FeedbackComments = ({ item, moment: Moment }) => {
+const FeedbackComments = ({
+  item,
+  moment: Moment,
+  filters: panelFilters,
+  setFilters: setPanelFilters,
+}) => {
+  console.log(panelFilters);
   const intl = useIntl();
   const dispatch = useDispatch();
   const moment = Moment.default;
@@ -133,7 +139,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   const [open, setOpen] = useState(false);
   const [sort, setSort] = useState({ on: 'date', order: 'descending' });
   const [currentPage, setCurrentPage] = useState(0);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ unread: panelFilters.has_unread });
   const [checkAllRead, setCheckAllRead] = useState(false);
   const [modalConfirmOpen, setModalConfirmOpen] = useState(false);
   const b_size = 25;
@@ -154,6 +160,7 @@ const FeedbackComments = ({ item, moment: Moment }) => {
   }, [feedbackCommentsResults]);
 
   const close = () => {
+    setPanelFilters({ ...panelFilters, has_unread: filters.unread }); //share unread filter between views
     setOpen(false);
   };
 

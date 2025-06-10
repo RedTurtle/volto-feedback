@@ -507,7 +507,13 @@ const VFPanel = ({ moment: Moment, toastify }) => {
                           textAlign="center"
                           className="comments-column"
                         >
-                          {item.comments && <FeedbackComments item={item} />}
+                          {item.comments && (
+                            <FeedbackComments
+                              item={item}
+                              filters={filters}
+                              setFilters={setFilters}
+                            />
+                          )}
                         </Table.Cell>
                       </tr>
                     ))}
