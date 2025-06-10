@@ -1,3 +1,10 @@
+## [0.7.0](https://github.com/RedTurtle/volto-feedback/compare/v0.6.2...v0.7.0) (2025-06-10)
+
+
+### Features
+
+* share 'unread' filter between Panel and comments modal ([a9c1904](https://github.com/RedTurtle/volto-feedback/commit/a9c19042e6989ea781745f199ab283fe906069a8))
+
 
 
 ### [0.6.2](https://github.com/RedTurtle/volto-feedback/compare/v0.6.1...v0.6.2) (2025-03-21)
