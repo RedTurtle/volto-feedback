@@ -1,21 +1,8 @@
-.feedback-form {
-  .answers-header,
-  .comments-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.875rem;
-    margin-bottom: 2.375rem;
-    box-shadow: 0 0.9375rem 1.325rem -0.9rem rgba(0, 0, 0, 0.1);
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 2;
-
-    > legend,
-    > span {
-      font-size: 0.875rem;
-      font-weight: 600;
-      line-height: 1.5;
-    }
-  }
+.feedback-form .answers-header > legend,
+.feedback-form .answers-header > span,
+.feedback-form .comments-header > legend,
+.feedback-form .comments-header > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
 }
