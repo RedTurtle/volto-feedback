@@ -146,19 +146,35 @@
   border-radius: 0.28571429rem;
   margin: 1em 0;
   background: #f8f8f9;
-  -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset,
+  -webkit-box-shadow:
+    0 0 0 1px rgba(34, 36, 38, 0.22) inset,
     0 0 0 0 transparent;
-  box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 transparent;
+  box-shadow:
+    0 0 0 1px rgba(34, 36, 38, 0.22) inset,
+    0 0 0 0 transparent;
   color: rgba(0, 0, 0, 0.87);
   line-height: 1.4285em;
-  -webkit-transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease,
+  -webkit-transition:
+    opacity 0.1s ease,
+    color 0.1s ease,
+    background 0.1s ease,
     -webkit-box-shadow 0.1s ease;
-  transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease,
+  transition:
+    opacity 0.1s ease,
+    color 0.1s ease,
+    background 0.1s ease,
     -webkit-box-shadow 0.1s ease;
-  transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease,
+  transition:
+    opacity 0.1s ease,
+    color 0.1s ease,
+    background 0.1s ease,
     box-shadow 0.1s ease;
-  transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease,
-    box-shadow 0.1s ease, -webkit-box-shadow 0.1s ease;
+  transition:
+    opacity 0.1s ease,
+    color 0.1s ease,
+    background 0.1s ease,
+    box-shadow 0.1s ease,
+    -webkit-box-shadow 0.1s ease;
 }
 
 .feedback-form .ui.icon.message > .icon:not(.close) {
@@ -177,8 +193,12 @@
 
 .feedback-form .ui.success.message {
   background-color: #fcfff5;
-  -webkit-box-shadow: 0 0 0 1px #a3c293 inset, 0 0 0 0 transparent;
-  box-shadow: 0 0 0 1px #a3c293 inset, 0 0 0 0 transparent;
+  -webkit-box-shadow:
+    0 0 0 1px #a3c293 inset,
+    0 0 0 0 transparent;
+  box-shadow:
+    0 0 0 1px #a3c293 inset,
+    0 0 0 0 transparent;
   color: #2c662d;
 }
 
@@ -221,4 +241,14 @@
   cursor: pointer !important;
   outline: none !important;
   text-decoration: underline !important;
+}
+
+/* FormHeader */
+.feedback-form .answers-header > legend,
+.feedback-form .answers-header > span,
+.feedback-form .comments-header > legend,
+.feedback-form .comments-header > span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
 }

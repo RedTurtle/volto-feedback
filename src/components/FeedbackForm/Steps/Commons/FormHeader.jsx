@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './formHeader.css';
-
 const FormHeader = ({ title, step, totalSteps, className }) => {
   return (
     <div className={className}>
