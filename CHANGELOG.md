@@ -1,3 +1,17 @@
+
+
+### [0.7.1](https://github.com/redturtle/volto-feedback/compare/v0.7.0...v0.7.1) (2025-07-08)
+
+
+### Bug Fixes
+
+* **a11y:** form header legend ([#9](https://github.com/redturtle/volto-feedback/issues/9)) ([1013b4a](https://github.com/redturtle/volto-feedback/commit/1013b4af34aced7ac67506468ea1afe175258c0f))
+
+
+### Maintenance
+
+* added release script ([229277f](https://github.com/redturtle/volto-feedback/commit/229277fe7a3000654d39edb11ba4747ebb2fbf9c))
+
 ## [0.7.0](https://github.com/RedTurtle/volto-feedback/compare/v0.6.2...v0.7.0) (2025-06-10)
 
 
