@@ -1,3 +1,10 @@
+### [0.7.2](https://github.com/RedTurtle/volto-feedback/compare/v0.7.1...v0.7.2) (2025-08-14)
+
+
+### Bug Fixes
+
+* remove edit buttons from toolbar in FeedbackControlpanel ([7ed303a](https://github.com/RedTurtle/volto-feedback/commit/7ed303a55ef01b683facc5b404003af8ad8eec01))
+
 
 
 ### [0.7.1](https://github.com/redturtle/volto-feedback/compare/v0.7.0...v0.7.1) (2025-07-08)
