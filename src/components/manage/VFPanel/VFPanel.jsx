@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Portal } from 'react-portal';
 import { defineMessages, useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import {
   Container,
   Confirm,
@@ -22,8 +22,10 @@ import Pagination from '@plone/volto/components/theme/Pagination/Pagination';
 import Toolbar from '@plone/volto/components/manage/Toolbar/Toolbar';
 import Unauthorized from '@plone/volto/components/theme/Unauthorized/Unauthorized';
 import Toast from '@plone/volto/components/manage/Toast/Toast';
+import Icon from '@plone/volto/components/theme/Icon/Icon';
 import { flattenToAppURL } from '@plone/volto/helpers/Url/Url';
 import Helmet from '@plone/volto/helpers/Helmet/Helmet';
+import backSVG from '@plone/volto/icons/back.svg';
 import { FeedbackComments } from 'volto-feedback/components/manage';
 import {
   getFeedbacks,
@@ -127,6 +129,10 @@ const messages = defineMessages({
   filter_unread: {
     id: 'feedbacks_comments_filter_unread',
     defaultMessage: 'Show comments to read.',
+  },
+  back: {
+    id: 'Back',
+    defaultMessage: 'Back',
   },
 });
 const VFPanel = ({ moment: Moment, toastify }) => {
@@ -577,7 +583,20 @@ const VFPanel = ({ moment: Moment, toastify }) => {
       )}
       {isClient && (
         <Portal node={document.getElementById('toolbar')}>
-          <Toolbar pathname={pathname} inner={<span />} />
+          <Toolbar
+            pathname={pathname}
+            inner={
+              <Link to="/" className="item">
+                <Icon
+                  name={backSVG}
+                  className="contents circled"
+                  size="30px"
+                  title={intl.formatMessage(messages.back)}
+                />
+              </Link>
+            }
+            hideDefaultViewButtons
+          />
         </Portal>
       )}
     </>
