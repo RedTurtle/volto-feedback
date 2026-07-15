@@ -1,3 +1,17 @@
+
+
+### [0.7.3](https://github.com/RedTurtle/volto-feedback/compare/v0.7.2...v0.7.3) (2026-07-15)
+
+
+### Bug Fixes
+
+* hydration mismatches in FeedbackForm (GoogleReCaptchaWidget, FormHeader) ([#11](https://github.com/RedTurtle/volto-feedback/issues/11)) ([1c8c6de](https://github.com/RedTurtle/volto-feedback/commit/1c8c6dea49575bef8d75761a7c808be4629f0e71))
+
+
+### Maintenance
+
+* added npm release script via github actions ([e3c1939](https://github.com/RedTurtle/volto-feedback/commit/e3c1939e1880d8f031766769a4f010a86a9f902a))
+
 ### [0.7.2](https://github.com/RedTurtle/volto-feedback/compare/v0.7.1...v0.7.2) (2025-08-14)
 
 
