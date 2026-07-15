@@ -4,7 +4,7 @@
     "commitMessage": "chore: release v${version}"
   },
   "npm": {
-    "publish": true
+    "publish": false
   },
   "github": {
     "release": true,
@@ -31,6 +31,34 @@
           {
             "type": "chore",
             "section": "Maintenance"
+          },
+          {
+            "type": "ci",
+            "section": "Maintenance"
+          },
+          {
+            "type": "perf",
+            "section": "Maintenance"
+          },
+          {
+            "type": "build",
+            "section": "Maintenance"
+          },
+          {
+            "type": "style",
+            "section": "Maintenance"
+          },
+          {
+            "type": "revert",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "test",
+            "section": "Maintenance"
+          },
+          {
+            "type": "docs",
+            "section": "Documentation"
           }
         ]
       }
