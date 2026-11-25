@@ -1,5 +1,12 @@
 
 
+### [0.7.4](https://github.com/RedTurtle/volto-feedback/compare/v0.7.3...v0.7.4) (2026-11-25)
+
+
+### Bug Fixes
+
+* export HoneypotWidget directly instead of lazy-loading it ([#13](https://github.com/RedTurtle/volto-feedback/issues/13)) ([0cbd45d](https://github.com/RedTurtle/volto-feedback/commit/0cbd45d0399cebdb25b754223a2c597d2f9232ae))
+
 ### [0.7.3](https://github.com/RedTurtle/volto-feedback/compare/v0.7.2...v0.7.3) (2026-07-15)
 
 
